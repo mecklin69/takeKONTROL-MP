@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Startseite", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_account: "Mein Konto", btn_organizations: "Für Organisationen",
+        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_account: "Mein Konto", btn_organizations: "Für Organisationen",
         hp_hero_title: "Wäre Ihre Familie—oder Ihr Unternehmen—morgen <span>bereit</span>?", hp_hero_sub: "Entdecken Sie Ihre Bereitschaft. Bauen Sie Resilienz auf. Schützen Sie, was zählt.", hp_hero_desc: "takeKONTROL hilft Einzelpersonen, Familien, Unternehmen und Gemeinden, sich durch Risikobewertung, angeleitetes Lernen und praktische Vorsorge auf Notfälle vorzubereiten.", hp_btn_journey: "Readiness Journey starten",
         hl_title: "Der Fahrplan zur <span>Resilienz</span>", hl_sub: "Ein systematisches Framework, das Sie Schritt für Schritt durch Risikoanalyse, Funktionstraining und langfristige Schutzstrategien führt.",
         hl_c1_title: "Risiken Verstehen", hl_c1_desc: "Wissen, welche Bedrohungen existieren.",
@@ -45,7 +45,7 @@ export const dictionary = {
         footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Home", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_account: "My Account", btn_organizations: "For Organizations",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_account: "My Account", btn_organizations: "For Organizations",
         hp_hero_title: "Would your family—or your business—be <span>ready</span> tomorrow?", hp_hero_sub: "Discover your readiness. Build resilience. Protect what matters.", hp_hero_desc: "TakeKONTROL helps individuals, families, businesses and communities prepare for emergencies through risk assessment, guided learning and practical preparedness.", hp_btn_journey: "Start Your Readiness Journey",
         hl_title: "The Roadmap to <span>Resilience</span>", hl_sub: "A systematic framework engineered to guide you step-by-step through risk assessment, functional training, and long-term protective strategies.",
         hl_c1_title: "Understand the Risks", hl_c1_desc: "Know what threats exist.",
