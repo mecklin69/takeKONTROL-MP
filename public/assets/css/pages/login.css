@@ -1,0 +1,504 @@
+/* ═══════════════════════════════════════════════
+   takeKONTROL — login page styles
+   Loaded after tokens.css, base.css and chrome.css.
+   ═══════════════════════════════════════════════ */
+
+* { box-sizing: border-box; }
+
+body, html {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-main); line-height: 1.6; scroll-behavior: smooth;
+    background-color: var(--primary-bg);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    overflow-x: hidden;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+/* Interactive Action Elements */
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; padding: 12px 32px; text-decoration: none; 
+    font-weight: 500; border-radius: 50px; transition: all var(--transition-speed) ease; cursor: pointer; 
+    border: 1px solid transparent; font-size: 0.95rem; letter-spacing: 0.5px;
+}
+
+.btn-primary:hover { background-color: var(--primary-red-hover); box-shadow: 0 4px 15px rgba(179, 32, 32, 0.4); }
+
+/* Flush Corporate Global Header Navigation */
+
+.tesla-header {
+    position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; 
+    padding: 16px 48px; z-index: 1000; background: color rgba(255, 255, 255, 0.98); background-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    color: rgba(255, 255, 255, 0.98); transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.tesla-header.scrolled {
+    background-color: var(--header-bg-scrolled); backdrop-filter: blur(10px); background-image: none;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1); border-bottom: 1px solid var(--border-color); color: var(--nav-text-scrolled);
+}
+
+.tesla-header .logo { display: flex; align-items: center; font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; color: inherit; text-decoration: none;}
+
+.tesla-header a, .theme-toggle, .lang-toggle { color: inherit; text-decoration: none; }
+
+.lang-toggle { background: none; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 700; padding: 6px 10px; border-radius: var(--radius-corp); letter-spacing: 0.5px; transition: background var(--transition-speed) ease; }
+
+.theme-toggle { background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 8px; border-radius: var(--radius-corp); transition: transform 0.2s ease, background var(--transition-speed) ease; }
+
+.drawer-header .logo { font-weight: 700; font-size: 1.1rem; color: var(--text-heading); letter-spacing: 1px; text-decoration: none;}
+
+/* ═══════════════════════════════════════════════
+   AUTHENTICATION SPECIFIC STYLES
+═══════════════════════════════════════════════ */
+
+.auth-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 40px;
+    background-color: var(--primary-bg);
+    overflow: hidden;
+}
+
+/* Sleek background blobs */
+
+.auth-bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.blob-1 { width: 500px; height: 500px; background-color: var(--primary-red); top: -100px; right: -150px; }
+
+.blob-2 { width: 400px; height: 400px; background-color: var(--text-muted); bottom: -100px; left: -100px; }
+
+.auth-container {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 460px;
+}
+
+.auth-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+    transition: box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.auth-card:hover { box-shadow: var(--card-shadow-hover); }
+
+/* View Switching Logic */
+
+.auth-view { display: none; animation: fadeIn 0.4s ease; }
+
+.auth-view.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-title { font-size: 2rem; margin-bottom: 8px; color: var(--text-heading); text-align: center; }
+
+.auth-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 30px; font-size: 1rem; line-height: 1.4;}
+
+/* Custom Inputs */
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+
+.field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;}
+
+.field label { font-size: 0.85rem; font-weight: 600; color: var(--text-heading); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Font-size: 16px is critical on mobile to prevent iOS auto-zoom on input focus */
+
+.field input {
+    width: 100%; padding: 14px 18px; border: 1px solid var(--border-color);
+    border-radius: 8px; background: var(--secondary-bg); color: var(--text-main);
+    font-family: inherit; font-size: 16px; transition: all var(--transition-speed) ease;
+}
+
+.field input:focus {
+    border-color: var(--primary-red); outline: none; box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.15); background: var(--card-bg);
+}
+
+.submit-btn { width: 100%; padding: 16px; font-size: 1.05rem; margin-top: 10px; }
+
+/* Google Button */
+
+.btn-google {
+    width: 100%;
+    background-color: var(--card-bg);
+    color: var(--text-heading);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 14px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.btn-google:hover {
+    background-color: var(--secondary-bg);
+    border-color: var(--text-muted);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+
+.auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.auth-divider span { padding: 0 15px; }
+
+.auth-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -10px;
+    margin-bottom: 25px;
+}
+
+.auth-link {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+.auth-link:hover { color: var(--primary-red); }
+
+.auth-link.strong { font-weight: 600; color: var(--primary-red); }
+
+.auth-link.strong:hover { text-decoration: underline; }
+
+.auth-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* Footer layout (Minimal for login page) */
+
+footer {
+    background-color: var(--footer-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 30px 0;
+    color: var(--text-muted);
+}
+
+.footer-bottom {
+    display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;
+}
+
+.footer-bottom a {
+    color: inherit; text-decoration: none; transition: color var(--transition-speed);
+}
+
+.footer-bottom a:hover { color: var(--primary-red); }
+
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE MEDIA QUERIES
+═══════════════════════════════════════════════ */
+
+@media (max-width: 992px) { 
+    .tesla-header { padding: 16px 24px; } 
+}
+
+@media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    .desktop-only, .center-nav { display: none !important; }
+    .mobile-toggle { display: inline-flex !important; }
+    
+    /* Login specific mobile adjustments */
+    .auth-section { padding: 100px 20px 40px; }
+    .auth-card { padding: 30px 24px; }
+    .auth-title { font-size: 1.8rem; }
+    
+    /* Stack name fields on mobile */
+    .field-row { grid-template-columns: 1fr; gap: 0; margin-bottom: 0; }
+    
+    .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+}
+
+/* The `hidden` attribute is only `display: none` in the browser's own
+           stylesheet, so ANY author rule that sets display (flex, block, grid)
+           overrides it and the element stays visible. This makes `hidden`
+           actually mean hidden. Must stay near the top of the sheet. */
+
+[hidden] { display: none !important; }
+
+/* Deep Black/Red Background Gradient */
+
+.auth-section {
+            background-color: #060608 !important;
+            background-image: radial-gradient(circle at 80% 20%, rgba(179, 32, 32, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 20% 80%, rgba(20, 20, 25, 0.9) 0%, transparent 50%) !important;
+        }
+
+.auth-bg-blob { display: none !important; }
+
+/* Hide old blobs to use the sleek gradient above */
+
+/* Dynamic Container Resizing */
+
+.auth-container {
+            width: 100%;
+            max-width: 460px; /* Default for Login */
+            margin: 0 auto;
+            transition: max-width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+/* Expand container only when Dashboard is active */
+
+.auth-container:has(#view-dashboard.active) {
+            max-width: 850px;
+        }
+
+/* -------------------------------------------
+           CORPORATE DASHBOARD ARCHITECTURE 
+           ------------------------------------------- */
+
+.dash-layout {
+            text-align: left;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+.dash-header-block {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+.dash-main-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+            color: var(--text-heading);
+            letter-spacing: -0.02em;
+        }
+
+.dash-user-greeting {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+/* Status Banner */
+
+.dash-status-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+.status-indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #34A853; /* Active Green */
+            box-shadow: 0 0 10px rgba(52, 168, 83, 0.5);
+        }
+
+.status-text-wrapper { font-size: 0.95rem; }
+
+.status-label { color: var(--text-muted); margin-right: 6px; }
+
+.status-value { color: var(--text-heading); font-weight: 600; }
+
+/* Perfect Desktop & Mobile Grid */
+
+.dash-interactive-grid {
+            display: grid;
+            /* Auto-fit creates 2 columns on desktop, 1 on mobile flawlessly */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 35px;
+        }
+
+.dash-grid-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            overflow: hidden;
+        }
+
+.item-border-accent {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 0px;
+            background-color: var(--primary-red);
+            transition: width 0.2s ease;
+        }
+
+.dash-grid-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(179, 32, 32, 0.3);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+.dash-grid-item:hover .item-border-accent { width: 4px; }
+
+.item-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+        }
+
+.item-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+/* Full Width Item for Returns */
+
+.grid-span-full { grid-column: 1 / -1; }
+
+/* Action Buttons */
+
+.dash-action-footer {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+        }
+
+.dash-action-footer .btn {
+            padding: 16px;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+/* ── Loading gate ─────────────────────────────────────────── */
+
+.auth-loading { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 40px 0; }
+
+.auth-spinner {
+            width: 34px; height: 34px; border-radius: 50%;
+            border: 3px solid var(--border-color); border-top-color: var(--primary-red);
+            animation: tkSpin 0.8s linear infinite;
+        }
+
+@keyframes tkSpin { to { transform: rotate(360deg); } }
+
+/* ── Inline form errors ───────────────────────────────────── */
+
+.auth-error {
+            background: rgba(211, 47, 47, 0.08);
+            border: 1px solid rgba(211, 47, 47, 0.35);
+            border-left: 3px solid #d32f2f;
+            color: #d32f2f;
+            border-radius: 8px; padding: 11px 14px; margin-bottom: 18px;
+            font-size: 0.88rem; line-height: 1.45;
+        }
+
+/* ── Password field ───────────────────────────────────────── */
+
+.pass-wrap { position: relative; display: flex; }
+
+.pass-wrap input { padding-right: 48px; }
+
+.pass-toggle {
+            position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; padding: 8px;
+            color: var(--text-muted); display: flex; border-radius: 6px;
+            transition: color var(--transition-speed) ease, background var(--transition-speed) ease;
+        }
+
+.pass-toggle:hover { color: var(--primary-red); background: rgba(128,128,128,0.12); }
+
+.pass-toggle[aria-pressed="true"] { color: var(--primary-red); }
+
+.field-hint { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ── Dashboard identity ───────────────────────────────────── */
+
+.dash-identity { display: flex; align-items: center; gap: 16px; }
+
+.dash-avatar-wrap {
+            position: relative; width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%;
+            background: var(--secondary-bg); border: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+
+.dash-avatar { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.dash-initials { font-size: 1.35rem; font-weight: 700; color: var(--primary-red); }
+
+.dash-email { font-size: 0.85rem; color: var(--text-muted); margin: 2px 0 0; word-break: break-all; }
+
+/* ── Email verification banner ────────────────────────────── */
+
+.verify-banner {
+            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--text-heading); border-radius: 8px;
+            padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem;
+        }
+
+.verify-banner svg { color: #f59e0b; flex-shrink: 0; }
+
+.verify-resend {
+            margin-left: auto; background: none; border: none; cursor: pointer;
+            color: var(--primary-red); font-weight: 600; font-size: 0.88rem;
+            text-decoration: underline; font-family: inherit; padding: 0;
+        }
+
+.btn-google[aria-busy="true"], .submit-btn[aria-busy="true"] { opacity: 0.65; cursor: progress; }
+
+.btn:disabled, .btn-google:disabled { cursor: not-allowed; }
+
+/* Mobile Adjustments */
+
+@media (max-width: 640px) {
+            .dash-header-block { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .dash-identity { gap: 12px; }
+            .dash-avatar-wrap { width: 46px; height: 46px; }
+            .verify-resend { margin-left: 0; }
+            .grid-span-full { grid-column: auto; } /* Reset span on mobile */
+            .dash-action-footer { grid-template-columns: 1fr; }
+        }

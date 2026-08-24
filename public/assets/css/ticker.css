@@ -1,0 +1,186 @@
+/* ═══════════════════════════════════════════════
+   SITUATIONAL AWARENESS TICKER
+   takeKONTROL — Live emergency & infrastructure feed
+   ═══════════════════════════════════════════════ */
+
+/* Container */
+.sit-ticker {
+  position: relative;
+  background: #0A0A0A;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(200, 0, 10, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  z-index: 10;
+  user-select: none;
+}
+/* 1. Force the main track to stay on one horizontal line */
+#ticker-mount-point, 
+.ticker-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    width: max-content; /* Tells the container to be as wide as its content needs */
+}
+
+/* 2. Prevent the individual news items from stacking or squishing */
+#ticker-mount-point > *, 
+.ticker-item {
+    flex-shrink: 0; /* Prevents flexbox from crushing them together */
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding-right: 30px; /* Adds breathing room between the headlines */
+}
+
+/* LIVE badge */
+.sit-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 0 18px 0 20px;
+  border-right: 1px solid rgba(200, 0, 10, 0.28);
+  height: 100%;
+  background: rgba(200, 0, 10, 0.08);
+  z-index: 2;
+}
+
+.sit-live-text {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #C8000A;
+  line-height: 1;
+}
+
+/* Pulsing dot */
+.sit-pulse {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #C8000A;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.sit-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(200, 0, 10, 0.22);
+  animation: sit-ring 1.6s ease-out infinite;
+}
+
+@keyframes sit-ring {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.0); opacity: 0; }
+}
+
+/* Scrolling track wrapper */
+.sit-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Inner track — contains content duplicated 2× for seamless loop */
+.sit-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  /* animation applied by JS once width is known */
+}
+
+.sit-track.sit-running {
+  animation: sit-scroll linear infinite;
+}
+
+@keyframes sit-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(var(--ticker-half)); }
+}
+
+/* Individual items */
+.sit-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 28px 0 0;
+}
+
+.sit-type {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(200, 0, 10, 0.9);
+  flex-shrink: 0;
+}
+
+.sit-sep {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.sit-msg {
+  font-family: 'Barlow Condensed', 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1;
+}
+
+/* Separator dot between items */
+.sit-dot {
+  font-size: 7px;
+  color: rgba(200, 0, 10, 0.5);
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+
+/* Right edge gradient fade */
+.sit-right-fade {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, #0A0A0A);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Pause on hover — good UX so users can read */
+.sit-ticker:hover .sit-track {
+  animation-play-state: paused;
+}
+
+/* ── Responsive ─────────────────────────────── */
+@media (max-width: 640px) {
+  .sit-badge {
+    padding: 0 12px 0 14px;
+  }
+
+  .sit-msg {
+    font-size: 12px;
+  }
+
+  .sit-type {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+}

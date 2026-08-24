@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>takeKONTROL | Everyday & Organizational Resilience</title>
+    <link rel="icon" type="image/png" href="assets/img/TakeKONTROL Logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <script>
+      /* Applied before first paint so a dark-mode visitor never sees a
+         white flash. The toggle itself lives in assets/js/core/theme.js. */
+      try {
+        var tkTheme = localStorage.getItem('tk_theme');
+        if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { /* storage blocked; light theme it is */ }
+    </script>
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/chrome.css">
+    <link rel="stylesheet" href="assets/css/ticker.css">
+    <link rel="stylesheet" href="assets/css/pages/home.css">
+</head>
+<body data-google-translate>
+
+    <div id="google_translate_element"></div>
+
+    <div class="scroll-progress-track"></div>
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+    <header class="tesla-header" id="navbar">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo" id="navLogo">
+                take<span style="color: var(--primary-red);">KONTROL</span>
+            </a>
+        </div>
+        <nav class="center-nav">
+            <a href="index.html" style="color: var(--primary-red);" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" data-localize="nav_shop">Shop</a>
+            <a href="#team" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" data-localize="nav_contact">Kontakt</a>
+        </nav>
+        <div class="right-nav">
+            <div class="controls-wrapper">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch Language">EN</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg id="sunIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06L7.756 5.635a.75.75 0 00-1.06-1.06L5.105 6.166z" /></svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" /></svg>
+                </button>
+                <a href="login.html" class="account-wrapper" aria-label="Account">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+            </div>
+            <a href="enquiry.html" class="btn btn-outline-hero btn-small desktop-only" data-localize="btn_organizations">Für Organisationen</a>
+            <button class="mobile-toggle" id="openDrawer" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+                take<span style="color: var(--primary-red);">KONTROL</span>
+            </a>
+            <button class="close-drawer" id="closeDrawer" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" class="drawer-link" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" class="drawer-link" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" class="drawer-link" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" class="drawer-link" data-localize="nav_contact">Kontakt</a>
+            <a href="login.html" class="drawer-link" data-localize="nav_account">Mein Konto</a>
+            <a href="enquiry.html" class="btn btn-primary drawer-link" style="margin-top:20px;" data-localize="btn_organizations">Für Organisationen</a>
+        </nav>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="assets/img/make_a_good_video_seeing_the_c.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content container">
+            <h1 data-localize="hp_hero_title">Wäre Ihre Familie—oder Ihr Unternehmen—morgen <span>bereit</span>?</h1>
+            <p class="subheadline" data-localize="hp_hero_sub">Entdecken Sie Ihre Bereitschaft. Bauen Sie Resilienz auf. Schützen Sie, was zählt.</p>
+            <p class="description" data-localize="hp_hero_desc">takeKONTROL hilft Einzelpersonen, Familien, Unternehmen und Gemeinden, sich durch Risikobewertung, angeleitetes Lernen und praktische Vorsorge auf Notfälle vorzubereiten.</p>
+            
+            <div class="hero-buttons">
+                <a href="#journey" class="btn btn-primary" data-localize="hp_btn_journey">Readiness Journey starten</a>
+                <a href="enquiry.html" class="btn btn-outline-hero" data-localize="btn_organizations">Für Organisationen</a>
+            </div>
+        </div>
+        <div id="ticker-mount-point" style="position: absolute; bottom: 0; left: 0; width: 100%; z-index: 10; overflow: hidden;"></div>
+    </section>
+
+    <div class="container">
+
+        <!-- 5-COLUMN READINESS JOURNEY -->
+        <section id="journey" class="bg-alt" style="border: none; background: transparent; padding-top: 80px;">
+            <h2 class="section-title" data-localize="hl_title">Der Fahrplan zur <span>Resilienz</span></h2>
+            <p class="section-sub" data-localize="hl_sub">Ein systematisches Framework, das Sie Schritt für Schritt durch Risikoanalyse, Funktionstraining und langfristige Schutzstrategien führt.</p>
+
+            <div class="journey-grid">
+                <div class="journey-step">
+                    <div class="card-cover">
+                        <img src="assets/img/understanding-risk.png" alt="Understand Risks">
+                    </div>
+                    <div class="card-body-sm">
+                        <div class="number">1</div>
+                        <h4 data-localize="hl_c1_title">Risiken Verstehen</h4>
+                        <p data-localize="hl_c1_desc">Wissen, welche Bedrohungen existieren.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="card-cover">
+                        <img src="assets/img/Readiness-to-Measure.png" alt="Measure Readiness">
+                    </div>
+                    <div class="card-body-sm">
+                        <div class="number">2</div>
+                        <h4 data-localize="hl_c2_title">Bereitschaft Messen</h4>
+                        <p data-localize="hl_c2_desc">Den KONTROL Score durchführen.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="card-cover">
+                        <img src="assets/img/Improve-preventative-care.png" alt="Improve Preparedness">
+                    </div>
+                    <div class="card-body-sm">
+                        <div class="number">3</div>
+                        <h4 data-localize="hl_c3_title">Vorsorge Verbessern</h4>
+                        <p data-localize="hl_c3_desc">Ihrem Aktionsplan folgen.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="card-cover">
+                        <img src="assets/img/Equip-yourself.png" alt="Equip Yourself">
+                    </div>
+                    <div class="card-body-sm">
+                        <div class="number">4</div>
+                        <h4 data-localize="hl_c4_title">Sich Ausrüsten</h4>
+                        <p data-localize="hl_c4_desc">Das richtige Equipment besorgen.</p>
+                    </div>
+                </div>
+                <div class="journey-step">
+                    <div class="card-cover">
+                        <img src="assets/img/readiness-to-hold.png" alt="Maintain Readiness">
+                    </div>
+                    <div class="card-body-sm">
+                        <div class="number">5</div>
+                        <h4 data-localize="hl_c5_title">Bereitschaft Halten</h4>
+                        <p data-localize="hl_c5_desc">Bereit bleiben, sicher bleiben.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 25 THREATS -->
+        <section id="threats" class="section-padding bg-alt" style="border-radius: var(--radius-corp); padding: 60px 40px; margin-bottom: 60px;">
+            <h2 class="section-title" data-localize="threats_title">25 European Disaster <span>Scenarios</span></h2>
+            <div class="threats-intro">
+                <p data-localize="bewusst_desc">Moderne Krisen sind keine Seltenheit mehr. Von Cyberangriffen und Stromausfällen bis hin zu Versorgungsunterbrechungen und Extremwetter – Einzelpersonen und Organisationen sind wachsenden Risiken ausgesetzt.</p>
+                <p class="highlight" data-localize="bewusst_sub">Kennen Sie die Bedrohungen, die für Sie relevant sind?</p>
+                
+                <!-- INTEGRATED IMAGE HERE -->
+                <!-- <img src="assets/img/Social-Crises-scenarios.png" alt="25 Threats Matrix" style="width: 100%; height: auto; border-radius: 8px; display: block; margin: 20px auto; max-width: 800px; box-shadow: var(--card-shadow);"> -->
+            </div>
+
+            <div class="threat-categories" id="threatCategories">
+                <!-- JS Will Render Categories Here with Unsplash Images -->
+            </div>
+        </section>
+
+        <!-- KONTROL SCORE -->
+        <section id="score" class="section-padding">
+            <div class="score-section">
+                <div class="text">
+                    <h2 data-localize="score_title">Wie gut sind Sie <span>heute vorbereitet?</span></h2>
+                    <p data-localize="score_desc">Der KONTROL Score hilft Organisationen, ihr aktuelles Bereitschaftsniveau zu verstehen.</p>
+                    <div class="features">
+                        <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-localize="score_l1">Bereitschaftsbewertung</span></div>
+                        <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-localize="score_l2">Praktische Empfehlungen</span></div>
+                        <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-localize="score_l3">Klare Statusübersicht</span></div>
+                        <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-localize="score_l4">DSGVO-konform</span></div>
+                    </div>
+                    <a href="kontrol-quick-check (2).html" class="btn btn-primary" style="margin-top: 20px;" data-localize="btn_score">Den KONTROL Score entdecken</a>
+                </div>
+                <div class="score-image-placeholder">
+                    <!-- INTEGRATED IMAGE HERE -->
+                    <img src="assets/img/nico-score.png" alt="Analytics Dashboard">
+                </div>
+            </div>
+        </section>
+
+        <!-- READINESS PROGRAM -->
+        <section id="readiness" class="section-padding bg-alt" style="border-radius: var(--radius-corp); padding: 60px 40px; margin-bottom: 60px;">
+            <h2 class="section-title" data-localize="bereit_title">Ihre <span>Readiness Journey</span></h2>
+            <p class="section-sub" data-localize="bereit_desc">Verwandeln Sie Ihre Ergebnisse in Taten. Das Bereitschaftsprogramm hilft Ihnen, Ihre Lücken durch einfache, praktische Maßnahmen zu schließen.</p>
+
+            <div style="text-align: center; margin-bottom: 40px;">
+                <!-- INTEGRATED IMAGE HERE -->
+                <div class="score-image-placeholder" style="max-width: 700px; margin: 0 auto; padding: 0;">
+                    <!-- <img src="assets/img/action-starke.png" alt="Readiness Program" style="width: 100%; height: auto; border-radius: var(--radius-corp); display: block;"> -->
+                </div>
+            </div>
+
+            <!-- 9-CARD GRID -->
+            <div class="readiness-grid">
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/self-sufficiency.png" alt="Self-Sufficiency">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c1_title">Selbstversorgung</h4>
+                        <p data-localize="r_c1_desc">Ein Zuhause aufbauen, das auch bei Störungen funktioniert.</p>
+                    </div>
+                </div>
+                <!-- <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/evacuation.png" alt="Evacuation">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c2_title">Evakuierung</h4>
+                        <p data-localize="r_c2_desc">Vorbereiten, um mit der richtigen Ausrüstung sicher zu gehen.</p>
+                    </div>
+                </div> -->
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/first-aid.png" alt="First Aid">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c3_title">Erste Hilfe</h4>
+                        <p data-localize="r_c3_desc">Selbstbewusst reagieren, bis Hilfe eintrifft.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/secure-documents.png" alt="Secure Documents">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c4_title">Sichere Dokumente</h4>
+                        <p data-localize="r_c4_desc">Schützen Sie Ihre wichtigsten Informationen.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/emergency-communication.png" alt="Emergency Communication">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c5_title">Notfallkommunikation</h4>
+                        <p data-localize="r_c5_desc">Informiert und in Verbindung bleiben.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/protection-evacuation-planning.png" alt="Shelter & Evacuation">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c6_title">Schutz & Evakuierungsplanung</h4>
+                        <p data-localize="r_c6_desc">Wissen, wohin man geht und was zu tun ist.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/physical-resilience.png" alt="Physical Resilience">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c7_title">Physische Resilienz</h4>
+                        <p data-localize="r_c7_desc">Kraft aufbauen, um effektiv zu reagieren.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/mental-resilience.png" alt="Mental Resilience">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c8_title">Mentale Resilienz</h4>
+                        <p data-localize="r_c8_desc">Ruhig bleiben und bessere Entscheidungen treffen.</p>
+                    </div>
+                </div>
+                <div class="readiness-card">
+                    <div class="card-cover">
+                        <img src="assets/img/community-support.png" alt="Community Support">
+                    </div>
+                    <div class="card-body-lg">
+                        <h4 data-localize="r_c9_title">Gemeinschaftsunterstützung</h4>
+                        <p data-localize="r_c9_desc">Gemeinsam mit Familie und Nachbarn vorbereiten.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LAB -->
+        <section id="lab" class="section-padding">
+            <h2 class="section-title" data-localize="lab_title">Praktisches <span>Resilience Lab</span></h2>
+            <p class="section-sub" data-localize="lab_desc">Erleben Sie realistische Krisenszenarien und angeleitete Resilienz-Übungen.</p>
+
+            <div class="lab-grid">
+                <div class="lab-card">
+                    <div class="card-cover">
+                        <img src="assets/img/self-sufficiency.png" alt="Emergency Kit Training">
+                    </div>
+                    <div class="card-body-sm">
+                        <h4 data-localize="lab_1_title">Emergency Kit Training</h4>
+                        <p data-localize="lab_1_desc">Lernen Sie, was zu packen ist.</p>
+                    </div>
+                </div>
+                <div class="lab-card">
+                    <div class="card-cover">
+                        <img src="assets/img/evacuation.png" alt="Evakuierungsübungen">
+                    </div>
+                    <div class="card-body-sm">
+                        <h4 data-localize="lab_2_title">Evakuierungsübungen</h4>
+                        <p data-localize="lab_2_desc">Schnelles und sicheres Verlassen.</p>
+                    </div>
+                </div>
+                <div class="lab-card">
+                    <div class="card-cover">
+                        <img src="assets/img/emergency-communication.png" alt="Kommunikations-Szenarien">
+                    </div>
+                    <div class="card-body-sm">
+                        <h4 data-localize="lab_3_title">Kommunikations-Szenarien</h4>
+                        <p data-localize="lab_3_desc">In Verbindung bleiben ohne Netz.</p>
+                    </div>
+                </div>
+                <div class="lab-card">
+                    <div class="card-cover">
+                        <img src="assets/img/physical-resilience.png" alt="Physische Resilienz">
+                    </div>
+                    <div class="card-body-sm">
+                        <h4 data-localize="lab_4_title">Physische Resilienz</h4>
+                        <p data-localize="lab_4_desc">Ausdauer für den Ernstfall aufbauen.</p>
+                    </div>
+                </div>
+                <div class="lab-card">
+                    <div class="card-cover">
+                        <img src="assets/img/first-aid.png" alt="Erste-Hilfe-Grundlagen">
+                    </div>
+                    <div class="card-body-sm">
+                        <h4 data-localize="lab_5_title">Erste-Hilfe-Grundlagen</h4>
+                        <p data-localize="lab_5_desc">Kritische Versorgung leisten.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="shop-all-wrap" style="margin-top: 20px;">
+                <a href="#" class="btn btn-outline-adaptive" data-localize="btn_lab">Das Lab besuchen</a>
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section id="products" class="section-padding bg-alt" style="border-radius: var(--radius-corp); padding: 60px 40px; margin-bottom: 60px;">
+            <h2 class="section-title" data-localize="prod_title">Echte Resilienz erfordert <span>physische Bereitschaft</span></h2>
+            <p class="section-sub" data-localize="prod_desc">Sorgfältig ausgewählte Ausrüstung, die Sie vorbereitet, bevor eine Krise eintritt.</p>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="image-placeholder"><img src="assets/img/shelf-front.png" alt="7-Day Home Kit"></div>
+                    <h4 data-localize="p_1_title">7-Day Home Kit</h4>
+                    <div class="price">€549.99</div>
+                    <a href="takekontrol-revamp.html#home-kit" class="btn btn-secondary">Shop Now</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"><img src="assets/img/minimum-bag-2.png" alt="Essential Backpack"></div>
+                    <h4 data-localize="p_2_title">Essential Backpack</h4>
+                    <div class="price">€89.99</div>
+                    <a href="takekontrol-revamp.html#backpacks" class="btn btn-secondary">Shop Now</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"><img src="assets/img/document-bag.png" alt="Standard Backpack"></div>
+                    <h4 data-localize="p_3_title">Standard Backpack</h4>
+                    <div class="price">€199.99</div>
+                    <a href="takekontrol-revamp.html#backpacks" class="btn btn-secondary">Shop Now</a>
+                </div>
+                <div class="product-card">
+                    <div class="image-placeholder"><img src="assets/img/premium-bag.png" alt="Premium Backpack"></div>
+                    <h4 data-localize="p_4_title">Premium Backpack</h4>
+                    <div class="price">€549.99</div>
+                    <a href="takekontrol-revamp.html#backpacks" class="btn btn-secondary">Shop Now</a>
+                </div>
+            </div>
+
+            <div class="shop-all-wrap">
+                <a href="takekontrol-revamp.html" class="btn btn-primary" data-localize="btn_all_prod">Alle Produkte ansehen →</a>
+            </div>
+        </section>
+
+        <!-- PYRAMID -->
+        <section id="pyramid" class="section-padding">
+            <h2 class="section-title" data-localize="gem_title">Resilienz wächst <span>durch Menschen</span></h2>
+            <p class="section-sub" data-localize="gem_desc">Vom Einzelnen zur Gesellschaft — Vorsorge erzeugt einen Welleneffekt.</p>
+
+            <div class="pyramid">
+                <div class="level">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <div>
+                        <span class="highlight" data-localize="pyr_1_bold">Vorbereitete Organisationen</span> 
+                        <span data-localize="pyr_1_text">stärken die Gesellschaft</span>
+                    </div>
+                </div>
+                <div class="level">
+                    <i class="fa-solid fa-building"></i>
+                    <div>
+                        <span class="highlight" data-localize="pyr_2_bold">Vorbereitete Teams</span> 
+                        <span data-localize="pyr_2_text">stärken Organisationen</span>
+                    </div>
+                </div>
+                <div class="level">
+                    <i class="fa-solid fa-people-group"></i>
+                    <div>
+                        <span class="highlight" data-localize="pyr_3_bold">Vorbereitete Familien</span> 
+                        <span data-localize="pyr_3_text">unterstützen sich gegenseitig</span>
+                    </div>
+                </div>
+                <div class="level">
+                    <i class="fa-solid fa-user"></i>
+                    <div>
+                        <span class="highlight" data-localize="pyr_4_bold">Vorbereitete Einzelpersonen</span> 
+                        <span data-localize="pyr_4_text">schützen sich selbst</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOR ORGANIZATIONS -->
+        <section id="organizations" class="section-padding bg-alt" style="border-radius: var(--radius-corp); padding: 60px 40px; margin-bottom: 60px;">
+            <div class="org-section">
+                <h2 class="section-title" data-localize="b2b_title">Wer ist im Notfall <span>wirklich verfügbar?</span></h2>
+                <p class="section-sub" data-localize="b2b_callout">Sie wissen, dass jeder Mitarbeiter viel kostet, wenn er nicht verfügbar ist. Schützen Sie Unternehmenswerte.</p>
+
+                <div class="org-grid">
+                    <div class="org-card">
+                        <div class="card-cover">
+                            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block;">
+                                <rect width="400" height="160" fill="#1a1a2e"/>
+                                <!-- Clipboard -->
+                                <rect x="130" y="28" width="140" height="110" rx="8" fill="none" stroke="#b32020" stroke-width="2.5"/>
+                                <rect x="155" y="18" width="90" height="22" rx="6" fill="#b32020"/>
+                                <!-- Checklist items -->
+                                <circle cx="155" cy="68" r="5" fill="#b32020"/>
+                                <line x1="167" y1="68" x2="250" y2="68" stroke="#b32020" stroke-width="2" opacity="0.7"/>
+                                <circle cx="155" cy="90" r="5" fill="#b32020"/>
+                                <line x1="167" y1="90" x2="250" y2="90" stroke="#b32020" stroke-width="2" opacity="0.7"/>
+                                <circle cx="155" cy="112" r="5" fill="none" stroke="#b32020" stroke-width="2"/>
+                                <line x1="167" y1="112" x2="230" y2="112" stroke="#b32020" stroke-width="2" opacity="0.4"/>
+                                <!-- Check marks -->
+                                <polyline points="149,66 153,70 161,62" fill="none" stroke="#b32020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polyline points="149,88 153,92 161,84" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="card-body-lg">
+                            <h4 data-localize="b2b_i1">Resilienz-Beurteilung</h4>
+                            <p data-localize="b2b_i2">KONTROL Score Module</p>
+                        </div>
+                    </div>
+                    <div class="org-card">
+                        <div class="card-cover">
+                            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block;">
+                                <rect width="400" height="160" fill="#1a1a2e"/>
+                                <!-- Shield -->
+                                <path d="M200,18 L265,45 L265,95 Q265,135 200,150 Q135,135 135,95 L135,45 Z" fill="none" stroke="#b32020" stroke-width="3"/>
+                                <!-- Check inside shield -->
+                                <polyline points="172,85 190,103 228,65" fill="none" stroke="#b32020" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <!-- Decorative dots -->
+                                <circle cx="80" cy="60" r="4" fill="#b32020" opacity="0.4"/>
+                                <circle cx="80" cy="80" r="4" fill="#b32020" opacity="0.3"/>
+                                <circle cx="80" cy="100" r="4" fill="#b32020" opacity="0.2"/>
+                                <circle cx="320" cy="60" r="4" fill="#b32020" opacity="0.4"/>
+                                <circle cx="320" cy="80" r="4" fill="#b32020" opacity="0.3"/>
+                                <circle cx="320" cy="100" r="4" fill="#b32020" opacity="0.2"/>
+                            </svg>
+                        </div>
+                        <div class="card-body-lg">
+                            <h4 data-localize="b2b_i3">Protokolle zur Krisenvorsorge</h4>
+                            <p data-localize="b2b_i4">Realistische Lab-Szenarien</p>
+                        </div>
+                    </div>
+                    <div class="org-card">
+                        <div class="card-cover">
+                            <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block;">
+                                <rect width="400" height="160" fill="#1a1a2e"/>
+                                <!-- Chalkboard / presentation screen -->
+                                <rect x="100" y="25" width="200" height="115" rx="6" fill="none" stroke="#b32020" stroke-width="2.5"/>
+                                <rect x="108" y="33" width="184" height="99" rx="4" fill="#b32020" opacity="0.12"/>
+                                <!-- Presenter figure -->
+                                <circle cx="130" cy="68" r="10" fill="#b32020" opacity="0.8"/>
+                                <line x1="130" y1="78" x2="130" y2="108" stroke="#b32020" stroke-width="2.5" stroke-linecap="round"/>
+                                <line x1="130" y1="90" x2="145" y2="85" stroke="#b32020" stroke-width="2.5" stroke-linecap="round"/>
+                                <!-- Lines on board representing content -->
+                                <line x1="158" y1="55" x2="270" y2="55" stroke="#b32020" stroke-width="1.5" opacity="0.6"/>
+                                <line x1="158" y1="72" x2="250" y2="72" stroke="#b32020" stroke-width="1.5" opacity="0.5"/>
+                                <line x1="158" y1="89" x2="260" y2="89" stroke="#b32020" stroke-width="1.5" opacity="0.4"/>
+                                <line x1="158" y1="106" x2="235" y2="106" stroke="#b32020" stroke-width="1.5" opacity="0.3"/>
+                                <!-- People icons below -->
+                                <circle cx="155" cy="135" r="7" fill="#b32020" opacity="0.5"/>
+                                <circle cx="200" cy="135" r="7" fill="#b32020" opacity="0.5"/>
+                                <circle cx="245" cy="135" r="7" fill="#b32020" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="card-body-lg">
+                            <h4 data-localize="b2b_i5">Management Training</h4>
+                            <p data-localize="b2b_i7">Umfassende Workshops</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="enquiry.html" class="btn btn-primary" style="margin-top: 30px;" data-localize="btn_briefing">Briefing anfordern</a>
+            </div>
+        </section>
+
+        <!-- TEAM -->
+        <section id="team" class="section-padding">
+            <h2 class="section-title">Team <span>takeKONTROL</span></h2>
+            <p class="section-sub" data-localize="team_desc">Menschen aus unterschiedlichen Bereichen. Uns verbindet der Antrieb, Unternehmen auf das Unerwartete vorzubereiten.</p>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Nico-Gramenz-Img-no-red-Circle-Background-minified-1.png" alt="Nico Gramenz" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Nico Gramenz</h4>
+                    <div class="role" data-localize="role_ceo">Co-Gründer & CEO</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Hanga-Img-no-red-Circle-Background-minified.png" alt="Hanga Katreiner" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Hanga Katreiner</h4>
+                    <div class="role" data-localize="role_cto">Co-Gründerin & CTO</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Jasmine-Tendo-Img-no-red-Circle-Background-minified.png" alt="Jasmine Tendo" onerror="this.src='https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Jasmine Tendo</h4>
+                    <div class="role">Marketing</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Youssef-El-Zein-Img-no-red-Circle-Background-minified.png" alt="Youssef El Zein" onerror="this.src='https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Youssef El Zein</h4>
+                    <div class="role">Product Management</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Vaishnavi-Img-no-red-Circle-Background-minified.png" alt="Vaishnavi Bachheti" onerror="this.src='https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Vaishnavi Bachheti</h4>
+                    <div class="role">Operations</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Chirag-Kalra-Img-no-red-Circle-Background-minified.png" alt="Chirag Kalra" onerror="this.src='https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Chirag Kalra</h4>
+                    <div class="role">Risk Management</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Yannik-Lorenz-Img-no-red-Circle-Background-minified-2.png" alt="Yannik Lorenz" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Yannik Lorenz</h4>
+                    <div class="role">Sales</div>
+                </div>
+                <div class="team-card">
+                    <div class="avatar"><img src="assets/img/Akishya-Abeysekera-Img-no-red-Circle-Background-minified.png" alt="Akishya Abeysekera" onerror="this.src='https://images.unsplash.com/photo-1598550874175-4d0ef43ee90d?auto=format&fit=crop&w=400&q=80'"></div>
+                    <h4>Akishya Abeysekera</h4>
+                    <div class="role">Finance</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col content-align-left">
+                    <h3 data-localize="footer_title">Join the takeKONTROL Community</h3>
+                    <p data-localize="footer_desc">Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.</p>
+                    <form class="footer-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary" data-localize="btn_subscribe">Subscribe</button>
+                    </form>
+                </div>
+                
+                <div class="footer-col content-align-left">
+                    <h4 data-localize="footer_contact">Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <span>📍</span> 
+                            <span>T-KONTROL Resilience Solutions UG<br>Mittelstraße 1B, 13055 Berlin</span>
+                        </li>
+                        <li>
+                            <span>📧</span> 
+                            <a href="mailto:info@takekontrol.de">info@takekontrol.de</a>
+                        </li>
+                        <li>
+                            <span>📞</span> 
+                            <a href="tel:+4917673249880">+49 176 73249880</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>
+                    <a href="https://gfkv.org/" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">GfKV Partner</a>
+                    <a href="https://shows.acast.com/kriegsbewusst-wer-bist-du-wenn-der-krieg-kommt" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">Podcast</a>
+                    <a href="https://www.linkedin.com/company/takekontrol/" target="_blank" style="color: inherit; text-decoration: none;">LinkedIn</a>
+                </p>
+                <p>&copy; 2026 takeKONTROL. All rights reserved.</p>
+                <p id="footerStamp">Stand: Mai 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══ THREAT MODAL ═══ -->
+    <div id="threatModal" class="modal-overlay" onclick="if(event.target===this) closeModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Kategorie <span>Bedrohungen</span></h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/pages/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Produktsicherheit & Rechtliches | takeKONTROL</title>
+    <link rel="icon" type="image/png" href="assets/img/TakeKONTROL Logo.png">
+    <script>
+      /* Applied before first paint so a dark-mode visitor never sees a
+         white flash. The toggle itself lives in assets/js/core/theme.js. */
+      try {
+        var tkTheme = localStorage.getItem('tk_theme');
+        if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { /* storage blocked; light theme it is */ }
+    </script>
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/chrome.css">
+    <link rel="stylesheet" href="assets/css/pages/legal.css">
+</head>
+<body data-google-translate>
+
+    <div id="google_translate_element"></div>
+
+    <header class="tesla-header" id="navbar">
+        <a href="index.html" class="logo">
+            <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo">
+            take<span style="color: var(--primary-red);">KONTROL</span>
+        </a>
+        <nav class="center-nav">
+            <a href="index.html" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" data-localize="nav_contact">Kontakt</a>
+        </nav>
+        <div class="right-nav">
+            <div class="controls-wrapper">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch Language">EN</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg id="sunIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06L7.756 5.635a.75.75 0 00-1.06-1.06L5.105 6.166z" /></svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" /></svg>
+                </button>
+                <a href="cart.html" class="cart-wrapper" aria-label="Cart">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="openDrawer" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="logo">
+                take<span style="color: var(--primary-red);">KONTROL</span>
+            </div>
+            <button class="close-drawer" id="closeDrawer" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" class="drawer-link" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" class="drawer-link" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" class="drawer-link" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" class="drawer-link" data-localize="nav_contact">Kontakt</a>
+        </nav>
+    </div>
+
+    <section class="hero-mini">
+        <div class="hero-content container">
+            <h1 data-localize="ps_hero_title">Produktsicherheit und rechtliche Hinweise</h1>
+            <p data-localize="ps_hero_sub">Wichtige Informationen und regulatorische Hinweise zu unserer Ausrüstung.</p>
+        </div>
+        
+        <div class="scroll-down-hint" id="scrollHint">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span data-localize="scroll_down">Nach unten scrollen</span>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="legal-content">
+            
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec1_title">Allgemeine Sicherheitshinweise</span>
+                </h2>
+                
+                <div class="warning-box">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-content">
+                        <p data-localize="ps_warning">Die Produkte in unserem Shop enthalten elektronische Geräte, Batterien und Gegenstände mit potenziellen Sicherheitsrisiken.</p>
+                    </div>
+                </div>
+
+                <ul class="custom-list">
+                    <li data-localize="ps_sec1_l1"><strong>CE-Kennzeichnung:</strong> Alle elektronischen Produkte sind CE-geprüft und entsprechen den geltenden EU-Richtlinien.</li>
+                    <li data-localize="ps_sec1_l2"><strong>Zertifizierungen:</strong> Soweit gesetzlich erforderlich, verfügen die Produkte zusätzlich über relevante EN-/DIN-Zertifizierungen.</li>
+                    <li data-localize="ps_sec1_l3"><strong>Sicherheitshinweise:</strong> Lesen Sie vor der ersten Nutzung die beiliegenden Bedienungsanleitungen der einzelnen Produkte.</li>
+                    <li data-localize="ps_sec1_l4"><strong>Lebensmittel:</strong> Bitte beachten Sie das auf der Verpackung aufgedruckte Mindesthaltbarkeitsdatum (MHD). Lagern Sie die Produkte kühl und trocken.</li>
+                    <li data-localize="ps_sec1_l5"><strong>Entsorgung:</strong> Produkte mit Batterien oder elektronischen Komponenten dürfen nicht im Hausmüll entsorgt werden.</li>
+                </ul>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec2_title">Bestimmungsgemäße Verwendung</span>
+                </h2>
+                <p data-localize="ps_sec2_text">Die angebotenen Produkte dienen der privaten Krisenvorsorge und Notfallvorbereitung. Sie stellen keine Garantie für Schutz oder Überleben in Notfällen dar und ersetzen keine behördlichen Sicherheitsanweisungen.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec3_title">Kinder</span>
+                </h2>
+                <p data-localize="ps_sec3_text">Einige Produkte enthalten Kleinteile, Batterien oder elektronische Komponenten. Außer Reichweite von Kindern aufbewahren.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec4_title">Herstellerinformationen</span>
+                </h2>
+                <p data-localize="ps_sec4_text1">Die Kontaktdaten der einzelnen Hersteller (Name und EU-Adresse) befinden sich auf den Produktverpackungen oder in der beiliegenden Dokumentation. Diese Informationen liegen uns vor und werden auf Anfrage zur Verfügung gestellt.</p>
+                <p data-localize="ps_sec4_text2">Eine vollständige Liste der Hersteller sowie der CE-/EN-konformen Produkte liegt vor und wird auf berechtigte Anfrage innerhalb angemessener Frist zur Verfügung gestellt.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec5_title">Produktänderungen</span>
+                </h2>
+                <p data-localize="ps_sec5_text">Technische Änderungen, Modellwechsel oder produktionsbedingte Anpassungen einzelner Komponenten bleiben vorbehalten.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec6_title">Haftung</span>
+                </h2>
+                <p data-localize="ps_sec6_text">Für Produkte von Drittherstellern gelten die gesetzlichen Gewährleistungs- und Produkthaftungsregelungen. Weitergehende Informationen können beim jeweiligen Hersteller eingeholt werden.</p>
+            </div>
+
+            <div class="legal-section">
+                <h2 class="legal-title">
+                    <span class="title-fill-text" data-localize="ps_sec7_title">Kontakt bei Sicherheitsfragen</span>
+                </h2>
+                <p data-localize="ps_sec7_text">Bei Fragen zur Produktsicherheit kontaktieren Sie uns bitte direkt.</p>
+
+                <div class="contact-block">
+                    <div class="contact-line"><span>📧</span> <a href="mailto:info@takekontrol.de">info@takekontrol.de</a></div>
+                    <div class="contact-line"><span>📍</span> T-KONTROL Resilience Solutions UG, Mittelstraße 1B, 13055 Berlin</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-localize="footer_title">Join the take<span style="color: var(--primary-red);">KONTROL</span> Community</h3>
+                    <p data-localize="footer_desc">Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.</p>
+                    <form class="footer-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary" data-localize="btn_subscribe">Subscribe</button>
+                    </form>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-localize="footer_contact">Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <span>📍</span> 
+                            <span>T-KONTROL Resilience Solutions UG<br>Mittelstraße 1B, 13055 Berlin</span>
+                        </li>
+                        <li>
+                            <span>📧</span> 
+                            <a href="mailto:info@takekontrol.de">info@takekontrol.de</a>
+                        </li>
+                        <li>
+                            <span>📞</span> 
+                            <a href="tel:+4917673249880">+49 176 73249880</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>
+                    <a href="https://gfkv.org/" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">GfKV Partner</a>
+                    <a href="https://shows.acast.com/kriegsbewusst-wer-bist-du-wenn-der-krieg-kommt" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">Podcast</a>
+                    <a href="https://www.linkedin.com/company/takekontrol/" target="_blank" style="color: inherit; text-decoration: none;">LinkedIn</a>
+                </p>
+                <p>&copy; 2026 takeKONTROL. All rights reserved.</p>
+                <p id="footerStamp">Stand: Mai 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/pages/legal.js"></script>
+</body>
+</html>

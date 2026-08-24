@@ -1,0 +1,44 @@
+/* ═══════════════════════════════════════════════
+   takeKONTROL — design tokens
+   The single place colours, radii and shadows are defined. Every page
+   used to carry its own copy of this block; five of the six agreed on
+   13 of the 16 variables, and the three that differed are preserved as
+   per-page overrides in assets/css/pages/.
+   ═══════════════════════════════════════════════ */
+
+:root,
+[data-theme="light"] {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f5f5f7;
+  --card-bg: #ffffff;
+  --primary-red: #b32020;
+  --primary-red-hover: #8c1919;
+  --text-main: #333333;
+  --text-muted: #555555;
+  --text-heading: #111111;
+  --border-color: #e5e5e5;
+  --header-bg-scrolled: rgba(255, 255, 255, 0.98);
+  --nav-text-scrolled: #111111;
+  --footer-bg: #f5f5f7;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 15px 40px rgba(179, 32, 32, 0.15);
+  --radius-corp: 14px;
+  --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+  --primary-bg: #080808;
+  --secondary-bg: #121212;
+  --card-bg: #1a1a1a;
+  --primary-red: #d32f2f;
+  --primary-red-hover: #b71c1c;
+  --text-main: #f5f5f7;
+  --text-muted: #a0a0a0;
+  --text-heading: #ffffff;
+  --border-color: #2a2a2a;
+  --header-bg-scrolled: rgba(10, 10, 10, 0.95);
+  --nav-text-scrolled: #ffffff;
+  --footer-bg: #050505;
+  --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: 0 15px 40px rgba(211, 47, 47, 0.15);
+}

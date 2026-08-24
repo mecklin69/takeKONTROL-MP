@@ -1,0 +1,19 @@
+/* ═══════════════════════════════════════════════
+   takeKONTROL — Reset, typography and buttons
+   Shared by every page. A rule earns a place here by being
+   byte-identical on at least 5 of the 7 pages.
+   ═══════════════════════════════════════════════ */
+
+h1,h2,h3,h4 { margin-top: 0; margin-bottom: 1rem; font-weight: 600; color: var(--text-heading); letter-spacing: -0.01em; transition: color var(--transition-speed) ease; }
+
+p { margin-bottom: 1.5rem; font-size: 1.05rem; color: var(--text-muted); transition: color var(--transition-speed) ease; }
+
+.section-padding { padding: 80px 0; }
+
+.btn-primary { background-color: var(--primary-red); color: #ffffff !important; }
+
+#google_translate_element { position: fixed; bottom: -9999px; left: 0; opacity: 0; pointer-events: none; width: 1px; height: 1px; overflow: hidden; z-index: -1; }
+
+.goog-te-banner-frame.skiptranslate,.goog-logo-link,.goog-te-gadget span { display: none !important; }
+
+body { top: 0px !important; }

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>takeKONTROL | Corporate Marketplace & Shop</title>
+    <link rel="icon" type="image/png" href="assets/img/TakeKONTROL Logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+      /* Applied before first paint so a dark-mode visitor never sees a
+         white flash. The toggle itself lives in assets/js/core/theme.js. */
+      try {
+        var tkTheme = localStorage.getItem('tk_theme');
+        if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { /* storage blocked; light theme it is */ }
+    </script>
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/chrome.css">
+    <link rel="stylesheet" href="assets/css/ticker.css">
+    <link rel="stylesheet" href="assets/css/pages/shop.css">
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="tesla-header" id="navbar">
+        <a href="index.html" class="logo">
+            <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo">
+            takeKONTROL
+        </a>
+        <nav class="center-nav">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="takekontrol-revamp.html" style="color: var(--primary-red);" data-i18n="nav_shop">Shop</a>
+            <a href="index.html#team" data-i18n="nav_team">Team</a>
+            <a href="enquiry.html" data-i18n="nav_contact">Contact</a>
+        </nav>
+        <div class="right-nav">
+            <div class="controls-wrapper">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch Language" data-i18n-toggle="1">DE</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg id="sunIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06L7.756 5.635a.75.75 0 00-1.06-1.06L5.105 6.166z"/></svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/></svg>
+                </button>
+                <a href="login.html" class="account-wrapper" aria-label="Account">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </a>
+                <a href="#" class="cart-wrapper" aria-label="Cart" onclick="requireLogin(event, 'cart.html')">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </a>
+            </div>
+            
+            <button class="mobile-toggle" id="openDrawer" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══ MOBILE DRAWER ═══ -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="logo">
+                take<span style="color: var(--primary-red);">KONTROL</span>
+            </div>
+            <button class="close-drawer" id="closeDrawer" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" data-i18n="nav_home">Home</a>
+            <a href="takekontrol-revamp.html" style="color: var(--primary-red);" data-i18n="nav_shop">Shop</a>
+            <a href="index.html#team" data-i18n="nav_team">Team</a>
+            <a href="enquiry.html" data-i18n="nav_contact">Contact</a>
+            <a href="login.html" data-i18n="nav_account">My Account</a>
+        </nav>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+        <video autoplay loop muted playsinline class="hero-video" poster="assets/img/hero-poster.jpg">
+            <source src="assets/img/hero-video-2.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 data-i18n-html="hero_title">Would you be ready if <span>everything changed</span> today?</h1>
+            <p data-i18n="hero_desc">Everything you need to protect yourself and your family—before the next emergency happens.</p>
+            <a href="#home-kit" class="btn btn-primary" data-i18n="hero_cta">Shop Preparedness Kits</a>
+        </div>
+    </section>
+
+    <!-- ═══ FULL WIDTH TICKER MOUNT POINT ═══ -->
+    <div class="ticker-wrapper">
+        <div id="ticker-mount-point"></div>
+    </div>
+
+    <div class="container">
+
+        <!-- ═══ SCENARIOS ═══ -->
+        <div class="scenario-grid">
+            <div class="scenario-card" onclick="location.href='#home-kit'">
+                <div class="icon-wrapper">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <h3 data-i18n="scn1_title">Stay at Home</h3>
+                <p data-i18n="scn1_desc">Remain safe and self-sufficient during prolonged disruptions with food, water, power and emergency equipment.</p>
+                <span class="btn btn-secondary btn-small" data-i18n="scn1_btn">Explore Home Kit</span>
+            </div>
+            <div class="scenario-card" onclick="location.href='#backpacks'">
+                <div class="icon-wrapper">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 21h8a2 2 0 0 0 2-2v-9a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v9a2 2 0 0 0 2 2z"></path>
+                        <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                        <path d="M8 21v-5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5"></path>
+                        <path d="M6 11H4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h2"></path>
+                        <path d="M18 11h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"></path>
+                    </svg>
+                </div>
+                <h3 data-i18n="scn2_title">Evacuation</h3>
+                <p data-i18n="scn2_desc">Leave within minutes with the equipment needed for emergency evacuation and continued self-sufficiency.</p>
+                <span class="btn btn-secondary btn-small" data-i18n="scn2_btn">Explore Backpacks</span>
+            </div>
+        </div>
+
+        <!-- ═══ HOME PREPAREDNESS KIT ═══ -->
+        <section id="home-kit" class="section-padding">
+            <div class="section-header">
+                <div class="left">
+                    <h2 data-i18n-html="homekit_title">7-Day Home <span>Preparedness Kit</span></h2>
+                    <p data-i18n="homekit_sub">Everything one adult needs to remain safe, operational and self-sufficient during extended disruptions.</p>
+                </div>
+            </div>
+
+            <div class="shelf-grid">
+                <div class="shelf-card">
+                    <div class="product-image-container">
+                        <div class="carousel-track" id="carouselHomeKit">
+                            <img src="assets/img/shelf-front.png" alt="7-Day Home Preparedness Kit - view 1" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/shelf-right.png" alt="7-Day Home Preparedness Kit - view 2" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/shelf-left.png" alt="7-Day Home Preparedness Kit - view 3" class="carousel-slide" onerror="tkImgFallback(this)">
+                        </div>
+                        <button class="carousel-btn prev-btn" aria-label="Previous image">&#10094;</button>
+                        <button class="carousel-btn next-btn" aria-label="Next image">&#10095;</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                        </div>
+                        <div class="swipe-hint">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14M19 12l-7-7-7 7"/></svg>
+                            <span data-i18n="swipe_hint">Swipe for more photos</span>
+                        </div>
+                    </div>
+                    <div class="shelf-info">
+                        <h3 data-i18n="name_homekit">7-Day Home Preparedness Kit</h3>
+                        <p class="description" data-i18n="homekit_desc">Designed for 1 person for approximately 7 days.</p>
+                        <div class="price">€549.99 <span class="vat" data-i18n="vat_label">excl. VAT</span></div>
+
+                        <!-- Best For -->
+                        <div class="best-for">
+                            <span class="label" data-i18n="bestfor_label">Best For</span>
+                            <span data-i18n="shelf_bf1">✓ Stay safe at home for 7 days</span>
+                            <span data-i18n="shelf_bf2">✓ Keep your family fed and hydrated</span>
+                            <span data-i18n="shelf_bf3">✓ Stay connected when power fails</span>
+                            <span data-i18n="shelf_bf4">✓ Handle medical emergencies</span>
+                            <span data-i18n="shelf_bf5">✓ Cook without electricity</span>
+                            <span data-i18n="shelf_bf6">✓ Feel confident, not helpless</span>
+                        </div>
+
+                        <div class="actions">
+                            <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-HOME-7D" data-name="7-Day Home Preparedness Kit" data-price="549.99" data-i18n="btn_add_cart">Add to Cart</a>
+                            <a href="javascript:void(0)" class="btn btn-outline btn-small view-items-btn" data-i18n="toggle_checklist_home">View Complete Checklist</a>
+                        </div>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+
+                        <!-- Family Calculator Note -->
+                        <div style="margin-top: 14px; padding: 12px 16px; background: var(--secondary-bg); border-radius: 10px; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">
+                                <i class="fa-solid fa-calculator" style="color: #3b82f6;"></i>
+                                <span data-i18n="calc_note_pre">Preparing for a family? Use the</span>
+                                <a href="https://www.ernaehrungsvorsorge.de/private-vorsorge/notvorrat/vorratskalkulator/" target="_blank" style="color: #3b82f6; text-decoration: none; font-weight: 600;" data-i18n="calc_note_link">
+                                    Household Supply Calculator
+                                </a>
+                                <span data-i18n="calc_note_post">to estimate food and water requirements.</span>
+                            </span>
+                        </div>
+
+                        <!-- Recommended Shelves -->
+                        <div class="shelf-recommend">
+                            <div class="title"><i class="fa-solid fa-layer-group"></i> <span data-i18n="shelf_rec_title">Recommended Storage Solutions</span></div>
+                            <div class="note" data-i18n="shelf_rec_note">Keep your preparedness kit organized, protected and ready for immediate access.</div>
+                            <div class="shelf-options">
+                                <div class="shelf-option">
+                                    <span class="name" data-i18n="shelf_opt1_name">Premium Storage Cabinet</span>
+                                    <span class="price">€199</span>
+                                    <a href="https://www.ikea.com/de/de/p/hemnes-buecherregal-schwarzbraun-hellbraun-20452294/" target="_blank" class="btn btn-outline btn-small" data-i18n="buy_ikea">Buy from IKEA →</a>
+                                </div>
+                                <div class="shelf-option">
+                                    <span class="name" data-i18n="shelf_opt2_name">Budget Storage Shelf</span>
+                                    <span class="price">€68.79</span>
+                                    <a href="https://www.amazon.de/-/en/dp/B0FP5552ZM?ref=fed_asin_title&th=1" target="_blank" class="btn btn-outline btn-small" data-i18n="buy_amazon">Buy from Amazon →</a>
+                                </div>
+                            </div>
+                            <div class="affiliate-note" data-i18n="affiliate_note">* Commission earned</div>
+                        </div>
+
+                        <!-- Expandable Items -->
+                        <div class="expandable" style="margin-top:16px;">
+                            <div class="toggle" aria-hidden="true" data-legacy-toggle>
+                                <i class="fa-solid fa-chevron-down"></i> <span data-i18n="toggle_checklist_home">View Complete Checklist</span>
+                            </div>
+                            <div class="content">
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_1">Cookbook - without electricity</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_2">Emergency food supplies</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_3">Power banks</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_4">FFP masks / dust masks</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_5">Eye protection</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_6">Flashlights</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_7">Batteries / rechargeable batteries</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_8">Water filter</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_9">Water canister</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_10">Gas bottle(s)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_11">Candles (tea lights)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_12">CO detector</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_13">Fire extinguisher</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_14">Fire blanket</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_15">Battery / hand crank lamps</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_16">Battery / hand crank fan</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_17">Radio receiver / radio</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_18">Waterproof document pouch</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_19">Pocket knife / multitool</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_20">First aid kit</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_21">Duct tape</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_22">Sewing kit</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_23">Solar charger</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_24">Trash bags</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_25">Emergency blankets (silver/gold)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_26">Food cans</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_27">Toilet paper / Toothbrush / Toothpaste / Wipes</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_28">Monopoly card game</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_29">UNO cards</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_30">Puzzle</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="hk_item_31">Water bottles</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ EVACUATION BACKPACKS ═══ -->
+        <section id="backpacks" class="section-padding">
+            <div class="section-header">
+                <div class="left">
+                    <h2 data-i18n-html="backpacks_title">Evacuation <span>Backpacks</span></h2>
+                    <p data-i18n="backpacks_sub">Choose the level of preparedness that matches your expected risks.</p>
+                </div>
+            </div>
+
+            <!-- ─── LEVEL SELECTOR ─── -->
+            <div class="level-selector">
+                <h2 data-i18n-html="level_title">Choose Your <span>Preparedness Level</span></h2>
+                <p class="sub" data-i18n="level_sub">Select the level that matches your needs.</p>
+                <div class="level-grid">
+                    <div class="level-card">
+                        <span class="dot green"></span>
+                        <h4 data-i18n="badge_essential">Essential</h4>
+                        <p data-i18n="level_essential_quote">"I want the minimum equipment to leave safely."</p>
+                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i> <span data-i18n="name_essential">Essential Backpack</span></span>
+                    </div>
+                    <div class="level-card">
+                        <span class="dot blue"></span>
+                        <h4 data-i18n="badge_standard">Standard</h4>
+                        <p data-i18n="level_standard_quote">"I want to be prepared for most emergencies."</p>
+                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i> <span data-i18n="name_standard">Standard Backpack</span></span>
+                    </div>
+                    <div class="level-card">
+                        <span class="dot red"></span>
+                        <h4 data-i18n="badge_premium">Premium</h4>
+                        <p data-i18n="level_premium_quote">"I want maximum independence during prolonged crises."</p>
+                        <span class="arrow"><i class="fa-solid fa-arrow-right"></i> <span data-i18n="name_premium">Premium Backpack</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── BACKPACKS GRID ─── -->
+            <div class="product-grid">
+
+                <!-- Essential -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <div class="carousel-track" id="carouselEssential">
+                            <img src="assets/img/essential-bagpack.png" alt="Essential Backpack - view 1" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/minimum-bag-2.png" alt="Essential Backpack - view 2" class="carousel-slide" onerror="tkImgFallback(this)">
+                        </div>
+                        <button class="carousel-btn prev-btn" aria-label="Previous image">&#10094;</button>
+                        <button class="carousel-btn next-btn" aria-label="Next image">&#10095;</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                        </div>
+                    </div>
+                    <span class="badge essential" data-i18n="badge_essential">Essential</span>
+                    <h3 data-i18n="name_essential">Essential Backpack</h3>
+                    <p class="description" data-i18n="desc_essential">Immediate evacuation equipment covering the first critical phase of an emergency.</p>
+                    
+                    <div class="product-card-bottom">
+                        <div class="price">€89.99 <span class="vat" data-i18n="vat_label">excl. VAT</span></div>
+                        <div class="best-for">
+                            <span class="label" data-i18n="bestfor_label">Best For</span>
+                            <span data-i18n="bf_ess_1">First preparedness kit</span>
+                            <span data-i18n="bf_ess_2">Quick evacuation</span>
+                            <span data-i18n="bf_ess_3">Peace of mind in the first hours</span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-ESS" data-name="Essential Backpack" data-price="89.99" data-i18n="btn_add_cart">Add to Cart</a>
+                            <a href="javascript:void(0)" class="btn btn-outline btn-small view-items-btn" data-i18n="toggle_view_items">View Included Items</a>
+                        </div>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+
+                        <div class="expandable">
+                            <div class="toggle" aria-hidden="true" data-legacy-toggle>
+                                <i class="fa-solid fa-chevron-down"></i> <span data-i18n="toggle_view_items">View Included Items</span>
+                            </div>
+                            <div class="content">
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_1">Taschenmesser / Multitool</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_2">Erste-Hilfe-Set</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_3">Universalwaschmittel</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_4">Wasserfester Rucksack 45+10l + Regenschutz</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_5">Rettungsdecken (silber/gold)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_6">Notnahrung (Müsliriegel)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_7">1.5L Trinkwasserflasche</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_8">Feuerzeug</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_9">Powerbank</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_10">Hygiene: Toilet paper + Wet wipes</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_11">Checklist</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_12">Katastrophe Leistung (QR Code)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="ess_item_13">Regenjacken</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Standard -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <div class="carousel-track" id="carouselStandard">
+                            <img src="assets/img/standard-bagpack.png" alt="Standard Backpack - view 1" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/standard-2.png" alt="Standard Backpack - view 2" class="carousel-slide" onerror="tkImgFallback(this)">
+                        </div>
+                        <button class="carousel-btn prev-btn" aria-label="Previous image">&#10094;</button>
+                        <button class="carousel-btn next-btn" aria-label="Next image">&#10095;</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                        </div>
+                    </div>
+                    <span class="badge standard" data-i18n="badge_standard">Standard</span>
+                    <h3 data-i18n="name_standard">Standard Backpack</h3>
+                    <p class="description" data-i18n="desc_standard">Enhanced preparedness with communication, navigation and planning equipment for most emergency situations.</p>
+                    
+                    <div class="product-card-bottom">
+                        <div class="price">€199.99 <span class="vat" data-i18n="vat_label">excl. VAT</span></div>
+                        <div class="best-for">
+                            <span class="label" data-i18n="bestfor_label">Best For</span>
+                            <span data-i18n="bf_std_1">Single-person preparedness</span>
+                            <span data-i18n="bf_std_2">Extended disruptions</span>
+                            <span data-i18n="bf_std_3">Communication &amp; navigation</span>
+                            <span data-i18n="bf_std_4">Greater self-sufficiency</span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-STD" data-name="Standard Backpack" data-price="199.99" data-i18n="btn_add_cart">Add to Cart</a>
+                            <a href="javascript:void(0)" class="btn btn-outline btn-small view-items-btn" data-i18n="toggle_view_items">View Included Items</a>
+                        </div>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+
+                        <div class="expandable">
+                            <div class="toggle" aria-hidden="true" data-legacy-toggle>
+                                <i class="fa-solid fa-chevron-down"></i> <span data-i18n="toggle_view_items">View Included Items</span>
+                            </div>
+                            <div class="content">
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_1">All Essential items</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_2">Funkempfänger / Radio (Batteriebetrieben)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_3">Wasserfeste Dokumentenhülle</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_4">Kartensatz (Stadtplan, Wanderkarten) ADAC</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_5">Kugelschreiber</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_6">Schreibpapier / Notizbuch</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="std_item_7">Hygiene: Wet wipes + Toilet paper + Toothbrush + Toothpaste</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <div class="carousel-track" id="carouselPremium">
+                            <img src="assets/img/04_ready_to_leave.png" alt="Premium Backpack - view 1" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/premium-bag-3.png" alt="Premium Backpack - view 2" class="carousel-slide" onerror="tkImgFallback(this)">
+                            <img src="assets/img/premium-bag.png" alt="Premium Backpack - view 3" class="carousel-slide" onerror="tkImgFallback(this)">
+                        </div>
+                        <button class="carousel-btn prev-btn" aria-label="Previous image">&#10094;</button>
+                        <button class="carousel-btn next-btn" aria-label="Next image">&#10095;</button>
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                        </div>
+                    </div>
+                    <span class="badge premium" data-i18n="badge_premium">Premium</span>
+                    <h3 data-i18n="name_premium">Premium Backpack</h3>
+                    <p class="description" data-i18n="desc_premium">Maximum personal preparedness for prolonged emergencies and infrastructure failures.</p>
+                    
+                    <div class="product-card-bottom">
+                        <div class="price">€549.99 <span class="vat" data-i18n="vat_label">excl. VAT</span></div>
+                        <div class="best-for">
+                            <span class="label" data-i18n="bestfor_label">Best For</span>
+                            <span data-i18n="bf_prem_1">Prolonged crises</span>
+                            <span data-i18n="bf_prem_2">Infrastructure collapse</span>
+                            <span data-i18n="bf_prem_3">Full independence</span>
+                            <span data-i18n="bf_prem_4">When help may not come</span>
+                        </div>
+                        <div class="actions">
+                            <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-PRM" data-name="Premium Backpack" data-price="549.99" data-i18n="btn_add_cart">Add to Cart</a>
+                            <a href="javascript:void(0)" class="btn btn-outline btn-small view-items-btn" data-i18n="toggle_view_items">View Included Items</a>
+                        </div>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+
+                        <div class="expandable">
+                            <div class="toggle" aria-hidden="true" data-legacy-toggle>
+                                <i class="fa-solid fa-chevron-down"></i> <span data-i18n="toggle_view_items">View Included Items</span>
+                            </div>
+                            <div class="content">
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_1">All Standard items</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_2">FFP Masken / Staubschutzmasken</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_3">Augenschutz</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_4">Taschenlampen</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_5">Batterien / Akkus</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_6">Wasserfilter flasche</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_7">Taschentücher</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_8">Löschdecke</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_9">Akku / Handbetriebene Lampen</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_10">Akku / handbetriebener Ventilator</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_11">ArbeitHamdschuhe</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_12">Handtuch (Microfaser)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_13">Solarladegerät</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_14">Panzertape</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_15">Nähzeug</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_16">Plastikbeutel (Ziploc)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_17">Wäscheleine / stabile Schnur</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_18">Karabiner</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_19">Müllsäcke</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_20">Regenschutz</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_21">Hygieneartikel (komplett)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_22">Haube / Multifunktionstuch / Schlauchschal</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_23">Handschuhe (einmal benutzen)</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_24">Wasserfester Stift</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_25">UNILITE Feuerzeug mit Gas</span></div>
+                                <div class="item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prem_item_26">Reisegeschirr + Reisebesteck</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══ COMPARISON TABLE ═══ -->
+        <div class="comparison-section">
+            <h2 data-i18n-html="comparison_title">Compare Your <span>Options</span></h2>
+            <p class="sub" data-i18n="comparison_sub">See the key differences at a glance.</p>
+
+            <div class="table-responsive">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="cap_label">Capability</th>
+                            <th data-i18n="badge_essential">Essential</th>
+                            <th data-i18n="badge_standard">Standard</th>
+                            <th data-i18n="badge_premium">Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="product-name" data-i18n="row_immediate_evac">Immediate Evacuation</td>
+                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
+                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
+                        </tr>
+                        <tr><td data-i18n="row_first_aid">First Aid</td>
+                            <td data-i18n="badge_essential">Essential</td>
+                            <td data-i18n="fa_enhanced">Enhanced</td>
+                            <td data-i18n="fa_advanced">Advanced</td>
+                        </tr>
+                        <tr><td data-i18n="row_food_water">Food &amp; Water</td>
+                            <td data-i18n="fw_emergency_supply">Emergency supply</td>
+                            <td data-i18n="fw_emergency_supply">Emergency supply</td>
+                            <td class="highlight" data-i18n="fw_water_filtration">+ Water filtration</td>
+                        </tr>
+                        <tr><td data-i18n="row_communication">Communication</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td data-i18n="comm_emergency_radio">Emergency radio</td>
+                            <td data-i18n="comm_radio_backup">Radio + backup systems</td>
+                        </tr>
+                        <tr><td data-i18n="row_navigation">Navigation</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td data-i18n="nav_maps">Maps</td>
+                            <td data-i18n="nav_maps_advanced">Maps + advanced tools</td>
+                        </tr>
+                        <tr><td data-i18n="row_power">Power</td>
+                            <td data-i18n="power_bank">Power bank</td>
+                            <td data-i18n="power_bank">Power bank</td>
+                            <td class="highlight" data-i18n="power_solar">Solar + backup lighting</td>
+                        </tr>
+                        <tr><td data-i18n="row_documents">Documents</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td data-i18n="doc_waterproof">Waterproof protection</td>
+                            <td data-i18n="doc_complete">Complete organization kit</td>
+                        </tr>
+                        <tr><td data-i18n="row_protection">Protection</td>
+                            <td data-i18n="prot_basic">Basic</td>
+                            <td data-i18n="fa_enhanced">Enhanced</td>
+                            <td data-i18n="prot_ppe">PPE + fire + weather</td>
+                        </tr>
+                        <tr><td data-i18n="row_prep_level">Preparedness Level</td>
+                            <td data-i18n="badge_essential">Essential</td>
+                            <td data-i18n="badge_standard">Standard</td>
+                            <td data-i18n="prep_maximum">Maximum</td>
+                        </tr>
+                        <tr style="border-top: 2px solid var(--primary-red);">
+                            <td><strong data-i18n="price_label">Price</strong></td>
+                            <td class="price-cell">€89.99</td>
+                            <td class="price-cell">€199.99</td>
+                            <td class="price-cell">€549.99</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-ESS" data-name="Essential Backpack" data-price="89.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                            <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-STD" data-name="Standard Backpack" data-price="199.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                            <td><a href="javascript:void(0)" class="btn btn-primary btn-small add-to-cart-btn" data-sku="TK-BP-PRM" data-name="Premium Backpack" data-price="549.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ═══ INDIVIDUAL PRODUCTS ═══ -->
+        <section class="section-padding" style="border-bottom: none; padding-top: 0;">
+            <div class="section-header">
+                <div class="left">
+                    <h2 data-i18n-html="individual_title">Individual <span>Products</span></h2>
+                    <p data-i18n="individual_sub">Standalone essentials to expand your preparedness.</p>
+                </div>
+            </div>
+
+            <div class="individual-grid">
+                <div class="individual-card">
+                    <div class="individual-card-content">
+                        <div class="single-image">
+                            <img src="assets/img/document-bag-2.png" alt="Waterproof Document Bag" onerror="tkImgFallback(this)">
+                        </div>
+                        <h4 data-i18n="doc_bag_name">Waterproof Document Bag</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;" data-i18n="doc_bag_desc">Keep your critical documents safe from fire and water.</p>
+                    </div>
+                    <div class="individual-card-bottom">
+                        <div class="price">€29.99</div>
+                        <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-ACC-DOCBAG" data-name="Waterproof Document Bag" data-price="29.99" data-i18n="btn_add_cart">Add to Cart</a>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="individual-card">
+                    <div class="individual-card-content">
+                        <div class="single-image">
+                            <img src="assets/img/premium-bag-3.png" alt="Waterproof Backpack" onerror="tkImgFallback(this)">
+                        </div>
+                        <h4 data-i18n="wp_backpack_name">Waterproof Backpack</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;" data-i18n="wp_backpack_desc">45+10L waterproof backpack with rain cover.</p>
+                    </div>
+                    <div class="individual-card-bottom">
+                        <div class="price">€34.99</div>
+                        <a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-ACC-WPBP" data-name="Waterproof Backpack" data-price="34.99" data-i18n="btn_add_cart">Add to Cart</a>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="individual-card">
+                    <div class="individual-card-content">
+                        <div class="single-image">
+                            <img src="assets/img/coming-soon.jpg" alt="Notebook" onerror="tkImgFallback(this)">
+                        </div>
+                        <h4 data-i18n="notebook_name">Notebook</h4>
+                        <p style="color:var(--text-muted); font-size:0.9rem;" data-i18n="notebook_desc">Logo + crisis tips + emergency contact list.</p>
+                    </div>
+                    <div class="individual-card-bottom">
+                        <div class="price" style="font-size: 0.95rem; padding: 4px 0;" data-i18n="coming_soon">Coming Soon</div>
+                        <a href="#" class="btn btn-secondary btn-small" data-i18n="notify_me">Notify Me</a>
+                        
+                        <!-- PRODUCT SAFETY DISCLAIMER -->
+                        <div class="safety-disclaimer">
+                            <i class="fa-solid fa-circle-info"></i> 
+                            <span data-i18n-html="ps_disclaimer">Please read our <a href="produktsicherheit.html" target="_blank">Product Safety & Legal</a> information before purchasing.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TRUST SECTION ═══ -->
+        <div class="trust-section">
+            <h2 data-i18n-html="trust_title">Why <span>takeKONTROL</span>?</h2>
+            <p class="sub" data-i18n="trust_sub">Built around European preparedness recommendations and practical resilience principles.</p>
+            <div class="trust-grid">
+                <div class="trust-item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="trust1">Based on official preparedness recommendations</span></div>
+                <div class="trust-item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="trust2">Professionally selected equipment</span></div>
+                <div class="trust-item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="trust3">No unnecessary gadgets</span></div>
+                <div class="trust-item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="trust4">Designed for real emergencies</span></div>
+                <div class="trust-item"><i class="fa-solid fa-circle-check"></i> <span data-i18n="trust5">Built for individuals, families &amp; organizations</span></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-i18n="footer_title">Join the takeKONTROL Community</h3>
+                    <p data-i18n="footer_desc">Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.</p>
+                    <form class="footer-form">
+                        <input type="email" id="footerEmailInput" data-i18n-placeholder="footer_email_placeholder" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary" data-i18n="footer_subscribe">Subscribe</button>
+                    </form>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact_heading">Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <span>📍</span> 
+                            <span data-i18n-html="footer_address">T-KONTROL Resilience Solutions UG<br>Mittelstraße 1B, 13055 Berlin</span>
+                        </li>
+                        <li>
+                            <span>📧</span> 
+                            <a href="mailto:info@takekontrol.de">info@takekontrol.de</a>
+                        </li>
+                        <li>
+                            <span>📞</span> 
+                            <a href="tel:+4917673249880">+49 176 73249880</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>
+                    <a href="https://gfkv.org/" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">GfKV Partner</a>
+                    <a href="https://shows.acast.com/kriegsbewusst-wer-bist-du-wenn-der-krieg-kommt" target="_blank" style="color: inherit; text-decoration: none; margin-right: 15px;">Podcast</a>
+                    <a href="https://www.linkedin.com/company/takekontrol/" target="_blank" style="color: inherit; text-decoration: none;">LinkedIn</a>
+                </p>
+                <p>&copy; 2026 takeKONTROL. All rights reserved.</p>
+                <p id="footerStamp" data-i18n="footer_stamp">Stand: Mai 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/pages/shop.js"></script>
+</body>
+</html>

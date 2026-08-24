@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mein Konto | takeKONTROL</title>
+    <link rel="icon" type="image/png" href="assets/img/TakeKONTROL Logo.png">
+    
+<!-- CORPORATE THEME OVERRIDES -->
+    <script>
+      /* Applied before first paint so a dark-mode visitor never sees a
+         white flash. The toggle itself lives in assets/js/core/theme.js. */
+      try {
+        var tkTheme = localStorage.getItem('tk_theme');
+        if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { /* storage blocked; light theme it is */ }
+    </script>
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/chrome.css">
+    <link rel="stylesheet" href="assets/css/pages/login.css">
+</head>
+<body data-google-translate>
+
+    <div id="google_translate_element"></div>
+
+    <header class="tesla-header" id="navbar">
+        <a href="index.html" class="logo">
+            <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo">
+            take<span style="color: var(--primary-red);">KONTROL</span>
+        </a>
+        <nav class="center-nav">
+            <a href="index.html" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" data-localize="nav_contact">Kontakt</a>
+        </nav>
+        <div class="right-nav">
+            <div class="controls-wrapper">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch Language">EN</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg id="sunIcon" style="display: none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06L7.756 5.635a.75.75 0 00-1.06-1.06L5.105 6.166z" /></svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z" /></svg>
+                </button>
+            </div>
+            
+            <button class="mobile-toggle" id="openDrawer" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <a href="index.html" class="logo" style="text-decoration: none; color: inherit;">
+                take<span style="color: var(--primary-red);">KONTROL</span>
+            </a>
+            <button class="close-drawer" id="closeDrawer" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" class="drawer-link" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" class="drawer-link" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" class="drawer-link" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" class="drawer-link" data-localize="nav_contact">Kontakt</a>
+        </nav>
+    </div>
+
+    <section class="auth-section">
+        <!-- Blobs removed via CSS override, relying entirely on the pure corporate gradient -->
+
+        <div class="container auth-container">
+            <div class="auth-card">
+                
+                <div id="view-loading" class="auth-view active">
+                    <div class="auth-loading">
+                        <div class="auth-spinner" aria-hidden="true"></div>
+                        <p class="auth-subtitle" data-localize="auth_loading" style="margin:0;">Sitzung wird geprüft…</p>
+                    </div>
+                </div>
+
+                <div id="view-login" class="auth-view">
+                    <h2 class="auth-title" data-localize="auth_login_title">Anmelden</h2>
+                    <p class="auth-subtitle" data-localize="auth_login_sub">Willkommen zurück bei takeKONTROL.</p>
+
+                    <button type="button" class="btn-google" onclick="signInWithGoogle(event)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        <span data-localize="btn_google_login">Mit Google anmelden</span>
+                    </button>
+
+                    <div class="auth-divider"><span data-localize="auth_or">oder mit E-Mail</span></div>
+
+                    <form onsubmit="handleAuth(event, 'login')">
+                        <div class="field">
+                            <label for="login-email" data-localize="lbl_email">E-Mail Adresse</label>
+                            <input type="email" id="login-email" autocomplete="email" required>
+                        </div>
+                        <div class="field">
+                            <label for="login-pass" data-localize="lbl_pass">Passwort</label>
+                            <div class="pass-wrap">
+                                <input type="password" id="login-pass" autocomplete="current-password" required>
+                                <button type="button" class="pass-toggle" onclick="togglePassword(event, 'login-pass')"
+                                        aria-pressed="false" data-localize-aria="show_pass" aria-label="Passwort anzeigen">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="auth-error" id="error-login" role="alert" hidden></div>
+
+                        <div class="auth-actions">
+                            <a href="#" class="auth-link" onclick="switchView('forgot')" data-localize="link_forgot">Passwort vergessen?</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary submit-btn" data-localize="btn_login">Anmelden →</button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <span data-localize="text_no_account">Noch kein Konto?</span> 
+                        <a href="#" class="auth-link strong" onclick="switchView('register')" data-localize="link_register">Jetzt registrieren</a>
+                    </div>
+                </div>
+
+                <div id="view-register" class="auth-view">
+                    <h2 class="auth-title" data-localize="auth_reg_title">Konto erstellen</h2>
+                    <p class="auth-subtitle" data-localize="auth_reg_sub">Werden Sie Teil der takeKONTROL Community.</p>
+
+                    <button type="button" class="btn-google" onclick="signInWithGoogle(event)">
+                        <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+                        <span data-localize="btn_google_reg">Mit Google registrieren</span>
+                    </button>
+
+                    <div class="auth-divider"><span data-localize="auth_or_reg">oder per E-Mail registrieren</span></div>
+
+                    <form onsubmit="handleAuth(event, 'register')">
+                        <div class="field-row">
+                            <div class="field">
+                                <label for="reg-first" data-localize="lbl_first">Vorname</label>
+                                <input type="text" id="reg-first" autocomplete="given-name" required>
+                            </div>
+                            <div class="field">
+                                <label for="reg-last" data-localize="lbl_last">Nachname</label>
+                                <input type="text" id="reg-last" autocomplete="family-name" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="reg-email" data-localize="lbl_email">E-Mail Adresse</label>
+                            <input type="email" id="reg-email" autocomplete="email" required>
+                        </div>
+                        <div class="field">
+                            <label for="reg-pass" data-localize="lbl_pass">Passwort</label>
+                            <div class="pass-wrap">
+                                <input type="password" id="reg-pass" autocomplete="new-password" minlength="8" required>
+                                <button type="button" class="pass-toggle" onclick="togglePassword(event, 'reg-pass')"
+                                        aria-pressed="false" data-localize-aria="show_pass" aria-label="Passwort anzeigen">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </div>
+                            <span class="field-hint" data-localize="pass_hint">Mindestens 8 Zeichen.</span>
+                        </div>
+                        <div class="field">
+                            <label for="reg-pass-confirm" data-localize="lbl_pass_confirm">Passwort bestätigen</label>
+                            <input type="password" id="reg-pass-confirm" autocomplete="new-password" minlength="8" required>
+                        </div>
+
+                        <div class="auth-error" id="error-register" role="alert" hidden></div>
+
+                        <button type="submit" class="btn btn-primary submit-btn" style="margin-top: 15px;" data-localize="btn_register">Registrieren →</button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <span data-localize="text_has_account">Bereits ein Konto?</span> 
+                        <a href="#" class="auth-link strong" onclick="switchView('login')" data-localize="link_login">Anmelden</a>
+                    </div>
+                </div>
+
+                <div id="view-forgot" class="auth-view">
+                    <h2 class="auth-title" data-localize="auth_forgot_title">Passwort zurücksetzen</h2>
+                    <p class="auth-subtitle" data-localize="auth_forgot_sub">Geben Sie Ihre E-Mail ein, um einen Reset-Link zu erhalten.</p>
+
+                    <form onsubmit="handleAuth(event, 'forgot')" style="margin-top: 30px;">
+                        <div class="field">
+                            <label for="forgot-email" data-localize="lbl_email">E-Mail Adresse</label>
+                            <input type="email" id="forgot-email" autocomplete="email" required>
+                        </div>
+
+                        <div class="auth-error" id="error-forgot" role="alert" hidden></div>
+
+                        <button type="submit" class="btn btn-primary submit-btn" style="margin-top: 15px;" data-localize="btn_reset">Link senden →</button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <a href="#" class="auth-link strong" onclick="switchView('login')" data-localize="link_back_login">← Zurück zur Anmeldung</a>
+                    </div>
+                </div>
+
+                <!-- VIEW 4: CORPORATE DASHBOARD GRID -->
+                <div id="view-dashboard" class="auth-view">
+                    <div class="dash-layout">
+                        
+                        <div class="dash-header-block">
+                            <div class="dash-identity">
+                                <div class="dash-avatar-wrap">
+                                    <img id="dash-avatar" class="dash-avatar" alt="" hidden>
+                                    <span id="dash-initials" class="dash-initials">?</span>
+                                </div>
+                                <div>
+                                    <h2 class="dash-main-title" data-localize="dash_title">Mein Konto</h2>
+                                    <p class="dash-user-greeting" id="user-greeting">Willkommen zurück</p>
+                                    <p class="dash-email" id="dash-email"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verify-banner" id="verify-banner" role="alert" hidden>
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                            <span data-localize="verify_banner">Bitte bestätigen Sie Ihre E-Mail-Adresse.</span>
+                            <button type="button" class="verify-resend" onclick="resendVerification(event)" data-localize="verify_send">Erneut senden</button>
+                        </div>
+
+                        <div class="dash-status-card">
+                            <div class="status-indicator-dot"></div>
+                            <div class="status-text-wrapper">
+                                <span class="status-label" data-localize="dash_status_lbl">Bereitschafts-Status:</span>
+                                <span class="status-value" data-localize="dash_status_val">Betriebsbereit / Aktiv</span>
+                            </div>
+                        </div>
+
+                        <div class="dash-interactive-grid">
+                            <a href="#" class="dash-grid-item">
+                                <div class="item-border-accent"></div>
+                                <span class="item-title" data-localize="dash_profile">Profil & Einstellungen</span>
+                                <span class="item-sub" data-localize="dash_profile_sub">Sicherheitsdetails und Passwörter verwalten</span>
+                            </a>
+                            <a href="#" class="dash-grid-item">
+                                <div class="item-border-accent"></div>
+                                <span class="item-title" data-localize="dash_address">Adressen verwalten</span>
+                                <span class="item-sub" data-localize="dash_address_sub">Liefer- und Rechnungsanschriften konfigurieren</span>
+                            </a>
+                            <a href="#" class="dash-grid-item">
+                                <div class="item-border-accent"></div>
+                                <span class="item-title" data-localize="dash_orders">Meine Bestellungen</span>
+                                <span class="item-sub" data-localize="dash_orders_sub">Sendungsverfolgung und Bestellhistorie</span>
+                            </a>
+                            <a href="#" class="dash-grid-item">
+                                <div class="item-border-accent"></div>
+                                <span class="item-title" data-localize="dash_cancelled">Stornierte Artikel</span>
+                                <span class="item-sub" data-localize="dash_cancelled_sub">Abgebrochene Transaktionen einsehen</span>
+                            </a>
+                            <a href="#" class="dash-grid-item grid-span-full">
+                                <div class="item-border-accent"></div>
+                                <span class="item-title" data-localize="dash_returns">Rückgabe & Erstattung</span>
+                                <span class="item-sub" data-localize="dash_returns_sub">Richtlinien einsehen, Retouren abwickeln und Ersatz anfordern</span>
+                            </a>
+                        </div>
+
+                        <div class="dash-action-footer">
+                            <a href="takekontrol-revamp.html" class="btn btn-outline-adaptive" data-localize="btn_to_shop">Zurück zum Shop</a>
+                            <button type="button" onclick="handleLogout()" class="btn btn-primary" data-localize="btn_logout">Abmelden</button>
+                        </div>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+                <p>
+                    <a href="https://gfkv.org/" target="_blank" style="margin-right: 15px;">GfKV Partner</a>
+                    <a href="produktsicherheit.html" style="margin-right: 15px;" data-localize="nav_safety">Produktsicherheit</a>
+                </p>
+                <p>&copy; 2026 takeKONTROL. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/pages/login.js"></script>
+</body>
+</html>

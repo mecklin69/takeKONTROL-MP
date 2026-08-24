@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widerrufsbelehrung | takeKONTROL</title>
+    <meta name="description" content="Widerrufsbelehrung und Widerrufsformular für Bestellungen im takeKONTROL Online-Shop.">
+    <meta name="robots" content="noindex">
+    <link rel="icon" type="image/png" href="assets/img/TakeKONTROL Logo.png">
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/chrome.css">
+    <link rel="stylesheet" href="assets/css/pages/legal.css">
+    <style>
+        .legal-hero { padding: 140px 0 60px; background: var(--secondary-bg); border-bottom: 1px solid var(--border-color); }
+        .legal-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 8px; }
+        .legal-hero p { color: var(--text-muted); font-size: 1rem; margin: 0; }
+        .legal-body { max-width: 780px; margin: 0 auto; padding: 60px 40px 100px; }
+        .legal-body h2 { font-size: 1.25rem; margin-top: 48px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
+        .legal-body h3 { font-size: 1rem; margin-top: 24px; margin-bottom: 8px; color: var(--text-heading); }
+        .legal-body p, .legal-body li { font-size: 0.975rem; line-height: 1.75; color: var(--text-muted); }
+        .legal-body ul, .legal-body ol { padding-left: 24px; margin-bottom: 1rem; }
+        .legal-body li { margin-bottom: 6px; }
+        .legal-body a { color: var(--primary-red); }
+        .legal-stamp { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border-color); font-size: 0.875rem; color: var(--text-muted); }
+        .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-red); text-decoration: none; font-size: 0.9rem; font-weight: 500; margin-bottom: 32px; }
+        .back-link:hover { text-decoration: underline; }
+        .widerruf-box {
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-corp);
+            padding: 32px;
+            margin: 40px 0;
+            background: var(--secondary-bg);
+        }
+        .widerruf-box h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+        .form-field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .form-field.full { grid-column: 1 / -1; }
+        .form-field label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-heading); }
+        .form-field input, .form-field textarea {
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+        }
+        .form-field textarea { resize: vertical; min-height: 80px; }
+        .btn-widerruf {
+            margin-top: 20px;
+            padding: 14px 32px;
+            background: var(--primary-red);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-widerruf:hover { background: var(--primary-red-hover); }
+        .widerruf-success { display: none; color: var(--text-heading); font-weight: 500; margin-top: 16px; }
+        @media (max-width: 768px) {
+            .legal-body { padding: 40px 24px 80px; }
+            .form-field-group { grid-template-columns: 1fr; }
+        }
+    </style>
+    <script>
+        try {
+            var tkTheme = localStorage.getItem('tk_theme');
+            if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {}
+    </script>
+</head>
+<body>
+
+    <header class="tesla-header" id="navbar">
+        <a href="index.html" class="logo">
+            <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo" id="navLogo">
+            takeKONTROL
+        </a>
+        <nav class="center-nav">
+            <a href="index.html" data-localize="nav_home">Startseite</a>
+            <a href="takekontrol-revamp.html" data-localize="nav_shop">Shop</a>
+            <a href="index.html#team" data-localize="nav_team">Team</a>
+            <a href="enquiry.html" data-localize="nav_contact">Kontakt</a>
+        </nav>
+        <div class="right-nav">
+            <div class="controls-wrapper">
+                <button class="lang-toggle" id="langToggle" aria-label="Switch Language">EN</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+                    <svg id="sunIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18.75a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM6.166 17.834a.75.75 0 001.06 1.06l1.591-1.59a.75.75 0 10-1.06-1.061l-1.591 1.59zM2.25 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3a.75.75 0 01-.75-.75zM5.106 6.166a.75.75 0 001.06 1.06L7.756 5.635a.75.75 0 00-1.06-1.06L5.105 6.166z"/></svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"/></svg>
+                </button>
+            </div>
+            <a href="cart.html" class="btn btn-primary desktop-only">
+                Warenkorb <span class="cart-badge" id="cartBadge">0</span>
+            </a>
+            <button class="mobile-toggle" id="openDrawer" aria-label="Open Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="logo">takeKONTROL</div>
+            <button class="close-drawer" id="closeDrawer" aria-label="Close Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html" class="drawer-link">Startseite</a>
+            <a href="takekontrol-revamp.html" class="drawer-link">Shop</a>
+            <a href="index.html#team" class="drawer-link">Team</a>
+            <a href="enquiry.html" class="drawer-link">Kontakt</a>
+        </nav>
+    </div>
+
+    <section class="legal-hero">
+        <div class="container">
+            <h1>Widerrufsbelehrung</h1>
+            <p>T-KONTROL Resilience Solutions UG (haftungsbeschränkt) — Widerrufsrecht für Verbraucher</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="legal-body">
+            <a href="javascript:history.back()" class="back-link">← Zurück</a>
+
+            <h2>Widerrufsrecht</h2>
+            <p>Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+            <p>Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag, <strong>an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben bzw. hat</strong>. Bei einer Bestellung mehrerer Waren, die getrennt geliefert werden, beginnt die Frist ab Erhalt der letzten Ware.</p>
+            <p>Um Ihr Widerrufsrecht auszuüben, müssen Sie uns</p>
+            <p style="margin-left:20px;">
+                <strong>T-KONTROL Resilience Solutions UG (haftungsbeschränkt)</strong><br>
+                Mittelstraße 1B, 13055 Berlin<br>
+                E-Mail: <a href="mailto:info@takekontrol.de">info@takekontrol.de</a><br>
+                Tel.: <a href="tel:+4917673249880">+49 176 73249880</a>
+            </p>
+            <p>mittels einer eindeutigen Erklärung (z.&nbsp;B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.</p>
+            <p>Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.</p>
+
+            <h2>Folgen des Widerrufs</h2>
+            <p>Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist.</p>
+            <p>Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.</p>
+            <p>Wir können die Rückzahlung verweigern, bis wir die Waren wieder zurückerhalten haben oder bis Sie den Nachweis erbracht haben, dass Sie die Waren zurückgesandt haben, je nachdem, welches der frühere Zeitpunkt ist.</p>
+            <p>Sie haben die Waren unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie uns über den Widerruf dieses Vertrages unterrichten, an uns zurückzusenden oder zu übergeben. Die Frist ist gewahrt, wenn Sie die Waren vor Ablauf der Frist von vierzehn Tagen absenden.</p>
+            <p>Sie tragen die unmittelbaren Kosten der Rücksendung der Waren.</p>
+            <p>Sie müssen für einen etwaigen Wertverlust der Waren nur aufkommen, wenn dieser Wertverlust auf einen zur Prüfung der Beschaffenheit, Eigenschaften und Funktionsweise der Waren nicht notwendigen Umgang mit ihnen zurückzuführen ist.</p>
+
+            <h2>Ausschluss des Widerrufsrechts</h2>
+            <p>Das Widerrufsrecht besteht nicht bei Verträgen zur Lieferung von Waren, die nach Kundenspezifikation angefertigt werden oder eindeutig auf die persönlichen Bedürfnisse zugeschnitten sind.</p>
+
+            <h2>Muster-Widerrufsformular</h2>
+            <p>Wenn Sie den Vertrag widerrufen wollen, können Sie dieses Formular ausfüllen und absenden. Sie können das Formular auch per E-Mail oder Post einsenden.</p>
+
+            <div class="widerruf-box">
+                <h3>Online-Widerrufsformular</h3>
+                <form id="widerrufForm" novalidate>
+                    <div class="form-field-group">
+                        <div class="form-field">
+                            <label for="wr-first">Vorname *</label>
+                            <input type="text" id="wr-first" name="firstName" required autocomplete="given-name">
+                        </div>
+                        <div class="form-field">
+                            <label for="wr-last">Nachname *</label>
+                            <input type="text" id="wr-last" name="lastName" required autocomplete="family-name">
+                        </div>
+                        <div class="form-field full">
+                            <label for="wr-address">Anschrift *</label>
+                            <input type="text" id="wr-address" name="address" required autocomplete="street-address">
+                        </div>
+                        <div class="form-field">
+                            <label for="wr-order">Bestellnummer (z. B. TK-XXXXX)</label>
+                            <input type="text" id="wr-order" name="orderNumber" placeholder="TK-…">
+                        </div>
+                        <div class="form-field">
+                            <label for="wr-date">Bestelldatum / Lieferdatum *</label>
+                            <input type="date" id="wr-date" name="orderDate" required>
+                        </div>
+                        <div class="form-field full">
+                            <label for="wr-product">Bezeichnung der Ware(n) *</label>
+                            <textarea id="wr-product" name="products" rows="2" required></textarea>
+                        </div>
+                        <div class="form-field full">
+                            <label for="wr-reason">Grund des Widerrufs (optional)</label>
+                            <textarea id="wr-reason" name="reason" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-widerruf">Widerruf absenden</button>
+                    <p class="widerruf-success" id="widerrufSuccess">
+                        ✓ Ihr Widerruf wurde erfolgreich übermittelt. Sie erhalten in Kürze eine Bestätigung per E-Mail an <strong id="widerrufEmail"></strong>.
+                    </p>
+                </form>
+            </div>
+
+            <p>Alternativ können Sie das Formular auch per Post oder E-Mail einsenden:</p>
+            <p style="margin-left:20px;">
+                T-KONTROL Resilience Solutions UG (haftungsbeschränkt)<br>
+                Mittelstraße 1B, 13055 Berlin<br>
+                E-Mail: <a href="mailto:info@takekontrol.de">info@takekontrol.de</a>
+            </p>
+
+            <div class="legal-stamp">
+                <p><strong>T-KONTROL Resilience Solutions UG (haftungsbeschränkt)</strong><br>
+                Mittelstraße 1B, 13055 Berlin</p>
+                <p style="margin-top:12px;">Stand: Juni 2026</p>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-localize="footer_title">Join the takeKONTROL Community</h3>
+                    <p data-localize="footer_desc">Subscribe to our newsletter for practical tips on keeping your household safe and prepared.</p>
+                    <form class="footer-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary" data-localize="btn_subscribe">Subscribe</button>
+                    </form>
+                </div>
+                <div class="footer-col">
+                    <h4 data-localize="footer_contact">Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li><span>📍</span><span>T-KONTROL Resilience Solutions UG<br>Mittelstraße 1B, 13055 Berlin</span></li>
+                        <li><span>📧</span><a href="mailto:info@takekontrol.de">info@takekontrol.de</a></li>
+                        <li><span>📞</span><a href="tel:+4917673249880">+49 176 73249880</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    <a href="agb.html" style="color:inherit;text-decoration:none;margin-right:15px;">AGB</a>
+                    <a href="datenschutz.html" style="color:inherit;text-decoration:none;margin-right:15px;">Datenschutz</a>
+                    <a href="widerruf.html" style="color:inherit;text-decoration:none;margin-right:15px;">Widerruf</a>
+                    <a href="https://gfkv.org/" target="_blank" style="color:inherit;text-decoration:none;">GfKV Partner</a>
+                </p>
+                <p>&copy; 2026 takeKONTROL. All rights reserved.</p>
+                <p id="footerStamp">Stand: Juni 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* The widerruf form needs no server. A mailto: link is the most
+           reliable approach: it opens in the user's own mail client, so
+           they have a copy in their Sent folder by default. */
+        document.getElementById('widerrufForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const get = (id) => document.getElementById(id).value.trim();
+            const first = get('wr-first');
+            const last = get('wr-last');
+            const address = get('wr-address');
+            const product = get('wr-product');
+            const date = get('wr-date');
+
+            if (!first || !last || !address || !product || !date) {
+                alert('Bitte füllen Sie alle Pflichtfelder aus.');
+                return;
+            }
+
+            const body = [
+                'Hiermit widerrufe ich den von mir abgeschlossenen Vertrag über den Kauf der folgenden Waren:',
+                '',
+                'Ware(n): ' + product,
+                'Bestell-/Lieferdatum: ' + date,
+                'Bestellnummer: ' + (get('wr-order') || '—'),
+                'Grund: ' + (get('wr-reason') || '—'),
+                '',
+                'Name: ' + first + ' ' + last,
+                'Anschrift: ' + address
+            ].join('\n');
+
+            const mailto = 'mailto:info@takekontrol.de'
+                + '?subject=' + encodeURIComponent('Widerruf – ' + (get('wr-order') || 'Bestellung'))
+                + '&body=' + encodeURIComponent(body);
+
+            window.location.href = mailto;
+
+            document.getElementById('widerrufSuccess').style.display = 'block';
+            document.getElementById('widerrufEmail').textContent = 'info@takekontrol.de';
+        });
+    </script>
+
+    <script type="module" src="assets/js/pages/legal.js"></script>
+</body>
+</html>

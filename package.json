@@ -1,0 +1,40 @@
+{
+  "name": "takekontrol",
+  "version": "1.0.0",
+  "private": true,
+  "description": "takeKONTROL — preparedness shop: static front end plus a PayPal checkout API.",
+  "type": "module",
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node tests/run.js",
+    "lint": "eslint .",
+    "check:links": "node tools/check-assets.js",
+    "check:pages": "node tools/check-pages.js",
+    "test:watch": "node --watch tests/run.js",
+    "test:unit": "node tests/run.js unit",
+    "test:api": "node tests/run.js api",
+    "test:pages": "node tests/run.js pages",
+    "test:static": "node tests/run.js static",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:report": "playwright show-report tests/visual/report",
+    "test:e2e:debug": "playwright test --debug"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1115.0",
+    "@aws-sdk/lib-dynamodb": "^3.1115.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "jsdom": "^24.1.1"
+  }
+}

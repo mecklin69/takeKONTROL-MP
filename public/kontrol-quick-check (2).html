@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KONTROL Quick-Check | takeKONTROL</title>
+<meta name="description" content="Der kostenlose 5-Minuten-Selbstcheck: Wie krisenfest sind Sie? 12 Fragen, sofortiges Ergebnis, konkrete nächste Schritte.">
+<style>
+  :root {
+    /* Light Mode Palette */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f7;
+    --bg-header-blur: rgba(255, 255, 255, 0.85);
+    
+    --text-heading: #111111;
+    --text-body: #333333;
+    --text-muted: #737373;
+    
+    --brand-red: #b32020;
+    --brand-red-hover: #8c1919;
+    --brand-red-tint: rgba(179, 32, 32, 0.15);
+    --status-green: #34A853;
+    
+    --border-color: #e5e5e5;
+    --radius-corp: 14px;
+    
+    --shadow-base: 0 10px 30px rgba(0,0,0,0.06);
+    --shadow-hover: 0 10px 30px var(--brand-red-tint);
+    
+    --font-stack: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Logo Theme Toggles */
+  .brand-icon-light { display: block; }
+  .brand-icon-dark { display: none; }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      /* Dark Mode Palette */
+      --bg-primary: #080808;
+      --bg-secondary: #121212;
+      --bg-header-blur: rgba(8, 8, 8, 0.85);
+      
+      --text-heading: #ffffff;
+      --text-body: #f5f5f7;
+      --text-muted: #a3a3a3;
+      
+      --brand-red: #d32f2f;
+      --brand-red-hover: #b71c1c;
+      --brand-red-tint: rgba(211, 47, 47, 0.15);
+      
+      --border-color: #222222;
+      --shadow-base: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    
+    .brand-icon-light { display: none; }
+    .brand-icon-dark { display: block; }
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  
+  body {
+    font-family: var(--font-stack);
+    background: var(--bg-primary);
+    color: var(--text-body);
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--text-heading);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Full Corporate Header ---------- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg-header-blur);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    padding: 16px 0;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .brand-icon {
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  .logo-text {
+    font-size: 20px;
+    color: var(--text-heading);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .logo-text strong { font-weight: 800; }
+
+  .brand-logo .tag {
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--brand-red);
+    text-transform: uppercase;
+    background: var(--brand-red-tint);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  .main-nav {
+    display: none;
+    align-items: center;
+    gap: 32px;
+  }
+
+  @media(min-width: 768px) {
+    .main-nav { display: flex; }
+  }
+
+  .main-nav a {
+    text-decoration: none;
+    color: var(--text-heading);
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  .main-nav a:hover { color: var(--brand-red); }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lang-toggle {
+    display: flex;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    overflow: hidden;
+  }
+
+  .lang-toggle button {
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 13px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .lang-toggle button.active {
+    background: var(--brand-red);
+    color: #ffffff;
+  }
+
+  .lang-toggle button:focus-visible {
+    outline: 2px solid var(--brand-red);
+    outline-offset: -2px;
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap {
+    padding: 32px 0 16px;
+    display: none;
+  }
+  .progress-wrap.visible { display: block; }
+  
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .progress-track {
+    height: 6px;
+    background: var(--bg-secondary);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--brand-red);
+    border-radius: 99px;
+    transition: width 0.35s ease;
+  }
+
+  /* ---------- Stage ---------- */
+  main { flex: 1; display: flex; flex-direction: column; width: 100%; align-items: center; }
+  
+  .stage {
+    max-width: 900px;
+    width: 100%;
+    padding: 24px 24px 80px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .screen { animation: fadeUp 0.35s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ---------- Intro ---------- */
+  .intro { padding-top: 6vh; }
+  
+  .eyebrow {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-red);
+    margin-bottom: 16px;
+  }
+  
+  .intro h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    max-width: 20ch;
+  }
+  
+  .intro .lede {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--text-body);
+    max-width: 60ch;
+    margin-bottom: 32px;
+  }
+  
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  
+  .fact {
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-heading);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-corp);
+    cursor: pointer;
+    padding: 16px 32px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+    background: var(--brand-red);
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover {
+    background: var(--brand-red-hover);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  
+  .btn-dark {
+    background: var(--text-heading);
+    color: var(--bg-primary);
+  }
+  
+  .btn-dark:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-base);
+  }
+  
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-heading);
+    border: 1px solid var(--border-color);
+  }
+  
+  .btn-ghost:hover {
+    border-color: var(--brand-red);
+    color: var(--brand-red);
+  }
+  
+  .trust {
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  
+  .intro-areas {
+    margin-top: 64px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 32px;
+  }
+  
+  .intro-areas p {
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  
+  .area-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-heading);
+  }
+  
+  .area-chips span::before {
+    content: "•";
+    color: var(--brand-red);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  /* ---------- Question ---------- */
+  .question { position: relative; padding-top: 20px; }
+  
+  .ghost-num {
+    position: absolute;
+    top: -40px;
+    right: 20px;
+    font-size: clamp(80px, 15vw, 180px);
+    font-weight: 700;
+    color: var(--bg-secondary);
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .q-cat {
+    position: relative;
+    z-index: 1;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-red);
+    margin-bottom: 16px;
+  }
+  
+  .q-text {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(24px, 4vw, 36px);
+    line-height: 1.3;
+    margin-bottom: 40px;
+    max-width: 30ch;
+  }
+  
+  .options {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-body);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    box-shadow: var(--shadow-base);
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .option:hover {
+    border-color: var(--brand-red);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  
+  .option .dot {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+  }
+  
+  .option.selected {
+    border-color: var(--brand-red);
+    background: var(--brand-red-tint);
+  }
+  
+  .option.selected .dot {
+    border-color: var(--brand-red);
+    background: var(--brand-red);
+    box-shadow: inset 0 0 0 4px var(--bg-primary);
+  }
+  
+  .q-nav {
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .back-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 0;
+    transition: color 0.2s ease;
+  }
+  
+  .back-link:hover { color: var(--text-heading); }
+
+  /* ---------- Results ---------- */
+  .score-hero {
+    background: #060608;
+    background: radial-gradient(circle at center, rgba(179,32,32,0.15) 0%, #060608 100%);
+    color: #ffffff;
+    padding: 80px 24px;
+    text-align: center;
+    border-radius: var(--radius-corp);
+    box-shadow: var(--shadow-base);
+    width: 100%;
+  }
+  
+  .score-hero .eyebrow { color: var(--brand-red); margin-bottom: 32px; }
+  
+  .ring-wrap {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin: 0 auto 40px;
+  }
+  
+  .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  
+  .ring-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 12; }
+  
+  .ring-fg {
+    fill: none;
+    stroke: var(--brand-red);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .ring-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ring-num .big {
+    font-size: 72px;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }
+  
+  .ring-num .of {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  
+  .score-hero .level-name {
+    font-size: clamp(32px, 5vw, 44px);
+    margin-bottom: 16px;
+    color: #ffffff;
+  }
+  
+  .score-hero .level-desc {
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 54ch;
+    margin: 0 auto;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .results-body {
+    padding: 64px 0 24px;
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .section-title {
+    font-size: clamp(24px, 4vw, 32px);
+    margin-bottom: 32px;
+  }
+
+  .cat-row { margin-bottom: 24px; }
+  
+  .cat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  
+  .cat-name { font-weight: 600; font-size: 16px; color: var(--text-heading); }
+  
+  .cat-pct {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  
+  .cat-track {
+    height: 8px;
+    background: var(--bg-secondary);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  
+  .cat-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--text-heading);
+    border-radius: 99px;
+    transition: width 0.9s ease 0.3s;
+  }
+  
+  .cat-row.weak .cat-fill { background: var(--brand-red); }
+  .cat-row.weak .cat-pct { color: var(--brand-red); }
+
+  .steps { margin-top: 64px; }
+  
+  .step-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    padding: 32px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    box-shadow: var(--shadow-base);
+  }
+  
+  .step-num {
+    flex: 0 0 auto;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--brand-red);
+    line-height: 1;
+  }
+  
+  .step-body h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .step-body p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-body);
+    margin-bottom: 0;
+  }
+  
+  .step-shop {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--brand-red);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .step-shop:hover { color: var(--brand-red-hover); }
+
+  .perfect-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--status-green);
+    border-radius: var(--radius-corp);
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .perfect-card h3 { color: var(--status-green); margin-bottom: 12px; }
+
+  .shop-cta {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-corp);
+    padding: 48px 32px;
+    margin-top: 64px;
+    text-align: center;
+  }
+  
+  .shop-cta h2 { margin-bottom: 16px; font-size: 24px; }
+  .shop-cta p { font-size: 16px; line-height: 1.6; margin-bottom: 32px; color: var(--text-body); max-width: 500px; margin-inline: auto; }
+
+  .result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    margin: 48px 0 32px;
+  }
+
+  /* ---------- Full Corporate Footer ---------- */
+  .site-footer {
+    border-top: 1px solid var(--border-color);
+    padding: 64px 0 32px;
+    background: var(--bg-secondary);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-col h4 {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .footer-col-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .footer-col p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-top: 16px;
+    font-size: 14px;
+    max-width: 300px;
+  }
+
+  .footer-links {
+    list-style: none;
+  }
+  
+  .footer-links li {
+    margin-bottom: 12px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--brand-red);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 32px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+  
+  .footer-bottom a {
+    color: var(--text-heading);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .option { font-size: 15px; padding: 16px; }
+    .btn { width: 100%; }
+    .result-actions .btn { width: auto; flex: 1; }
+    .score-hero { border-radius: 0; padding: 48px 20px; }
+    .step-card { flex-direction: column; gap: 16px; }
+  }
+</style>
+    <script>
+      try {
+        var tkTheme = localStorage.getItem('tk_theme');
+        if (tkTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    </script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand-logo">
+      <img src="assets/img/take-kontrol-black-logo.png" alt="takeKONTROL Logo" class="brand-icon brand-icon-light">
+      <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo" class="brand-icon brand-icon-dark">
+      <span class="logo-text">take<strong>KONTROL</strong></span>
+      <span class="tag" id="wordmarkTag">Quick-Check</span>
+    </a>
+    
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html">Home</a>
+      <a href="takekontrol-revamp.html">Shop</a>
+      <a href="#">Kontakt</a>
+    </nav>
+
+    <div class="header-actions">
+      <div class="lang-toggle" role="group" aria-label="Sprache / Language">
+        <button id="btnDE" class="active" onclick="setLang('de')">DE</button>
+        <button id="btnEN" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container progress-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span id="progressLabel"></span>
+    <span id="progressTime"></span>
+  </div>
+  <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="12" id="progressBar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<main>
+  <div class="stage" id="stage"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-col">
+      <div class="footer-col-logo">
+        <img src="assets/img/take-kontrol-black-logo.png" alt="takeKONTROL Logo" class="brand-icon brand-icon-light">
+        <img src="assets/img/TakeKONTROL Logo.png" alt="takeKONTROL Logo" class="brand-icon brand-icon-dark">
+        <span class="logo-text">take<strong>KONTROL</strong></span>
+      </div>
+      <p id="footerDesc">Organizational & Everyday Resilience. Wir bereiten Sie auf das Unerwartete vor.</p>
+    </div>
+    <div class="footer-col">
+      <h4 id="footerNavLabel">Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="takekontrol-revamp.html">Shop</a></li>
+        <li><a href="#">KONTROL Score</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4 id="footerLegalLabel">Rechtliches</h4>
+      <ul class="footer-links">
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">AGB</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <div id="footerText"></div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   KONTROL Quick-Check — takeKONTROL (B2C)
+   Refactored to Corporate Dashboard Architecture & Layout
+   ========================================================= */
+const SHOP_URL = "takekontrol-revamp.html";
+const SITE_URL = "index.html";
+
+/* ---------------- i18n: UI strings ---------------- */
+const UI = {
+  de:{
+    tag:"Quick-Check",
+    navHome:"Home",
+    navShop:"Shop",
+    navContact:"Kontakt",
+    footerDesc:"Organizational & Everyday Resilience. Wir bereiten Sie auf das Unerwartete vor.",
+    footerNav:"Navigation",
+    footerLegal:"Rechtliches",
+    eyebrow:"Kostenloser Selbstcheck",
+    title:"Wie krisenfest sind Sie?",
+    lede:"Stromausfall, Extremwetter, Versorgungslücke: 12 kurze Fragen zeigen Ihnen, wo Sie heute stehen – und was Ihre wichtigsten nächsten Schritte sind.",
+    facts:["12 Fragen","ca. 4 Minuten","Sofortiges Ergebnis","Keine Anmeldung"],
+    start:"Check starten",
+    trust:"Ihre Antworten bleiben auf diesem Gerät. Keine Datenspeicherung.",
+    areasLabel:"Das prüfen wir",
+    qOf:(i,n)=>`Frage ${i} von ${n}`,
+    timeLeft:(m)=>`≈ ${m} Min.`,
+    back:"← Zurück",
+    resultEyebrow:"KONTROL Score",
+    ofPoints:(max)=>`von ${max} Punkten`,
+    catPoints:(pts,max)=>`${pts} / ${max} Pkt.`,
+    catTitle:"Ihre Bereitschaft nach Bereichen",
+    stepsTitle:"Ihre wichtigsten nächsten Schritte",
+    shopLink:"Passendes im Shop ansehen →",
+    perfectTitle:"Alle Bereiche gesichert",
+    perfectText:"Sie haben die Grundlagen im Griff. Prüfen Sie Vorräte, Batterien und Haltbarkeiten einmal im Jahr – und bleiben Sie dran.",
+    ctaTitle:"Schließen Sie Ihre Lücken",
+    ctaText:"Im takeKONTROL Shop finden Sie geprüfte Ausrüstung für genau die Bereiche, in denen Sie noch Bedarf haben.",
+    ctaBtn:"Zum Shop",
+    restart:"Check wiederholen",
+    share:"Ergebnis teilen",
+    copied:"Kopiert!",
+    shareText:(s,max,l)=>`Mein takeKONTROL Score: ${s} von ${max} Punkten – „${l}". Wie krisenfest bist du?`,
+    footer:`Eine Methodik von <a href="${SITE_URL}">takeKONTROL</a> · Antworten bleiben lokal.<br>© ${new Date().getFullYear()} takeKONTROL. Alle Rechte vorbehalten.`,
+    weakTag:"Kritisch"
+  },
+  en:{
+    tag:"Quick check",
+    navHome:"Home",
+    navShop:"Shop",
+    navContact:"Contact",
+    footerDesc:"Organizational & Everyday Resilience. We prepare you for the unexpected.",
+    footerNav:"Navigation",
+    footerLegal:"Legal",
+    eyebrow:"Free self-assessment",
+    title:"How crisis-ready are you?",
+    lede:"Power cuts, extreme weather, supply gaps: 12 short questions show you where you stand today – and your most important next steps.",
+    facts:["12 questions","approx. 4 minutes","Instant result","No sign-up"],
+    start:"Start the check",
+    trust:"Your answers stay on this device. Nothing is stored locally or remotely.",
+    areasLabel:"What we check",
+    qOf:(i,n)=>`Question ${i} of ${n}`,
+    timeLeft:(m)=>`≈ ${m} min`,
+    back:"← Back",
+    resultEyebrow:"KONTROL Score",
+    ofPoints:(max)=>`out of ${max} points`,
+    catPoints:(pts,max)=>`${pts} / ${max} pts`,
+    catTitle:"Your readiness by area",
+    stepsTitle:"Your most important next steps",
+    shopLink:"See matching gear in the shop →",
+    perfectTitle:"All areas secured",
+    perfectText:"You have the essentials covered. Review supplies, batteries and expiry dates once a year – and keep it up.",
+    ctaTitle:"Close your gaps",
+    ctaText:"The takeKONTROL shop carries proven gear for exactly the areas where you still have needs.",
+    ctaBtn:"Go to shop",
+    restart:"Retake the check",
+    share:"Share result",
+    copied:"Copied!",
+    shareText:(s,max,l)=>`My takeKONTROL Score: ${s} of ${max} points – "${l}". How crisis-ready are you?`,
+    footer:`Methodology by <a href="${SITE_URL}">takeKONTROL</a> · Answers stay strictly local.<br>© ${new Date().getFullYear()} takeKONTROL. All rights reserved.`,
+    weakTag:"Critical"
+  }
+};
+
+/* ---------------- Categories & Questions ---------------- */
+const CATS = {
+  wasser:{de:"Wasser & Nahrung", en:"Water & food"},
+  energie:{de:"Strom, Licht & Wärme", en:"Power, light & heat"},
+  gesundheit:{de:"Gesundheit & Erste Hilfe", en:"Health & first aid"},
+  info:{de:"Information & Notfallplan", en:"Information & emergency plan"},
+  flucht:{de:"Dokumente & Notgepäck", en:"Documents & go-bag"}
+};
+
+const QUESTIONS = [
+  {
+    cat:"wasser", prio:1, shop:true,
+    de:{q:"Wie lange käme Ihr Haushalt ohne Leitungswasser aus – nur mit dem Trinkwasser, das Sie zu Hause haben?", opts:[["Weniger als einen Tag",0],["1–3 Tage",1],["4–7 Tage",2],["Mehr als eine Woche",3]], reco:{h:"Trinkwasser bevorraten",p:"Lagern Sie mindestens 2 Liter Trinkwasser pro Person und Tag – für mehrere Tage. Wasser ist die Lücke, die am schnellsten kritisch wird."}},
+    en:{q:"If the tap ran dry today, how long would the drinking water in your home last?", opts:[["Less than a day",0],["1–3 days",1],["4–7 days",2],["More than a week",3]], reco:{h:"Stock drinking water",p:"Store at least 2 litres of drinking water per person per day – enough for several days. Water is the gap that turns critical fastest."}}
+  },
+  {
+    cat:"wasser", prio:2, shop:true,
+    de:{q:"Wie lange könnten Sie sich aus Ihrem Vorrat ernähren, ohne einzukaufen?", opts:[["Höchstens 2–3 Tage",0],["Etwa eine Woche",1],["1–2 Wochen",2],["Mehr als 2 Wochen",3]], reco:{h:"Lebensmittelvorrat aufbauen",p:"Bauen Sie einen Vorrat an lange haltbaren Lebensmitteln für mindestens eine Woche auf – am einfachsten mit fertigen Notnahrungs-Sets."}},
+    en:{q:"How long could you feed yourself from what's in the house, without shopping?", opts:[["2–3 days at most",0],["About a week",1],["1–2 weeks",2],["More than 2 weeks",3]], reco:{h:"Build a food reserve",p:"Build a reserve of long-life food for at least one week – ready-made emergency food sets make this easy."}}
+  },
+  {
+    cat:"energie", prio:7, shop:true,
+    de:{q:"Der Strom fällt abends aus. Haben Sie sofort Licht – unabhängig vom Netz?", opts:[["Nein, nur das Handy",0],["Kerzen oder Lampe – müsste aber suchen",1],["Taschenlampe griffbereit",2],["Griffbereit, inklusive Ersatzbatterien",3]], reco:{h:"Licht griffbereit machen",p:"Legen Sie Taschenlampen und Ersatzbatterien an einen festen, griffbereiten Platz – einen pro Etage."}},
+    en:{q:"The power goes out at night. Do you have light right away – independent of the grid?", opts:[["No, just my phone",0],["Candles or a lamp – but I'd have to search",1],["Flashlight within reach",2],["Within reach, spare batteries included",3]], reco:{h:"Keep light within reach",p:"Keep flashlights and spare batteries in a fixed, easy-to-reach spot – one per floor."}}
+  },
+  {
+    cat:"energie", prio:8, shop:true,
+    de:{q:"Könnten Sie ohne Strom eine warme Mahlzeit zubereiten?", opts:[["Nein",0],["Nur behelfsmäßig (z. B. Grill)",1],["Ja, Campingkocher vorhanden",2],["Ja, inklusive Brennstoffvorrat",3]], reco:{h:"Unabhängig kochen können",p:"Ein Campingkocher mit Brennstoffvorrat macht Sie beim Kochen unabhängig vom Stromnetz – auch bei tagelangem Ausfall."}},
+    en:{q:"Could you prepare a hot meal without electricity?", opts:[["No",0],["Only improvised (e.g. barbecue)",1],["Yes, I have a camping stove",2],["Yes, including a fuel reserve",3]], reco:{h:"Cook off-grid",p:"A camping stove with a fuel reserve lets you cook independently of the grid – even during multi-day outages."}}
+  },
+  {
+    cat:"energie", prio:6, shop:true,
+    de:{q:"Wie lange bliebe Ihr Handy bei einem Blackout erreichbar?", opts:[["Nur bis der Akku leer ist",0],["Powerbank vorhanden, aber selten geladen",1],["Geladene Powerbank griffbereit",2],["Powerbank plus Solar- oder Kurbellader",3]], reco:{h:"Handy am Netz halten",p:"Halten Sie eine geladene Powerbank bereit – ideal ergänzt durch einen Solar- oder Kurbellader für längere Ausfälle."}},
+    en:{q:"In a blackout, how long would your phone stay alive?", opts:[["Only until the battery dies",0],["I own a power bank, but it's rarely charged",1],["Charged power bank within reach",2],["Power bank plus a solar or crank charger",3]], reco:{h:"Keep your phone alive",p:"Keep a charged power bank ready – ideally backed by a solar or crank charger for longer outages."}}
+  },
+  {
+    cat:"info", prio:5, shop:true,
+    de:{q:"Internet und Mobilfunk fallen aus. Wie erfahren Sie, was los ist?", opts:[["Wüsste ich nicht",0],["Warn-App ist installiert (z. B. NINA)",1],["Batterie- oder Kurbelradio vorhanden",2],["Warn-App und Radio",3]], reco:{h:"Ohne Netz informiert bleiben",p:"Ein Batterie- oder Kurbelradio hält Sie auch ohne Internet und Mobilfunk auf dem Laufenden. Warn-Apps wie NINA ergänzen, ersetzen es aber nicht."}},
+    en:{q:"Internet and mobile networks go down. How do you find out what's happening?", opts:[["I wouldn't know",0],["Warning app installed (e.g. NINA)",1],["Battery or crank radio at home",2],["Warning app and radio",3]], reco:{h:"Stay informed off-grid",p:"A battery or crank radio keeps you informed even without internet or mobile coverage. Warning apps complement it, but don't replace it."}}
+  },
+  {
+    cat:"gesundheit", prio:4, shop:true,
+    de:{q:"Wie gut ist Ihre Hausapotheke mit Verbandsmaterial ausgestattet?", opts:[["Kaum bis gar nicht",0],["Ein paar Pflaster und Schmerzmittel",1],["Solide Grundausstattung",2],["Vollständig und regelmäßig geprüft",3]], reco:{h:"Erste-Hilfe-Set vervollständigen",p:"Ein vollständiges Erste-Hilfe-Set gehört in jeden Haushalt. Prüfen Sie Inhalt und Haltbarkeit einmal im Jahr."}},
+    en:{q:"How well is your home first-aid kit stocked?", opts:[["Barely or not at all",0],["A few plasters and painkillers",1],["Solid basic kit",2],["Complete and checked regularly",3]], reco:{h:"Complete your first-aid kit",p:"A complete first-aid kit belongs in every household. Check contents and expiry dates once a year."}}
+  },
+  {
+    cat:"gesundheit", prio:12, shop:false,
+    de:{q:"Wann war Ihr letzter Erste-Hilfe-Kurs?", opts:[["Noch nie",0],["Vor mehr als 10 Jahren (z. B. Führerschein)",1],["Innerhalb der letzten 10 Jahre",2],["In den letzten 2 Jahren",3]], reco:{h:"Erste-Hilfe-Kenntnisse auffrischen",p:"Frischen Sie Ihre Erste-Hilfe-Kenntnisse auf – ein Tageskurs genügt, um im Ernstfall sicher zu handeln."}},
+    en:{q:"When was your last first-aid course?", opts:[["Never",0],["More than 10 years ago (e.g. driving licence)",1],["Within the last 10 years",2],["Within the last 2 years",3]], reco:{h:"Refresh your first-aid skills",p:"Refresh your first-aid skills – a one-day course is enough to act with confidence in an emergency."}}
+  },
+  {
+    cat:"gesundheit", prio:10, shop:false,
+    de:{q:"Hätten Sie wichtige Medikamente für ein bis zwei Wochen im Haus?", opts:[["Nein, ich kaufe erst bei Bedarf",0],["Für wenige Tage",1],["Ja, für 1–2 Wochen",2],["Ich benötige keine regelmäßigen Medikamente",3]], reco:{h:"Medikamenten-Reserve anlegen",p:"Sprechen Sie mit Ihrer Arztpraxis oder Apotheke über einen kleinen Vorrat Ihrer wichtigsten Medikamente."}},
+    en:{q:"Would you have essential medication for one to two weeks at home?", opts:[["No, I only buy when needed",0],["A few days' worth",1],["Yes, for 1–2 weeks",2],["I don't take regular medication",3]], reco:{h:"Build a medication reserve",p:"Talk to your doctor or pharmacy about keeping a small reserve of your most important medication."}}
+  },
+  {
+    cat:"flucht", prio:9, shop:true,
+    de:{q:"Wären Ihre wichtigsten Dokumente im Notfall in einer Minute griffbereit?", opts:[["Nein, die liegen verstreut",0],["Ich wüsste, wo alles ist",1],["Gebündelt an einem Ort",2],["Dokumentenmappe plus digitale Kopien",3]], reco:{h:"Dokumentenmappe anlegen",p:"Bündeln Sie Ausweise, Versicherungen und wichtige Verträge in einer Dokumentenmappe – ergänzt um digitale Kopien."}},
+    en:{q:"In an emergency, could you grab your key documents within one minute?", opts:[["No, they're scattered",0],["I'd know where everything is",1],["Bundled in one place",2],["Document folder plus digital copies",3]], reco:{h:"Set up a document folder",p:"Bundle IDs, insurance papers and key contracts in one document folder – backed by digital copies."}}
+  },
+  {
+    cat:"flucht", prio:3, shop:true,
+    de:{q:"Sie müssen in 10 Minuten das Haus verlassen: Steht ein gepacktes Notgepäck bereit?", opts:[["Nein",0],["Einzelne Dinge, nichts gepackt",1],["Teilweise gepackt",2],["Ja, komplett für 72 Stunden",3]], reco:{h:"Notfallrucksack packen",p:"Ein fertig gepackter Notfallrucksack pro Person deckt die ersten 72 Stunden ab – die kritischste Phase jeder Evakuierung."}},
+    en:{q:"You have to leave the house in 10 minutes: is a packed go-bag ready?", opts:[["No",0],["A few items, nothing packed",1],["Partially packed",2],["Yes, complete for 72 hours",3]], reco:{h:"Pack a go-bag",p:"A ready-packed emergency backpack per person covers the first 72 hours – the most critical phase of any evacuation."}}
+  },
+  {
+    cat:"info", prio:11, shop:false,
+    de:{q:"Haben Sie mit Familie oder Mitbewohnern einen Plan für den Notfall?", opts:[["Nie darüber gesprochen",0],["Nur grob mal erwähnt",1],["Treffpunkt ist vereinbart",2],["Klarer Plan: Treffpunkt, Kontakte, Aufgaben",3]], reco:{h:"Notfallplan besprechen",p:"Vereinbaren Sie einen festen Treffpunkt und Notfallkontakte – 15 Minuten Gespräch genügen für den Anfang."}},
+    en:{q:"Have you agreed an emergency plan with family or housemates?", opts:[["Never talked about it",0],["Mentioned it vaguely once",1],["Meeting point agreed",2],["Clear plan: meeting point, contacts, roles",3]], reco:{h:"Talk through an emergency plan",p:"Agree a fixed meeting point and emergency contacts – a 15-minute conversation is enough to start."}}
+  }
+];
+
+const MAX_PER_Q = 3;
+const TOTAL_MAX = QUESTIONS.length * MAX_PER_Q;
+
+const LEVELS = [
+  {min:0,  de:{name:"Setup erforderlich",  desc:"Sie starten fast bei null – die gute Nachricht: Die wichtigsten Lücken lassen sich schnell und strukturiert schließen."},
+           en:{name:"Setup Required",      desc:"You're starting almost from zero – the good news: the most important gaps can be closed quickly and structurally."}},
+  {min:10, de:{name:"Basisniveau",         desc:"Eine Basis ist da. Im Ernstfall gäbe es aber spürbare Lücken – Ihre nächsten Schritte zur Optimierung stehen unten."},
+           en:{name:"Baseline",            desc:"You have a foundation. In a real emergency there would still be noticeable gaps – your next steps for optimization are below."}},
+  {min:19, de:{name:"Fortgeschritten",     desc:"Vieles ist vorhanden. Ein paar gezielte Ergänzungen machen jetzt den entscheidenden operativen Unterschied."},
+           en:{name:"Advanced",            desc:"Much is in place. A few targeted additions will now make the decisive operational difference."}},
+  {min:28, de:{name:"KONTROL Status: Grün",desc:"Stark. Sie haben die kritischen Bereiche im Griff – halten Sie Systeme und Pläne aktuell."},
+           en:{name:"KONTROL Status: Green",desc:"Strong. You have the critical areas under control – keep systems and plans up to date."}}
+];
+
+/* ---------------- State ---------------- */
+let lang = "de";
+let step = -1;
+let answers = new Array(QUESTIONS.length).fill(null);
+let advanceTimer = null;
+
+const stage = document.getElementById("stage");
+const footerText = document.getElementById("footerText");
+const progressWrap = document.getElementById("progressWrap");
+const progressFill = document.getElementById("progressFill");
+const progressBar = document.getElementById("progressBar");
+const progressLabel = document.getElementById("progressLabel");
+const progressTime = document.getElementById("progressTime");
+
+function t(){ return UI[lang]; }
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+function setLang(l){
+  lang = l;
+  document.documentElement.lang = l;
+  document.getElementById("btnDE").classList.toggle("active", l==="de");
+  document.getElementById("btnEN").classList.toggle("active", l==="en");
+  
+  // Update header/footer texts
+  const u = t();
+  document.getElementById("wordmarkTag").textContent = u.tag;
+  const navLinks = document.querySelectorAll("#mainNav a");
+  if(navLinks.length >= 3) {
+    navLinks[0].textContent = u.navHome;
+    navLinks[1].textContent = u.navShop;
+    navLinks[2].textContent = u.navContact;
+  }
+  document.getElementById("footerDesc").textContent = u.footerDesc;
+  document.getElementById("footerNavLabel").textContent = u.footerNav;
+  document.getElementById("footerLegalLabel").textContent = u.footerLegal;
+  
+  render();
+}
+
+function render(){
+  clearTimeout(advanceTimer);
+  footerText.innerHTML = t().footer;
+  if(step === -1) renderIntro();
+  else if(step < QUESTIONS.length) renderQuestion(step);
+  else renderResults();
+}
+
+function renderIntro(){
+  progressWrap.classList.remove("visible");
+  const u = t();
+  stage.innerHTML = `
+    <section class="screen intro">
+      <p class="eyebrow">${u.eyebrow}</p>
+      <h1>${u.title}</h1>
+      <p class="lede">${u.lede}</p>
+      <div class="facts">${u.facts.map(f=>`<span class="fact">${f}</span>`).join("")}</div>
+      <button class="btn btn-primary" onclick="startCheck()">${u.start}</button>
+      <p class="trust">${u.trust}</p>
+      <div class="intro-areas">
+        <p>${u.areasLabel}</p>
+        <div class="area-chips">
+          ${Object.values(CATS).map(c=>`<span>${c[lang]}</span>`).join("")}
+        </div>
+      </div>
+    </section>`;
+}
+
+function startCheck(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  step = 0;
+  render();
+  window.scrollTo({top:0});
+}
+
+function renderQuestion(i){
+  const u = t();
+  const q = QUESTIONS[i][lang];
+  const cat = CATS[QUESTIONS[i].cat][lang];
+  const n = QUESTIONS.length;
+
+  progressWrap.classList.add("visible");
+  progressLabel.textContent = u.qOf(i+1, n);
+  progressTime.textContent = u.timeLeft(Math.max(1, Math.ceil((n-i)*20/60)));
+  progressFill.style.width = ((i)/n*100) + "%";
+  progressBar.setAttribute("aria-valuenow", i+1);
+  progressBar.setAttribute("aria-label", u.qOf(i+1, n));
+
+  stage.innerHTML = `
+    <section class="screen question">
+      <div class="ghost-num" aria-hidden="true">${String(i+1).padStart(2,"0")}</div>
+      <p class="q-cat">${cat}</p>
+      <h2 class="q-text">${esc(q.q)}</h2>
+      <div class="options" role="group" aria-label="${esc(q.q)}">
+        ${q.opts.map((o,oi)=>`
+          <button class="option ${answers[i]===oi?"selected":""}" aria-pressed="${answers[i]===oi}"
+                  onclick="selectOption(${i},${oi})">
+            <span class="dot" aria-hidden="true"></span>${esc(o[0])}
+          </button>`).join("")}
+      </div>
+      <div class="q-nav">
+        ${i>0 ? `<button class="back-link" onclick="goBack()">${u.back}</button>` : ""}
+      </div>
+    </section>`;
+}
+
+function selectOption(qi, oi){
+  answers[qi] = oi;
+  const btns = stage.querySelectorAll(".option");
+  btns.forEach((b,idx)=>{
+    b.classList.toggle("selected", idx===oi);
+    b.setAttribute("aria-pressed", idx===oi);
+  });
+  clearTimeout(advanceTimer);
+  advanceTimer = setTimeout(()=>{
+    step = qi + 1;
+    render();
+    window.scrollTo({top:0});
+  }, 350);
+}
+
+function goBack(){
+  clearTimeout(advanceTimer);
+  if(step > 0){ step--; render(); }
+}
+
+function computeResults(){
+  let total = 0;
+  const catAgg = {};
+  Object.keys(CATS).forEach(k=>catAgg[k]={pts:0,max:0});
+
+  const perQ = QUESTIONS.map((q,i)=>{
+    const pts = q[lang].opts[answers[i]][1];
+    total += pts;
+    catAgg[q.cat].pts += pts;
+    catAgg[q.cat].max += MAX_PER_Q;
+    return {i, pts, prio:q.prio};
+  });
+
+  const score = total;
+  const level = [...LEVELS].reverse().find(l=>score>=l.min);
+
+  const cats = Object.keys(CATS).map(k=>({
+    key:k, name:CATS[k][lang],
+    pts:catAgg[k].pts, max:catAgg[k].max,
+    missing:catAgg[k].max - catAgg[k].pts
+  }));
+  const maxMissing = Math.max(...cats.map(c=>c.missing));
+
+  const gaps = perQ.filter(x=>x.pts<MAX_PER_Q)
+                   .sort((a,b)=> a.pts-b.pts || a.prio-b.prio)
+                   .slice(0,3);
+  return {score, level, cats, gaps, maxMissing};
+}
+
+function renderResults(){
+  const u = t();
+  const r = computeResults();
+  progressWrap.classList.remove("visible");
+
+  const C = 2*Math.PI*88;
+
+  const stepsHTML = r.gaps.length
+    ? r.gaps.map((g,idx)=>{
+        const q = QUESTIONS[g.i];
+        const rec = q[lang].reco;
+        return `
+        <div class="step-card">
+          <div class="step-num">${String(idx+1).padStart(2,"0")}</div>
+          <div class="step-body">
+            <h3>${rec.h}</h3>
+            <p>${rec.p}</p>
+            ${q.shop ? `<a class="step-shop" href="${SHOP_URL}" target="_blank" rel="noopener">${u.shopLink}</a>` : ""}
+          </div>
+        </div>`;
+      }).join("")
+    : `<div class="perfect-card"><h3>${u.perfectTitle}</h3><p>${u.perfectText}</p></div>`;
+
+  stage.innerHTML = `
+    <section class="screen results">
+      <div class="score-hero">
+        <p class="eyebrow">${u.resultEyebrow}</p>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="ring-bg" cx="100" cy="100" r="88"></circle>
+            <circle class="ring-fg" id="ringFg" cx="100" cy="100" r="88"
+                    stroke-dasharray="${C}" stroke-dashoffset="${C}"></circle>
+          </svg>
+          <div class="ring-num">
+            <span class="big" id="scoreNum">0</span>
+            <span class="of">${u.ofPoints(TOTAL_MAX)}</span>
+          </div>
+        </div>
+        <h1 class="level-name">${r.level[lang].name}</h1>
+        <p class="level-desc">${r.level[lang].desc}</p>
+      </div>
+
+      <div class="results-body">
+        <h2 class="section-title">${u.catTitle}</h2>
+        ${r.cats.map(c=>{
+          const isWeak = r.maxMissing>0 && c.missing===r.maxMissing;
+          const barPct = Math.round(c.pts/c.max*100);
+          return `
+          <div class="cat-row ${isWeak?"weak":""}">
+            <div class="cat-head">
+              <span class="cat-name">${c.name}</span>
+              <span class="cat-pct">${isWeak?u.weakTag+" · ":""}${u.catPoints(c.pts,c.max)}</span>
+            </div>
+            <div class="cat-track"><div class="cat-fill" data-w="${barPct}"></div></div>
+          </div>`;
+        }).join("")}
+
+        <div class="steps">
+          <h2 class="section-title">${u.stepsTitle}</h2>
+          ${stepsHTML}
+        </div>
+
+        <div class="shop-cta">
+          <h2>${u.ctaTitle}</h2>
+          <p>${u.ctaText}</p>
+          <a class="btn btn-primary" href="${SHOP_URL}" target="_blank" rel="noopener">${u.ctaBtn}</a>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn btn-ghost" onclick="startCheck()">${u.restart}</button>
+          <button class="btn btn-ghost" id="shareBtn" onclick="shareResult(${r.score})">${u.share}</button>
+        </div>
+      </div>
+    </section>`;
+
+  requestAnimationFrame(()=>{
+    const ring = document.getElementById("ringFg");
+    ring.style.strokeDashoffset = C - (C * r.score/TOTAL_MAX);
+    stage.querySelectorAll(".cat-fill").forEach(f=>{ f.style.width = f.dataset.w + "%"; });
+
+    const numEl = document.getElementById("scoreNum");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(reduce){ numEl.textContent = r.score; return; }
+    const start = performance.now(), dur = 1000;
+    (function tick(now){
+      const p = Math.min(1,(now-start)/dur);
+      numEl.textContent = Math.round(r.score * (1-Math.pow(1-p,3)));
+      if(p<1) requestAnimationFrame(tick);
+    })(start);
+  });
+  window.scrollTo({top:0});
+}
+
+function shareResult(score){
+  const u = t();
+  const level = [...LEVELS].reverse().find(l=>score>=l.min)[lang].name;
+  const text = u.shareText(score, TOTAL_MAX, level);
+  const url = location.href;
+  if(navigator.share){
+    navigator.share({title:"takeKONTROL Score", text, url}).catch(()=>{});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(text+" "+url).then(()=>{
+      const b = document.getElementById("shareBtn");
+      const old = b.textContent; b.textContent = u.copied;
+      setTimeout(()=>b.textContent = old, 1600);
+    });
+  }
+}
+
+setLang("de");
+</script>
+</body>
+</html>
