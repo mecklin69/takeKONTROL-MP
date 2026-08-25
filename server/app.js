@@ -51,9 +51,10 @@ export function createApp({ rateLimit = true } = {}) {
   app.use('/api', apiNotFound);
 
 app.get('/', (req, res) => res.redirect(301, '/takekontrol-revamp.html'));
-app.get('/index.html', (req, res) => res.redirect(301, '/takekontrol-revamp.html'));
+app.get('/index.html', (req, res) => res.redirect(301, '/index.html'));
 app.use(express.static(STATIC_DIR));
-  app.use(errorHandler);
+
+app.use(errorHandler);
 
   return app;
 }
