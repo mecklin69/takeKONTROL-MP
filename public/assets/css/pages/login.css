@@ -922,3 +922,22 @@ footer {
     to   { opacity: 1; transform: translateY(0); }
   }
 }
+
+/* Order detail */
+.dash-order-detail { font-size: 0.9rem; }
+.dash-detail-row { display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border-color); gap:12px; }
+.dash-detail-row span:first-child { color:var(--text-muted); flex-shrink:0; }
+.dash-detail-section { font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin:20px 0 10px; }
+.dash-addr-display { font-size:0.9rem; line-height:1.7; color:var(--text-main); padding:12px; background:var(--secondary-bg); border-radius:8px; }
+.dash-order-line { display:flex; justify-content:space-between; padding:6px 0; font-size:0.9rem; border-bottom:1px solid var(--border-color); }
+.dash-order-line:last-child { border:none; }
+.dash-detail-totals { margin-top:12px; padding:12px; background:var(--secondary-bg); border-radius:8px; }
+.dash-order-total { font-size:1rem; margin-top:6px; padding-top:10px; border-top:2px solid var(--border-color) !important; }
+.dash-order-total strong { color:var(--primary-red); }
+.dash-order-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+.dash-addr-label { color:var(--primary-red); font-size:0.8rem; }
+
+/* Return items */
+.dash-return-item { border:1px solid var(--border-color); border-radius:10px; padding:14px; margin-bottom:10px; background:var(--secondary-bg); }
+.dash-addr-form textarea { width:100%; padding:10px 14px; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg); color:var(--text-main); font-family:inherit; font-size:0.9rem; resize:vertical; }
+.dash-addr-form select { width:100%; padding:10px 14px; border:1px solid var(--border-color); border-radius:8px; background:var(--card-bg); color:var(--text-main); font-family:inherit; font-size:0.9rem; }

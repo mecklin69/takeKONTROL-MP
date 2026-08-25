@@ -23,6 +23,7 @@ import { createRateLimiter } from './middleware/rate-limit.js';
 import { apiNotFound, errorHandler } from './middleware/errors.js';
 import { quoteRouter } from './routes/quote.js';
 import { enquiryRouter } from './routes/enquiry.js';
+import { userRouter } from './routes/user.js';
 import { ordersRouter } from './routes/orders.js';
 import { webhookRouter } from './routes/webhooks.js';
 
@@ -44,11 +45,12 @@ export function createApp({ rateLimit = true } = {}) {
 
   app.use('/api', quoteRouter);
   app.use('/api', enquiryRouter);
+  app.use('/api', userRouter);
   app.use('/api', ordersRouter);
 
   app.use('/api', apiNotFound);
-app.get('/', (req, res) => res.redirect('/takekontrol-revamp.html'));
-app.use(express.static(STATIC_DIR));
+
+  app.use(express.static(STATIC_DIR));
 
   app.use(errorHandler);
 
