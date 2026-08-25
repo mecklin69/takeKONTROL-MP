@@ -2,36 +2,40 @@
  * takeKONTROL — Firebase bootstrap
  * =================================================================
  * Fill in the values from Firebase console → Project settings → your
- * web app. Until you do, a local bypass account is active so you can
- * develop and test the rest of the site without Firebase.
+ * web app. Until you do, a local bypass account is active.
  *
  * LOCAL BYPASS
- * When apiKey is not configured (still REPLACE_ME), Firebase is skipped
- * entirely. One hardcoded test account is accepted instead:
- *
+ * When apiKey is still REPLACE_ME, Firebase is skipped entirely.
+ * One hardcoded test account is accepted:
  *   dhoop@gmail.com  /  Rohitdhoop123#
- *
- * This bypass is ONLY active when the real API key is missing. The
- * moment you paste in real Firebase credentials it is gone.
  * =================================================================
  */
+
+import { initializeApp }        from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  GoogleAuthProvider
+} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
 /* ── Test credentials for the local bypass ── */
 const BYPASS_EMAIL    = 'dhoop@gmail.com';
 const BYPASS_PASSWORD = 'Rohitdhoop123#';
 
 const firebaseConfig = {
-  apiKey:            'REPLACE_ME',
-  authDomain:        'REPLACE_ME.firebaseapp.com',
-  projectId:         'REPLACE_ME',
-  storageBucket:     'REPLACE_ME.appspot.com',
-  messagingSenderId: 'REPLACE_ME',
-  appId:             'REPLACE_ME'
+  apiKey: "AIzaSyAob0uqTOYmR1uk_f5TSLJRMlijNGwf_zo",
+  authDomain: "takekontrol-mp.firebaseapp.com",
+  projectId: "takekontrol-mp",
+  storageBucket: "takekontrol-mp.firebasestorage.app",
+  messagingSenderId: "749324107038",
+  appId: "1:749324107038:web:50d6ef262154e7c95d1d0f",
+  measurementId: "G-Q8YPMYLTDD"
 };
 
-const FIREBASE_READY = firebaseConfig.apiKey !== 'REPLACE_ME';
+export const FIREBASE_MODE = firebaseConfig.apiKey !== 'REPLACE_ME';
 
-/* ── Bypass auth object (used when Firebase is not configured) ── */
+/* ── Bypass auth (when Firebase is not configured) ── */
 const bypassListeners = [];
 let   bypassUser      = null;
 
@@ -50,30 +54,13 @@ const bypassAuth = {
   currentUser: null,
   onAuthStateChanged(listener) {
     bypassListeners.push(listener);
-    // Fire immediately with the current state
     setTimeout(() => listener(bypassUser), 0);
-    return () => {};   // unsubscribe no-op
+    return () => {};
   }
 };
 
-/* ── Exports: real Firebase when configured, bypass otherwise ── */
-
-export let app          = null;
-export let auth         = bypassAuth;
-export let googleProvider = null;
-export let authReady    = Promise.resolve();
-
-/* Expose for auth.js: true = real Firebase, false = bypass mode */
-export const FIREBASE_MODE = FIREBASE_READY;
-
-/**
- * Called by auth.js sign-in handlers.
- * In bypass mode: accepts only the test credentials.
- * In Firebase mode: delegates to real Firebase.
- */
 export async function bypassSignIn(email, password) {
-  if (FIREBASE_READY) return null;   // auth.js uses Firebase directly
-
+  if (FIREBASE_MODE) return null;
   if (email.trim().toLowerCase() === BYPASS_EMAIL.toLowerCase()
       && password === BYPASS_PASSWORD) {
     bypassUser = makeBypassUser(email.trim().toLowerCase());
@@ -87,26 +74,31 @@ export async function bypassSignIn(email, password) {
 }
 
 export function bypassSignOut() {
-  if (FIREBASE_READY) return null;
+  if (FIREBASE_MODE) return null;
   bypassUser = null;
   bypassAuth.currentUser = null;
   bypassListeners.forEach(fn => fn(null));
 }
 
-if (FIREBASE_READY) {
-  /* Real Firebase — only imported when the API key is set */
-  const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-  const { getAuth, setPersistence, browserLocalPersistence, GoogleAuthProvider }
-    = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js');
+/* ── Real Firebase or bypass exports ── */
+export let app           = null;
+export let auth          = bypassAuth;
+export let googleProvider = null;
+export let authReady     = Promise.resolve();
 
-  app           = initializeApp(firebaseConfig);
-  auth          = getAuth(app);
-  googleProvider = new GoogleAuthProvider();
-  googleProvider.setCustomParameters({ prompt: 'select_account' });
-
-  authReady = setPersistence(auth, browserLocalPersistence).catch(err => {
-    console.warn('[tk-auth] falling back to in-memory persistence:', err.code);
-  });
+if (FIREBASE_MODE) {
+  try {
+    app           = initializeApp(firebaseConfig);
+    auth          = getAuth(app);
+    googleProvider = new GoogleAuthProvider();
+    googleProvider.setCustomParameters({ prompt: 'select_account' });
+    authReady     = setPersistence(auth, browserLocalPersistence).catch(err => {
+      console.warn('[tk-auth] falling back to in-memory persistence:', err.code);
+    });
+    console.info('[tk-auth] Firebase initialised');
+  } catch (err) {
+    console.error('[tk-auth]', err.code, err.message);
+  }
 } else {
   console.info('[tk-auth] Firebase not configured — local bypass active (dhoop@gmail.com)');
 }

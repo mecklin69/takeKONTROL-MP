@@ -502,3 +502,423 @@ footer {
             .grid-span-full { grid-column: auto; } /* Reset span on mobile */
             .dash-action-footer { grid-template-columns: 1fr; }
         }
+
+/* ═══════════════════════════════════════════════
+   DASHBOARD PANELS
+   ═══════════════════════════════════════════════ */
+
+#dash-panel-container {
+  margin-top: 24px;
+}
+
+.dash-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-corp);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.dash-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dash-panel-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-heading);
+}
+
+.dash-panel-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.dash-panel-close:hover {
+  background: var(--secondary-bg);
+  color: var(--text-heading);
+}
+
+.dash-panel-body {
+  padding: 24px;
+}
+
+.dash-panel-loading {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px;
+}
+
+.dash-empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Active card state */
+.dash-grid-item.active {
+  border-color: var(--primary-red);
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.15);
+}
+
+/* Form groups */
+.dash-form-group {
+  margin-bottom: 24px;
+}
+
+.dash-form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.dash-form-group input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--secondary-bg);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.dash-form-group input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.dash-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.dash-input-row input {
+  flex: 1;
+}
+
+.dash-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+.dash-danger-zone {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+}
+
+.btn-sm {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-outline-adaptive {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.btn-outline-adaptive:hover {
+  background: var(--secondary-bg);
+}
+
+/* Address cards */
+.dash-address-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background: var(--secondary-bg);
+  gap: 16px;
+}
+
+.dash-address-body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+.dash-address-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Address form */
+.dash-addr-form {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--secondary-bg);
+}
+
+.dash-addr-form h4 {
+  margin-top: 0;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+}
+
+.dash-form-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dash-form-row input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.dash-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* Order cards */
+.dash-order-card {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: var(--secondary-bg);
+}
+
+.dash-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dash-order-num {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-heading);
+  font-family: monospace;
+}
+
+.dash-status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.dash-order-meta {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.dash-order-items {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Returns panel */
+.dash-return-policy {
+  background: var(--secondary-bg);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.dash-return-policy h4 {
+  margin-top: 0;
+  color: var(--text-heading);
+}
+
+.dash-return-policy p,
+.dash-return-policy li {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.dash-return-policy ul {
+  padding-left: 20px;
+}
+
+.dash-return-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .dash-address-card { flex-direction: column; }
+  .dash-form-row { flex-direction: column; }
+  .dash-order-meta { flex-direction: column; gap: 4px; }
+  .dash-return-actions { flex-direction: column; }
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE BOTTOM SHEET — panels slide up from bottom
+   ═══════════════════════════════════════════════ */
+
+/* Backdrop */
+.dash-sheet-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+.dash-sheet-backdrop.active {
+  display: block;
+  animation: fadeInBackdrop 0.25s ease;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Bottom sheet container */
+@media (max-width: 768px) {
+  #dash-panel-container.dash-panel-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 20px 20px 0 0;
+    animation: slideUpSheet 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  @keyframes slideUpSheet {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* Drag handle at the top of the sheet */
+  #dash-panel-container.dash-panel-sheet .dash-panel::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+
+  /* Bigger close button on mobile */
+  .dash-panel-close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  /* Full-width buttons in panels on mobile */
+  .dash-return-actions {
+    flex-direction: column;
+  }
+
+  .dash-return-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Grid cards as horizontal rows on mobile */
+  .dash-interactive-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dash-grid-item.grid-span-full {
+    grid-column: 1 !important;
+  }
+
+  /* Larger tap targets on mobile */
+  .dash-grid-item {
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 12px;
+  }
+
+  .dash-grid-item .item-border-accent {
+    width: 3px;
+    height: 36px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .dash-grid-item .item-title {
+    font-size: 1rem;
+  }
+
+  /* Chevron indicator on mobile cards */
+  .dash-grid-item::after {
+    content: '›';
+    margin-left: auto;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  /* Address form full width */
+  .dash-form-row {
+    flex-direction: column;
+  }
+}
+
+/* Desktop: panel slides in below the grid normally */
+@media (min-width: 769px) {
+  #dash-panel-container {
+    animation: fadeSlideIn 0.25s ease;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}

@@ -18,7 +18,7 @@ try {
   console.warn(`\n⚠️  ${err.message}\n`);
 }
 
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`takeKONTROL checkout API → http://localhost:${PORT} (${paypalEnvironment})`);
   console.log(`serving static files from ${STATIC_DIR}`);
 });

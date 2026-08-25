@@ -6,6 +6,7 @@ import { quote, quotesMatch } from '../pricing.js';
 import { validateShipping } from '../validate.js';
 import * as paypal from '../paypal.js';
 import * as store from '../store.js';
+import { EMAIL_PATTERN } from '../validate.js';
 import { asyncHandler } from '../middleware/async-handler.js';
 
 export const ordersRouter = Router();
@@ -165,4 +166,24 @@ ordersRouter.post('/orders/:id/manual', (req, res) => {
   }
   const updated = store.updateOrder(order.orderId, { status: 'AWAITING_TRANSFER' });
   return res.json({ status: 'AWAITING_TRANSFER', orderNumber: updated.orderNumber });
+});
+
+/* ── Orders by email (account dashboard) ───────────────────────── */
+ordersRouter.get('/my-orders', (req, res) => {
+  const email = String(req.query.email || '').trim().toLowerCase();
+  if (!email || !EMAIL_PATTERN.test(email)) {
+    return res.status(400).json({ error: 'INVALID_EMAIL' });
+  }
+  const orders = store.getOrdersByEmail(email).map(o => ({
+    orderId:     o.orderId,
+    orderNumber: o.orderNumber,
+    status:      o.status,
+    createdAt:   o.createdAt,
+    grandTotal:  o.quote?.grandTotal,
+    currency:    o.quote?.currency || 'EUR',
+    lines:       (o.quote?.lines || []).map(l => ({ name: l.name, qty: l.qty })),
+    captureId:   o.captureId || null,
+    paidAt:      o.paidAt    || null
+  }));
+  return res.json({ orders });
 });

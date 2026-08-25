@@ -39,6 +39,7 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 const orders     = new Map();   // orderId (UUID) -> order
 const byPaypalId = new Map();   // paypalOrderId  -> orderId
 const byOrderNum = new Set();   // orderNumbers issued this session
+const byEmail    = new Map();   // email -> Set of orderIds
 
 /* ── Boot: replay log ────────────────────────────────────────────── */
 if (fs.existsSync(LOG_FILE)) {
@@ -51,6 +52,10 @@ if (fs.existsSync(LOG_FILE)) {
       orders.set(record.orderId, merged);
       if (merged.paypalOrderId) byPaypalId.set(merged.paypalOrderId, record.orderId);
       if (merged.orderNumber)   byOrderNum.add(merged.orderNumber);
+      if (merged.email) {
+        if (!byEmail.has(merged.email)) byEmail.set(merged.email, new Set());
+        byEmail.get(merged.email).add(record.orderId);
+      }
     } catch { /* torn last line — safe to ignore */ }
   }
 }
@@ -205,6 +210,10 @@ export function createOrder(data) {
 
   orders.set(orderId, record);
   if (record.paypalOrderId) byPaypalId.set(record.paypalOrderId, orderId);
+  if (record.email) {
+    if (!byEmail.has(record.email)) byEmail.set(record.email, new Set());
+    byEmail.get(record.email).add(orderId);
+  }
 
   append(record);
   syncToDynamo(record, true);   // async, non-blocking, conditional write
@@ -224,6 +233,10 @@ export function updateOrder(orderId, patch) {
 
   orders.set(orderId, merged);
   if (merged.paypalOrderId) byPaypalId.set(merged.paypalOrderId, orderId);
+  if (merged.email) {
+    if (!byEmail.has(merged.email)) byEmail.set(merged.email, new Set());
+    byEmail.get(merged.email).add(orderId);
+  }
 
   append({ orderId, ...patch, updatedAt: merged.updatedAt });
   syncToDynamo(merged, false);  // async, non-blocking, unconditional update
@@ -231,6 +244,15 @@ export function updateOrder(orderId, patch) {
 }
 
 export const getOrder          = (orderId)      => orders.get(orderId) || null;
+export const getOrdersByEmail = (email) => {
+  if (!email) return [];
+  const ids = byEmail.get(email.toLowerCase().trim()) || new Set();
+  return Array.from(ids)
+    .map(id => orders.get(id))
+    .filter(Boolean)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+};
+
 export const getOrderByPaypalId = (paypalOrderId) => {
   const id = byPaypalId.get(paypalOrderId);
   return id ? orders.get(id) : null;

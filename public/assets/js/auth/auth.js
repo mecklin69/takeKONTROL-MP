@@ -32,6 +32,7 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
 import { auth, googleProvider, authReady, FIREBASE_MODE, bypassSignIn, bypassSignOut } from './firebase-config.js';
+import { initDashboard, setDashboardUser } from './dashboard.js';
 import { STORAGE_KEYS } from '../shared/catalog.js';
 import { byId } from '../core/dom.js';
 import { currentLang, t } from '../core/i18n.js';
@@ -396,6 +397,8 @@ export async function handleLogout() {
 /* ═══ Dashboard ═══════════════════════════════════════════════════ */
 function renderDashboard(user) {
   currentUser = user;
+  setDashboardUser(user);
+  initDashboard(user);
   greetUser();
 
   const email = byId('dash-email');
