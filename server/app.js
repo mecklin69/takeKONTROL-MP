@@ -51,7 +51,15 @@ export function createApp({ rateLimit = true } = {}) {
   app.use('/api', apiNotFound);
 
 app.get('/', (req, res) => res.redirect(301, '/takekontrol-revamp.html'));
-app.use(express.static(STATIC_DIR));
+app.use(express.static(STATIC_DIR, {
+  etag: true,
+  lastModified: true,
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css') || path.endsWith('.js')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  }
+}));
 
 app.use(errorHandler);
 
