@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Startseite", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
+        nav_home: "Resilienze", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
         ps_hero_title: "Produktsicherheit und rechtliche Hinweise",
         ps_hero_sub: "Wichtige Informationen und regulatorische Hinweise zu unserer Ausrüstung.",
         scroll_down: "Nach unten scrollen",
@@ -36,7 +36,7 @@ export const dictionary = {
         btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Home", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
         ps_hero_title: "Product Safety and Legal",
         ps_hero_sub: "Important information and regulatory notices regarding our equipment.",
         scroll_down: "Scroll to read",

@@ -11,6 +11,7 @@ import { $$, byId, onReady } from '../core/dom.js';
 import { readLocal, writeSession } from '../core/storage.js';
 import { initShopBindings } from '../cart/shop-bindings.js';
 import { initTicker } from '../features/ticker.js';
+import { initShopMobile } from '../features/shop-mobile.js';
 import * as cart from '../cart/engine.js';
 
 /* ── Image fallback ─────────────────────────────────────────────── */
@@ -108,4 +109,5 @@ onReady(() => {
   initTicker();
   cart.refreshBadge();
   ['carouselHomeKit', 'carouselEssential', 'carouselStandard', 'carouselPremium'].forEach(initCarousel);
+  initShopMobile();
 });

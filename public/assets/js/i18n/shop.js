@@ -7,7 +7,7 @@
 
 export const dictionary = {
     en: {
-        "nav_home": "Home", "nav_shop": "Shop", "nav_team": "Team", "nav_contact": "Contact", "nav_account": "My Account", 
+        "nav_home": "Resilience", "nav_shop": "Shop", "nav_team": "Team", "nav_contact": "Contact", "nav_account": "My Account", 
         "hero_title": "Would you be ready if <span>everything changed</span> today?", "hero_desc": "Everything you need to protect yourself and your family—before the next emergency happens.", "hero_cta": "Shop Preparedness Kits", 
         "scn1_title": "Stay at Home", "scn1_desc": "Remain safe and self-sufficient during prolonged disruptions with food, water, power and emergency equipment.", "scn1_btn": "Explore Home Kit", 
         "scn2_title": "Evacuation", "scn2_desc": "Leave within minutes with the equipment needed for emergency evacuation and continued self-sufficiency.", "scn2_btn": "Explore Backpacks", 
@@ -27,7 +27,7 @@ export const dictionary = {
         "footer_title": "Join the takeKONTROL Community", "footer_desc": "Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.", "footer_email_placeholder": "Your email address", "footer_subscribe": "Subscribe", "footer_contact_heading": "Contact Us", "footer_address": "T-KONTROL Resilience Solutions UG<br>Mittelstraße 1B, 13055 Berlin", "footer_stamp": "Status: May 2026"
     },
     de: {
-        "nav_home": "Startseite", "nav_shop": "Shop", "nav_team": "Team", "nav_contact": "Kontakt", "nav_account": "Mein Konto", 
+        "nav_home": "Resilienz", "nav_shop": "Shop", "nav_team": "Team", "nav_contact": "Kontakt", "nav_account": "Mein Konto", 
         "hero_title": "Wären Sie bereit, wenn sich <span>heute alles ändern</span> würde?", "hero_desc": "Alles, was Sie brauchen, um sich und Ihre Familie zu schützen – bevor der nächste Notfall eintritt.", "hero_cta": "Vorsorge-Sets entdecken", 
         "scn1_title": "Zu Hause bleiben", "scn1_desc": "Bleiben Sie bei längeren Störungen sicher und autark – mit Nahrung, Wasser, Strom und Notfallausrüstung.", "scn1_btn": "Zum Heim-Set", 
         "scn2_title": "Evakuierung", "scn2_desc": "Verlassen Sie Ihr Zuhause innerhalb von Minuten – mit der Ausrüstung für Evakuierung und anhaltende Autarkie.", "scn2_btn": "Zu den Rucksäcken", 

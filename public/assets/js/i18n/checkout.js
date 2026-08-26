@@ -23,7 +23,7 @@ export const dictionary = {
         ck_sum_ship:"Versand (netto)", ck_sum_total:"Gesamt",
         ck_sum_note:"Alle Preise inkl. gesetzlicher MwSt. (19 %, §12 UStG). Lieferung innerhalb von 3–5 Werktagen.",
         ck_processing:"Zahlung wird verarbeitet", ck_processing_note:"Bitte schließen Sie dieses Fenster nicht.",
-        nav_home:"Startseite", nav_shop:"Shop", nav_team:"Team", nav_contact:"Kontakt" },
+        nav_home:"Resilienz", nav_shop:"Shop", nav_team:"Team", nav_contact:"Kontakt" },
     en: { ck_step_address:"1 — Delivery", ck_step_review:"2 — Review", ck_step_pay:"3 — Payment", ck_step_done:"4 — Done",
         ck_addr_title:"Delivery address", ck_addr_lead:"Where should your equipment go?",
         ck_first:"First name", ck_last:"Last name", ck_email:"Email (for your confirmation)", ck_phone:"Phone (optional, for the courier)",
@@ -41,5 +41,5 @@ export const dictionary = {
         ck_sum_ship:"Shipping (net)", ck_sum_total:"Total",
         ck_sum_note:"All prices include statutory German VAT (19 %, §12 UStG). Delivery in 3–5 working days.",
         ck_processing:"Processing your payment", ck_processing_note:"Please do not close this window.",
-        nav_home:"Home", nav_shop:"Shop", nav_team:"Team", nav_contact:"Contact" }
+        nav_home:"Resilience", nav_shop:"Shop", nav_team:"Team", nav_contact:"Contact" }
 };

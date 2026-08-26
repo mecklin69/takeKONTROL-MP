@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Startseite", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
+        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
         enq_title: "Ihre Anfrage", 
         enq_sub: "Ob für Ihren privaten Haushalt oder die Stärkung Ihrer Organisation – wir helfen Ihnen, die Kontrolle zu übernehmen.",
         enq_left_tag: "Warum Kontakt aufnehmen?", 
@@ -35,7 +35,7 @@ export const dictionary = {
         footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge. Bleiben Sie informiert, bleiben Sie bereit.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Home", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
         enq_title: "Make Your Enquiry", 
         enq_sub: "Whether you're equipping your household or strengthening your organisation — we're here to help you take control.",
         enq_left_tag: "Why reach out?", 

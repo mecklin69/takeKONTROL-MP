@@ -6,7 +6,7 @@
 
 export const dictionary = {
 de: {
-  nav_home: 'Startseite', nav_shop: 'Shop', nav_team: 'Team', nav_contact: 'Kontakt', nav_safety: 'Produktsicherheit',
+  nav_home: 'Resilienz', nav_shop: 'Shop', nav_team: 'Team', nav_contact: 'Kontakt', nav_safety: 'Produktsicherheit',
 
   auth_login_title: 'Anmelden', auth_login_sub: 'Willkommen zurück bei takeKONTROL.',
   btn_google_login: 'Mit Google anmelden', auth_or: 'oder mit E-Mail',
@@ -58,7 +58,7 @@ de: {
   err_linked: 'Google-Konto erfolgreich verknüpft.'
 },
 en: {
-  nav_home: 'Home', nav_shop: 'Shop', nav_team: 'Team', nav_contact: 'Contact', nav_safety: 'Product Safety',
+  nav_home: 'Resilience', nav_shop: 'Shop', nav_team: 'Team', nav_contact: 'Contact', nav_safety: 'Product Safety',
 
   auth_login_title: 'Sign In', auth_login_sub: 'Welcome back to takeKONTROL.',
   btn_google_login: 'Sign in with Google', auth_or: 'or sign in with email',
