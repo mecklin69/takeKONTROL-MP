@@ -476,3 +476,56 @@
     height: 10px;
   }
 }
+
+/* ── Critical image fixes — must be at end to override ─────────── */
+@media (max-width: 768px) {
+
+  /* Force full-width images — overrides any inherited constraints */
+  .product-card .product-image-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  .product-card .carousel-track {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .product-card .carousel-slide {
+    min-width: 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 260px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    flex-shrink: 0 !important;
+    display: block !important;
+  }
+
+  /* Navbar — hide logo text on very small screens, keep icon */
+  .tesla-header .logo span,
+  .tesla-header .logo-text {
+    display: none;
+  }
+
+  .tesla-header .logo {
+    max-width: 40px;
+  }
+
+  /* Hide lang toggle text on mobile — just show icon or nothing */
+  .lang-toggle {
+    display: none !important;
+  }
+}
+
+/* ── Fix object-position: images were anchored top, crops subject ── */
+@media (max-width: 768px) {
+  .product-card .carousel-slide,
+  .product-card .product-image-container img {
+    object-position: center center !important;
+  }
+}
