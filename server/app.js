@@ -54,9 +54,16 @@ app.get('/', (req, res) => res.redirect(301, '/takekontrol-revamp.html'));
 app.use(express.static(STATIC_DIR, {
   etag: true,
   lastModified: true,
-  setHeaders: (res, path) => {
-    if (path.endsWith('.css') || path.endsWith('.js')) {
-      res.setHeader('Cache-Control', 'no-cache');
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.html')) {
+      // HTML — never cache, always fresh
+      res.setHeader('Cache-Control', 'no-store');
+    } else if (filePath.endsWith('.css') || filePath.endsWith('.js')) {
+      // CSS/JS — revalidate on every request
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
+    } else if (/\.(png|jpg|jpeg|webp|gif|svg|ico|mp4)$/i.test(filePath)) {
+      // Images/media — cache for 7 days (they rarely change)
+      res.setHeader('Cache-Control', 'public, max-age=604800');
     }
   }
 }));
