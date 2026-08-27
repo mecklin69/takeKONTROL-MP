@@ -58,7 +58,7 @@ export const THREATS = {
     },
     "Soziale Katastrophen": {
         icon: "fa-solid fa-people-group",
-        image: "Social-Crises-scenarios.png",
+        image: "Social-Crises-scenarios.jpeg",
         threats: [
             { name: "Ressourcenüberverbrauch", desc: "Die Ungleichheit beim Verbrauch gefährdet die globale und wirtschaftliche Stabilität.", likelihood: "Hoch", impact: "Mittel", speed: "Langsam", consequences: ["Ressourcenknappheit", "Wirtschaftliche Instabilität", "Preisvolatilität", "Soziale Ungleichheit"], products: [{ name: "Notfallvorrat-Set", href: "takekontrol-revamp.html#home-kit" }] },
             { name: "Gescheiterte Integration", desc: "Politische Radikalisierung und Nationalismus destabilisieren europäische Staaten.", likelihood: "Mittel", impact: "Hoch", speed: "Langsam", consequences: ["Politische Instabilität", "Zivile Unruhen", "Radikalisierung", "Geschwächte Institutionen"], products: [{ name: "Standard Rucksack", href: "takekontrol-revamp.html#standard-backpack" }] },
