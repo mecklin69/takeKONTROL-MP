@@ -19,7 +19,7 @@
 /** Prices are NET (excluding VAT) in EUR, matching the "excl. VAT" labels in the shop. */
 export const CATALOG = {
   'TK-HOME-7D':    { name: '7-Day Home Preparedness Kit', name_de: '7-Tage Haushalts-Vorsorgeset',  price: 549.99 },
-  'TK-BP-ESS':     { name: 'Essential Backpack',          name_de: 'Essential Rucksack',            price: 89.99 },
+  'TK-BP-ESS':     { name: 'Essential Backpack',          name_de: 'Essential Rucksack',            price: 49.99 },
   'TK-BP-STD':     { name: 'Standard Backpack',           name_de: 'Standard Rucksack',             price: 199.99 },
   'TK-BP-PRM':     { name: 'Premium Backpack',            name_de: 'Premium Rucksack',              price: 549.99 },
   'TK-ACC-DOCBAG': { name: 'Waterproof Document Bag',     name_de: 'Wasserdichte Dokumententasche', price: 29.99 },
