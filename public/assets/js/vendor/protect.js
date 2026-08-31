@@ -30,13 +30,13 @@
 export const PROTECT_CONFIG = {
   /** Keep the native menu inside form fields: cut/paste, spell-check and
    *  autofill all live there, and there is no content to steal. */
-  ALLOW_IN_FORM_FIELDS: true,
+  ALLOW_IN_FORM_FIELDS: false,
 
   /** Keep it wherever the visitor has actually selected text. */
-  ALLOW_ON_SELECTION: true,
+  ALLOW_ON_SELECTION: false,
 
   /** Stop images being dragged out or long-pressed into "Save image". */
-  BLOCK_IMAGE_DRAG: true,
+  BLOCK_IMAGE_DRAG: false,
 
   /** Suppress the selection highlight on non-text elements. */
   BLOCK_SELECTION: false,

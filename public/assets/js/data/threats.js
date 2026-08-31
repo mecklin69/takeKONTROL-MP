@@ -122,7 +122,7 @@ export const THREATS = {
     },
     "Social Disasters": {
         icon: "fa-solid fa-people-group",
-        image: "Social-Crises-scenarios.png",
+        image: "Social-Crises-scenarios.jpeg",
         threats: [
             { name: "Resource overconsumption", desc: "Inequality in consumption threatens global and economic stability.", likelihood: "High", impact: "Medium", speed: "Slow", consequences: ["Resource scarcity", "Economic instability", "Price volatility", "Social inequality"], products: [{ name: "Home Preparedness Kit", href: "takekontrol-revamp.html#home-kit" }] },
             { name: "Failed integration", desc: "Political radicalization and nationalism destabilize European states.", likelihood: "Medium", impact: "High", speed: "Slow", consequences: ["Political instability", "Civil unrest", "Radicalization", "Weakened institutions"], products: [{ name: "Standard Backpack", href: "takekontrol-revamp.html#standard-backpack" }] },
