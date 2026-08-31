@@ -63,7 +63,7 @@ app.use(express.static(STATIC_DIR, {
       res.setHeader('Cache-Control', 'no-cache, must-revalidate');
     } else if (/\.(png|jpg|jpeg|webp|gif|svg|ico|mp4)$/i.test(filePath)) {
       // Images/media — cache for 7 days (they rarely change)
-      res.setHeader('Cache-Control', 'public, max-age=604800');
+      res.setHeader('Cache-Control', 'no-cache, must-revalidate');
     }
   }
 }));
