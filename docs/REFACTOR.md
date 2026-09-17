@@ -155,16 +155,9 @@ including an address or an order number. Both are one-line changes.
   the Firebase SDK from gstatic. The other six pages are covered.
 
 ## The tools
+## PRICING CHANGE
+One place only — public/assets/js/shared/catalog.js:
 
-`tools/` holds the scripts that performed the move. They read from the
-original upload path and are kept for provenance: if you doubt that a
-dictionary or the threat dataset came across verbatim, rerun the
-extractor and diff.
 
-| script | what it moved |
-| --- | --- |
-| `extract-i18n.py` | seven inline dictionaries → `assets/js/i18n/` |
-| `extract-threats.py` | the 25-scenario dataset → `assets/js/data/threats.js` |
-| `split-css.py` | seven inline stylesheets → shared layers plus page files |
-| `build-pages.py` | rewrote the seven pages |
-| `check-assets.js` | reports references that do not resolve (kept for daily use) |
+
+

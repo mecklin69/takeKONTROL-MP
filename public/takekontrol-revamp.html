@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="assets/css/pages/shop.css">
     <link rel="stylesheet" href="assets/css/pages/shop-mobile.css">
 </head>
-<body>
+<body>          
 
 <div class="toast-container" id="toastContainer"></div>
 
@@ -492,83 +492,103 @@
             </div>
         </section>
 
-        <!-- ═══ COMPARISON TABLE ═══ -->
-        <div class="comparison-section">
-            <h2 data-i18n-html="comparison_title">Compare Your <span>Options</span></h2>
-            <p class="sub" data-i18n="comparison_sub">See the key differences at a glance.</p>
+ <div class="comparison-section">
+    <h2 data-i18n-html="comparison_title">Compare Your <span>Emergency Kits</span></h2>
+    <p class="sub" data-i18n="comparison_sub">Every kit gets your family moving safely. The real difference is what happens when the situation lasts longer than expected.</p>
 
-            <div class="table-responsive">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th data-i18n="cap_label">Capability</th>
-                            <th data-i18n="badge_essential">Essential</th>
-                            <th data-i18n="badge_standard">Standard</th>
-                            <th data-i18n="badge_premium">Premium</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td class="product-name" data-i18n="row_immediate_evac">Immediate Evacuation</td>
-                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
-                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
-                            <td class="check"><i class="fa-solid fa-circle-check"></i></td>
-                        </tr>
-                        <tr><td data-i18n="row_first_aid">First Aid</td>
-                            <td data-i18n="badge_essential">Essential</td>
-                            <td data-i18n="fa_enhanced">Enhanced</td>
-                            <td data-i18n="fa_advanced">Advanced</td>
-                        </tr>
-                        <tr><td data-i18n="row_food_water">Food &amp; Water</td>
-                            <td data-i18n="fw_emergency_supply">Emergency supply</td>
-                            <td data-i18n="fw_emergency_supply">Emergency supply</td>
-                            <td class="highlight" data-i18n="fw_water_filtration">+ Water filtration</td>
-                        </tr>
-                        <tr><td data-i18n="row_communication">Communication</td>
-                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
-                            <td data-i18n="comm_emergency_radio">Emergency radio</td>
-                            <td data-i18n="comm_radio_backup">Radio + backup systems</td>
-                        </tr>
-                        <tr><td data-i18n="row_navigation">Navigation</td>
-                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
-                            <td data-i18n="nav_maps">Maps</td>
-                            <td data-i18n="nav_maps_advanced">Maps + advanced tools</td>
-                        </tr>
-                        <tr><td data-i18n="row_power">Power</td>
-                            <td data-i18n="power_bank">Power bank</td>
-                            <td data-i18n="power_bank">Power bank</td>
-                            <td class="highlight" data-i18n="power_solar">Solar + backup lighting</td>
-                        </tr>
-                        <tr><td data-i18n="row_documents">Documents</td>
-                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
-                            <td data-i18n="doc_waterproof">Waterproof protection</td>
-                            <td data-i18n="doc_complete">Complete organization kit</td>
-                        </tr>
-                        <tr><td data-i18n="row_protection">Protection</td>
-                            <td data-i18n="prot_basic">Basic</td>
-                            <td data-i18n="fa_enhanced">Enhanced</td>
-                            <td data-i18n="prot_ppe">PPE + fire + weather</td>
-                        </tr>
-                        <tr><td data-i18n="row_prep_level">Preparedness Level</td>
-                            <td data-i18n="badge_essential">Essential</td>
-                            <td data-i18n="badge_standard">Standard</td>
-                            <td data-i18n="prep_maximum">Maximum</td>
-                        </tr>
-                        <tr style="border-top: 2px solid var(--primary-red);">
-                            <td><strong data-i18n="price_label">Price</strong></td>
-                            <td class="price-cell">€89.99</td>
-                            <td class="price-cell">€199.99</td>
-                            <td class="price-cell">€549.99</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-ESS" data-name="Essential Backpack" data-price="89.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
-                            <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-STD" data-name="Standard Backpack" data-price="199.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
-                            <td><a href="javascript:void(0)" class="btn btn-primary btn-small add-to-cart-btn" data-sku="TK-BP-PRM" data-name="Premium Backpack" data-price="549.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th data-i18n="cap_label">Capability / Scenario</th>
+                    <th data-i18n="badge_essential">Essential</th>
+                    <th data-i18n="badge_standard">Standard</th>
+                    <th data-i18n="badge_premium">Premium</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="product-name" data-i18n="row_power">Phone &amp; Battery Power</td>
+                    <td data-i18n="power_essential">One charge from power bank, then you wait</td>
+                    <td data-i18n="power_standard">One charge from power bank, then you wait</td>
+                    <td class="highlight" data-i18n="power_solar">Solar power bank, wall charger &amp; dedicated lamp</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_food_water">Water Supply</td>
+                    <td data-i18n="fw_essential">Empty 1 L bottle (user supplies water)</td>
+                    <td data-i18n="fw_standard">Empty 1 L bottle (user supplies water)</td>
+                    <td class="highlight" data-i18n="fw_water_filtration">1 L packed water + refillable filter bottle</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_protection">Air &amp; Environment Safety</td>
+                    <td data-i18n="prot_basic">FFP dust masks included</td>
+                    <td data-i18n="prot_enhanced">FFP dust masks included</td>
+                    <td class="highlight" data-i18n="prot_ppe">+ Eye protection, gloves, scarf &amp; fire blanket</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_heat_gear">Heat &amp; Wet Gear Relief</td>
+                    <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                    <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                    <td class="highlight" data-i18n="gear_fan">Rechargeable fan to cool down &amp; dry gear</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_shelter">Overnight Shelter</td>
+                    <td data-i18n="shelter_essential">Rain jacket keeps you dry</td>
+                    <td data-i18n="shelter_standard">Rain jacket keeps you dry</td>
+                    <td class="highlight" data-i18n="shelter_premium">+ Emergency sleeping shelter for warmth</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_tools">Tools &amp; Repairs</td>
+                    <td data-i18n="tools_essential">Basic pocket multitool</td>
+                    <td data-i18n="tools_standard">Basic pocket multitool</td>
+                    <td class="highlight" data-i18n="tools_premium">16-in-1 multitool, tape, rope, ties &amp; more</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_communication">Communication &amp; Information</td>
+                    <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                    <td data-i18n="comm_emergency_radio">Emergency radio &amp; detailed road map</td>
+                    <td data-i18n="comm_radio_backup">Emergency radio &amp; detailed road map</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_first_aid">First Aid</td>
+                    <td data-i18n="fa_essential">First-aid kit + 1 blanket</td>
+                    <td data-i18n="fa_enhanced">First-aid kit + 1 blanket</td>
+                    <td data-i18n="fa_advanced">First-aid kit + 1 blanket</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_documents">Document Protection</td>
+                    <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                    <td data-i18n="doc_waterproof">Fireproof/waterproof bag, pen &amp; notebook</td>
+                    <td class="highlight" data-i18n="doc_complete">Fireproof/waterproof bag &amp; notebook + waterproof pen</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_hygiene">Hygiene &amp; Long Wait</td>
+                    <td data-i18n="hygiene_basic">Universal detergent only</td>
+                    <td data-i18n="hygiene_full">Full hygiene kit (toothbrush, wipes, tissues)</td>
+                    <td class="highlight" data-i18n="hygiene_towel">Full hygiene kit + compact microfiber towel</td>
+                </tr>
+                <tr>
+                    <td class="product-name" data-i18n="row_food">Food Supply</td>
+                    <td data-i18n="food_essential">Pack of snack bars (5 bars)</td>
+                    <td data-i18n="food_standard">Pack of snack bars (5 bars)</td>
+                    <td class="highlight" data-i18n="food_premium">Snack pack + 500g NRG-5 ration with pot &amp; cutlery</td>
+                </tr>
+                <tr style="border-top: 2px solid var(--primary-red);">
+                    <td><strong data-i18n="price_label">Price</strong></td>
+                    <td class="price-cell">€154.69</td>
+                    <td class="price-cell">€273.69</td>
+                    <td class="price-cell">€594.99</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-ESS" data-name="Essential Backpack" data-price="154.69" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                    <td><a href="javascript:void(0)" class="btn btn-secondary btn-small add-to-cart-btn" data-sku="TK-BP-STD" data-name="Standard Backpack" data-price="273.69" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                    <td><a href="javascript:void(0)" class="btn btn-primary btn-small add-to-cart-btn" data-sku="TK-BP-PRM" data-name="Premium Backpack" data-price="594.99" data-cart-style="compact" data-i18n="btn_add">Add</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
         <!-- ═══ INDIVIDUAL PRODUCTS ═══ -->
         <section class="section-padding" style="border-bottom: none; padding-top: 0;">
