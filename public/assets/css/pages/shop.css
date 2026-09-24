@@ -421,14 +421,165 @@ section:last-of-type { border-bottom: none; }
 
 @keyframes tkExpandIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 
-.expandable .content .item {
-            font-size: 0.85rem; color: var(--text-muted); padding: 5px 0; border-bottom: 1px solid var(--border-color);
-            display: flex; align-items: flex-start; gap: 8px; text-align: left;
+/* Individual checklist items expand on click to reveal what the item is
+   and why it's included — same interaction as a native <details>/<summary>
+   accordion, built by hand so every row can carry its own description. */
+.checklist-item {
+            border-bottom: 1px solid var(--border-color); text-align: left;
         }
 
-.expandable .content .item:last-child { border-bottom: none; }
+.checklist-item:last-child { border-bottom: none; }
 
-.expandable .content .item i { color: #22c55e; font-size: 0.85rem; margin-top: 4px; flex-shrink: 0; }
+.checklist-item__head {
+            width: 100%; display: flex; align-items: center; gap: 9px; padding: 8px 2px;
+            background: none; border: 0; cursor: pointer; text-align: left; color: var(--text-main);
+            font: inherit; transition: color var(--transition-speed);
+        }
+
+.checklist-item__head:hover { color: var(--primary-red); }
+
+.checklist-item__head i.fa-circle-check { color: #22c55e; font-size: 0.85rem; flex-shrink: 0; }
+
+.checklist-item__name { font-size: 0.85rem; flex: 1; }
+
+.checklist-item__qty {
+            font-size: 0.72rem; color: var(--text-muted); background: var(--secondary-bg);
+            padding: 2px 9px; border-radius: 99px; white-space: nowrap; flex-shrink: 0;
+        }
+
+.checklist-item__head .chev {
+            flex-shrink: 0; display: inline-flex; color: var(--text-muted);
+            transition: transform var(--transition-speed);
+        }
+
+.checklist-item__head .chev i { font-size: 0.7rem; }
+
+.checklist-item.is-open .checklist-item__head .chev { transform: rotate(180deg); }
+
+.checklist-item.is-open .checklist-item__head { color: var(--primary-red); }
+
+.checklist-item__body {
+            padding: 0 2px 14px 26px; animation: tkExpandIn 0.2s ease;
+        }
+
+.checklist-item__body p { margin: 0; font-size: 0.82rem; line-height: 1.5; color: var(--text-muted); }
+
+.checklist-item__facts {
+            display: grid; grid-template-columns: 100px 1fr; gap: 6px 14px; margin: 0 0 8px;
+            font-size: 0.82rem;
+        }
+
+.checklist-item__facts dt { font-weight: 700; color: var(--text-heading); }
+
+.checklist-item__facts dd { margin: 0; color: var(--text-muted); }
+
+@media (max-width: 560px) {
+            .checklist-item__facts { grid-template-columns: 1fr; }
+            .checklist-item__facts dt { margin-top: 4px; }
+        }
+
+.checklist-item__age {
+            display: flex; align-items: flex-start; gap: 6px; font-size: 0.78rem;
+            color: #b45309; background: #fef3c7; border-radius: 6px; padding: 6px 10px; margin: 0 0 10px;
+        }
+
+/* Category accordions — one per "What's inside" section, each holding
+   several checklist items. Native <details>/<summary> for free
+   keyboard and focus handling, styled to match the card system. */
+.cat {
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px;
+            margin-bottom: 8px; overflow: hidden;
+        }
+
+.cat:last-child { margin-bottom: 0; }
+
+.cat[open] { border-color: var(--primary-red); }
+
+.cat > summary {
+            list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px; font-size: 0.85rem; color: var(--text-heading); user-select: none;
+        }
+
+.cat > summary::-webkit-details-marker,
+.cat > summary::marker { display: none; content: ''; }
+
+.cat__num {
+            display: grid; place-items: center; width: 26px; height: 26px; border-radius: 7px;
+            background: var(--secondary-bg); color: var(--text-muted); font-weight: 800;
+            font-size: 0.68rem; flex-shrink: 0;
+        }
+
+.cat[open] .cat__num { background: var(--primary-red); color: #fff; }
+
+.cat__name { font-weight: 650; flex: 1; }
+
+.cat__count { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+
+.cat > summary .chev { flex-shrink: 0; color: var(--text-muted); transition: transform var(--transition-speed); }
+
+.cat[open] > summary .chev { transform: rotate(180deg); }
+
+.cat__body { padding: 0 12px 8px; border-top: 1px solid var(--border-color); }
+
+/* Manufacturer / EU-representative identification, collapsed by default
+   inside each item — Art. 19 GPSR-style disclosure. */
+.mfr { margin-top: 4px; font-size: 0.78rem; }
+
+.mfr > summary {
+            list-style: none; cursor: pointer; color: var(--primary-red); font-weight: 600;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+
+.mfr > summary::-webkit-details-marker, .mfr > summary::marker { display: none; content: ''; }
+
+.mfr > summary::before { content: '\\25B8'; font-size: 0.7em; transition: transform var(--transition-speed); }
+
+.mfr[open] > summary::before { transform: rotate(90deg); }
+
+.mfr__body table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+
+.mfr__body td {
+            padding: 4px 0; border-bottom: 1px solid var(--border-color); vertical-align: top;
+            font-size: 0.78rem;
+        }
+
+.mfr__body td:first-child { color: var(--text-muted); font-weight: 600; width: 42%; padding-right: 10px; }
+
+.mfr__body tr:last-child td { border-bottom: none; }
+
+/* Food safety / nutrition — legally required ingredient, allergen and
+   nutrition facts for the food items included in a kit. */
+.food-info {
+            margin: 10px 0; padding: 10px 12px; background: var(--secondary-bg); border-radius: 8px;
+            font-size: 0.78rem;
+        }
+
+.food-info h4 { margin: 0 0 6px; font-size: 0.8rem; color: var(--text-heading); }
+
+.food-info__allergens {
+            font-weight: 700; color: #b45309; background: #fef3c7; border-radius: 6px;
+            padding: 5px 8px; margin-bottom: 8px;
+        }
+
+.food-info__allergens span { text-transform: uppercase; margin-right: 4px; }
+
+.food-info__traces { display: block; font-weight: 400; margin-top: 2px; }
+
+.food-info__facts, .food-info__nutrition { width: 100%; border-collapse: collapse; margin-bottom: 8px; }
+
+.food-info__facts td, .food-info__nutrition td {
+            padding: 3px 0; border-bottom: 1px solid var(--border-color); vertical-align: top;
+        }
+
+.food-info__facts td:first-child, .food-info__nutrition td:first-child {
+            color: var(--text-muted); font-weight: 600; width: 40%; padding-right: 10px;
+        }
+
+.food-info__nutrition caption { text-align: left; font-weight: 700; color: var(--text-heading); padding-bottom: 4px; }
+
+.food-info__nutrition tr.sub td:first-child { padding-left: 12px; font-weight: 400; }
+
+.food-info__note { margin: 6px 0 0; font-size: 0.72rem; color: var(--text-muted); font-style: italic; }
 
 /* Level Selector */
 

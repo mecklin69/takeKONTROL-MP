@@ -13,6 +13,7 @@ import { initShopBindings } from '../cart/shop-bindings.js';
 import { initTicker } from '../features/ticker.js';
 import { initShopMobile } from '../features/shop-mobile.js';
 import { initLightbox } from '../features/lightbox.js';
+import { renderKitContents } from './kit-contents.js';
 import * as cart from '../cart/engine.js';
 
 /* ── Image fallback ─────────────────────────────────────────────── */
@@ -106,10 +107,12 @@ function initCarousel(trackId) {
 initSite({ dictionary, googleTranslate: false });
 
 onReady(() => {
+  renderKitContents();
   initShopBindings();
   initTicker();
   cart.refreshBadge();
   ['carouselHomeKit', 'carouselEssential', 'carouselStandard', 'carouselPremium'].forEach(initCarousel);
   initShopMobile();
   initLightbox();
+  document.addEventListener('tk:lang-changed', () => renderKitContents());
 });

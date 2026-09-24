@@ -214,6 +214,16 @@ function toggleView(btn) {
   if (open) panel.scrollTop = 0;
 }
 
+function toggleChecklistItem(head) {
+  const row = head.closest('.checklist-item');
+  const body = head.nextElementSibling;
+  if (!row || !body) return;
+  const open = body.hidden;
+  body.hidden = !open;
+  head.setAttribute('aria-expanded', String(open));
+  row.classList.toggle('is-open', open);
+}
+
 /* ── Boot ───────────────────────────────────────────────────────── */
 
 export function initShopBindings() {
@@ -239,7 +249,10 @@ export function initShopBindings() {
     if (addBtn) { event.preventDefault(); handleAdd(addBtn); return; }
 
     const viewBtn = event.target.closest('.view-items-btn, [data-view-items]');
-    if (viewBtn) { event.preventDefault(); toggleView(viewBtn); }
+    if (viewBtn) { event.preventDefault(); toggleView(viewBtn); return; }
+
+    const itemHead = event.target.closest('.checklist-item__head');
+    if (itemHead) { event.preventDefault(); toggleChecklistItem(itemHead); }
   });
 
   document.addEventListener('keydown', (event) => {
