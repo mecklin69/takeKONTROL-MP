@@ -37,12 +37,23 @@ function requireUID(req) {
 
 /* ── Orders ─────────────────────────────────────────────────────── */
 
+/**
+ * Orders the customer should see. `CREATED` is written the instant
+ * checkout starts — before PayPal is even opened — purely so an
+ * interrupted session can be recovered (see server/store.js). It is
+ * not something the customer did or paid for, so it never belongs in
+ * their order history: an abandoned or unstarted checkout must not
+ * look like a real order. Every other status reflects an actual
+ * outcome of a payment attempt and is shown as-is.
+ */
+const CUSTOMER_VISIBLE = (order) => order.status !== 'CREATED';
+
 userRouter.get('/user/orders', asyncHandler(async (req, res) => {
   const email = requireEmail(req);
   const orders = await dynamo.getOrdersByEmail(email);
 
   return res.json({
-    orders: orders.map(formatOrder)
+    orders: orders.filter(CUSTOMER_VISIBLE).map(formatOrder)
   });
 }));
 
@@ -52,6 +63,10 @@ userRouter.get('/user/orders/:id', asyncHandler(async (req, res) => {
 
   if (!order) return res.status(404).json({ error: 'ORDER_NOT_FOUND' });
   if (order.email?.toLowerCase() !== email) return res.status(403).json({ error: 'FORBIDDEN' });
+  // A still-CREATED order isn't a real order yet from the customer's
+  // side — a stale bookmark or link to it should 404, same as if it
+  // never existed, rather than reveal an unpaid draft.
+  if (!CUSTOMER_VISIBLE(order)) return res.status(404).json({ error: 'ORDER_NOT_FOUND' });
 
   return res.json({ order: formatOrder(order, true) });
 }));
@@ -94,6 +109,9 @@ userRouter.get('/user/orders/:id/invoice', asyncHandler(async (req, res) => {
 
   if (!order) return res.status(404).json({ error: 'ORDER_NOT_FOUND' });
   if (order.email?.toLowerCase() !== email) return res.status(403).json({ error: 'FORBIDDEN' });
+  // An invoice is a record of a payment that happened. Anything short
+  // of PAID (including a still-CREATED draft) has nothing to invoice.
+  if (order.status !== 'PAID') return res.status(404).json({ error: 'ORDER_NOT_PAID' });
 
   const q        = safeJson(order.rawQuote)  || {};
   const shipping = safeJson(order.rawShipping) || {};
