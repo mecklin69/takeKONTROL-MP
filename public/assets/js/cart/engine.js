@@ -23,6 +23,7 @@ import {
   PRICING,
   STORAGE_KEYS,
   fromCents,
+  grossUnitPrice,
   priceCart
 } from '../shared/catalog.js';
 import { byId } from '../core/dom.js';
@@ -89,7 +90,7 @@ function save(lines) {
   return lines;
 }
 
-/** A display view of the cart: catalogue name and price joined in. */
+/** A display view of the cart: catalogue name and gross price joined in. */
 export function getDetailedLines(lang = currentLang()) {
   return getLines().map((line) => {
     const product = CATALOG[line.sku];
@@ -97,31 +98,43 @@ export function getDetailedLines(lang = currentLang()) {
       sku: line.sku,
       qty: line.qty,
       name: lang === 'en' ? product.name : product.name_de,
-      price: product.price
+      price: grossUnitPrice(line.sku)
     };
   });
 }
 
-/** Full VAT and shipping breakdown, in euros, for rendering. */
-export function totals(lang = currentLang()) {
-  const priced = priceCart(getLines(), { lang, strict: false });
+/**
+ * Full VAT-inclusive breakdown, in euros, for rendering. Every amount
+ * is gross. Pass a coupon code (e.g. from the checkout page) to see
+ * the cart discounted; leave it out for the plain, undiscounted view
+ * the cart page and shop badges use.
+ */
+export function totals(lang = currentLang(), couponCode = null) {
+  const priced = priceCart(getLines(), { lang, strict: false, couponCode });
   return {
     count: priced.count,
     lines: priced.lines.map((line) => ({
       sku: line.sku,
       name: line.name,
       qty: line.qty,
-      unitNet: fromCents(line.unitCents),
-      lineNet: fromCents(line.lineCents)
+      unitGross: fromCents(line.unitCents),
+      lineGross: fromCents(line.lineCents),
+      unitGrossBeforeDiscount: fromCents(line.unitCentsBeforeDiscount),
+      lineGrossBeforeDiscount: fromCents(line.lineCentsBeforeDiscount),
+      discounted: line.discounted
     })),
-    subtotalNet: fromCents(priced.itemTotalCents),
-    shippingNet: fromCents(priced.shippingCents),
+    subtotalGross: fromCents(priced.itemTotalCents),
+    subtotalGrossBeforeDiscount: fromCents(priced.itemTotalCentsBeforeDiscount),
+    discount: fromCents(priced.discountCents),
+    shippingGross: fromCents(priced.shippingCents),
     freeShipping: priced.freeShipping,
     shippingGap: fromCents(priced.shippingGapCents),
     vatRate: priced.vatRate,
     vat: fromCents(priced.vatCents),
     total: fromCents(priced.grandTotalCents),
-    smallBusiness: priced.smallBusiness
+    smallBusiness: priced.smallBusiness,
+    coupon: priced.coupon,
+    couponError: priced.couponError
   };
 }
 

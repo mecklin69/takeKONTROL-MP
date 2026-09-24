@@ -11,7 +11,7 @@
  * =================================================================
  */
 
-import { CATALOG } from '../shared/catalog.js';
+import { CATALOG, grossUnitPrice } from '../shared/catalog.js';
 import { $$ } from '../core/dom.js';
 import { currentLang, t as translate } from '../core/i18n.js';
 import * as cart from './engine.js';
@@ -56,6 +56,21 @@ const CHEVRON_ICON =
   'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
   '<polyline points="6 9 12 15 18 9"></polyline></svg>';
 
+/* ── Shelf prices ───────────────────────────────────────────────
+   Every product's shop-shelf price is the VAT-inclusive (gross)
+   figure, read straight from the catalogue — never typed into the
+   markup. The HTML only carries a data-sku and a placeholder amount
+   so the page still reads sensibly with JavaScript disabled. */
+
+function renderShopPrices() {
+  for (const el of $$('.price[data-sku]')) {
+    const sku = el.dataset.sku;
+    if (!CATALOG[sku]) continue;
+    const amount = el.querySelector('.price-amount');
+    if (amount) amount.textContent = cart.formatEUR(grossUnitPrice(sku));
+  }
+}
+
 /* ── Add to cart ────────────────────────────────────────────────── */
 
 function paintButton(btn) {
@@ -96,8 +111,9 @@ function upgradeAddButton(btn) {
     return;
   }
 
-  // Keep the catalogue price authoritative on the markup too.
-  btn.dataset.price = String(CATALOG[sku].price);
+  // Keep the catalogue price authoritative on the markup too — gross,
+  // matching what is actually shown and charged.
+  btn.dataset.price = String(grossUnitPrice(sku));
 
   if (!btn.querySelector('.atc-label')) {
     const compact = btn.dataset.cartStyle === 'compact';
@@ -203,6 +219,7 @@ function toggleView(btn) {
 export function initShopBindings() {
   const addButtons = $$('.add-to-cart-btn');
   const viewButtons = $$('.view-items-btn, [data-view-items]');
+  renderShopPrices();
   if (addButtons.length === 0 && viewButtons.length === 0) return;
 
   addButtons.forEach(upgradeAddButton);
@@ -235,6 +252,7 @@ export function initShopBindings() {
 
   document.addEventListener('tk:cart-changed', paintAll);
   document.addEventListener('tk:lang-changed', () => {
+    renderShopPrices();
     paintAll();
     for (const btn of $$('.view-items-btn')) {
       const panel = document.getElementById(btn.dataset.target);

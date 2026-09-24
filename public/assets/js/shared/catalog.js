@@ -9,14 +9,24 @@
  * Before this refactor the SKU table and the VAT/shipping constants
  * existed twice — once in cart.js and once in server/catalog.js — and
  * the two were already drifting. Change a price here and both sides
- * move together.
+ * move together. The same is true of coupons: FIRST10 is defined once,
+ * below, and applying it changes the browser, the server quote and the
+ * amount PayPal is asked to collect together, because all three call
+ * priceCart().
  *
  * Keep this file free of browser globals (window, document, localStorage)
  * and of Node built-ins (fs, process). It must stay runnable in both.
  * =================================================================
  */
 
-/** Prices are NET (excluding VAT) in EUR, matching the "excl. VAT" labels in the shop. */
+/**
+ * CATALOG prices are the shop's LIST prices, NET (excluding VAT), in EUR.
+ * They stay net internally — that is the number a merchant actually
+ * negotiates and books — but every price shown to a shopper (shop,
+ * cart, checkout, invoice) is the GROSS, VAT-inclusive figure computed
+ * from this by priceCart() / grossUnitPrice() below. Nothing outside
+ * this file should do that arithmetic itself.
+ */
 export const CATALOG = {
   'TK-HOME-7D':    { name: '7-Day Home Preparedness Kit', name_de: '7-Tage Haushalts-Vorsorgeset',  price: 549.99 },
   'TK-BP-ESS':     { name: 'Essential Backpack',          name_de: 'Essential Rucksack',            price: 49.99 },
@@ -35,7 +45,7 @@ export const PRICING = {
   /** Kleinunternehmer §19 UStG: set true to charge 0 % VAT and show the §19 notice. */
   SMALL_BUSINESS_19_USTG: false,
 
-  /** Shipping within Germany, net. Free at or above the threshold. */
+  /** Shipping within Germany, net (converted to gross alongside everything else). */
   SHIPPING_NET: 5.90,
   FREE_SHIPPING_THRESHOLD_NET: 150.00,
 
@@ -46,9 +56,33 @@ export const PRICING = {
   QUOTE_TTL_MS: 15 * 60 * 1000
 };
 
+/**
+ * Coupon codes. One place, like everything else here — matched
+ * case-insensitively. Add a code by adding an entry; nothing else
+ * needs to change for it to work in the browser, the quote endpoint,
+ * order creation and the PayPal amount.
+ */
+export const COUPONS = {
+  FIRST10: { code: 'FIRST10', percentOff: 10 }
+};
+
+/**
+ * Look up and normalise a coupon code. Returns null for no code, an
+ * unrecognised code, or anything that doesn't resolve — callers that
+ * need to tell "no code" apart from "bad code" check the raw input
+ * themselves (priceCart does, via couponError below).
+ */
+export function resolveCoupon(rawCode) {
+  const code = String(rawCode || '').trim().toUpperCase();
+  if (!code) return null;
+  const coupon = COUPONS[code];
+  return coupon ? { code: coupon.code, percentOff: coupon.percentOff } : null;
+}
+
 /** localStorage / sessionStorage keys used anywhere in the front end. */
 export const STORAGE_KEYS = {
   CART: 'tk_cart',
+  COUPON: 'tk_coupon',
   LANG: 'tk_lang',
   THEME: 'tk_theme',
   PENDING_ORDER: 'tk_pending_order',
@@ -67,6 +101,25 @@ export const STORAGE_KEYS = {
 export const toCents = (v) => Math.round((Number(v) || 0) * 100);
 export const fromCents = (c) => c / 100;
 export const centsToString = (c) => (c / 100).toFixed(2);
+
+/** The VAT rate actually in effect right now (0 under §19 UStG). */
+export const effectiveVatRate = () =>
+  PRICING.SMALL_BUSINESS_19_USTG ? 0 : PRICING.VAT_RATE;
+
+/** Net cents → gross cents at the given (or current) VAT rate. */
+export const toGrossCents = (netCents, vatRate = effectiveVatRate()) =>
+  Math.round(netCents * (1 + vatRate));
+
+/**
+ * A single product's shop-shelf price: gross, in euros, no cart or
+ * coupon involved. This is what the shop page shows next to "Add to
+ * Cart" — VAT-inclusive, exactly like the checkout total.
+ */
+export function grossUnitPrice(sku) {
+  const product = CATALOG[sku];
+  if (!product) return 0;
+  return fromCents(toGrossCents(toCents(product.price)));
+}
 
 export class PricingError extends Error {
   constructor(code, message) {
@@ -114,55 +167,110 @@ export function normaliseLines(rawLines, { strict = true } = {}) {
 
 /**
  * The one place cart maths happens. Both the browser summary and the
- * server quote are formatted from this result, so they cannot disagree.
+ * server quote are formatted from this result, so they cannot disagree
+ * — and neither can a coupon: apply FIRST10 here and the browser
+ * total, the server quote, the capture-time price check and the
+ * PayPal amount all move together, because they all call this.
  *
- * @returns {{lines: Array, itemTotalCents: number, shippingCents: number,
- *            vatRate: number, vatCents: number, grandTotalCents: number,
- *            count: number, freeShipping: boolean, shippingGapCents: number,
- *            smallBusiness: boolean, currency: string}}
+ * Every money figure this returns is GROSS (VAT-inclusive) — unit
+ * prices, line totals, the item subtotal, shipping, the grand total.
+ * vatCents is the VAT portion *contained within* those figures, shown
+ * for the legally-required "of which VAT" line, not added on top of
+ * them.
+ *
+ * @param {Array<{sku: string, qty: number}>} rawLines
+ * @param {{ lang?: 'de'|'en', strict?: boolean, couponCode?: string|null }} [options]
+ * @returns {{lines: Array, itemTotalCents: number, itemTotalCentsBeforeDiscount: number,
+ *            discountCents: number, shippingCents: number, vatRate: number,
+ *            vatCents: number, grandTotalCents: number, count: number,
+ *            freeShipping: boolean, shippingGapCents: number,
+ *            smallBusiness: boolean, currency: string,
+ *            coupon: {code: string, percentOff: number} | null,
+ *            couponError: 'INVALID_COUPON' | null}}
  */
-export function priceCart(rawLines, { lang = 'de', strict = true } = {}) {
+export function priceCart(rawLines, { lang = 'de', strict = true, couponCode = null } = {}) {
   const merged = normaliseLines(rawLines, { strict });
+
+  const coupon = resolveCoupon(couponCode);
+  // A code was typed but did not resolve to anything real — tell the
+  // caller so the UI can say "invalid code" rather than silently
+  // charging full price. strict (server) callers treat this as a hard
+  // error so a stale/garbled code never slips past an order.
+  const trimmedInput = String(couponCode || '').trim();
+  const couponError = (trimmedInput && !coupon) ? 'INVALID_COUPON' : null;
+  if (couponError && strict) {
+    throw new PricingError('INVALID_COUPON', `Unknown coupon code: ${trimmedInput}`);
+  }
+
+  const vatRate = effectiveVatRate();
 
   const lines = [];
   let itemTotalCents = 0;
+  let itemTotalCentsBeforeDiscount = 0;
   let count = 0;
 
   for (const [sku, qty] of merged) {
     const product = CATALOG[sku];
-    const unitCents = toCents(product.price);
-    const lineCents = unitCents * qty;
-    itemTotalCents += lineCents;
+    const unitGrossFull = toGrossCents(toCents(product.price), vatRate);
+    const unitGross = coupon
+      ? Math.round(unitGrossFull * (100 - coupon.percentOff) / 100)
+      : unitGrossFull;
+
+    const lineGross = unitGross * qty;
+    const lineGrossFull = unitGrossFull * qty;
+
+    itemTotalCents += lineGross;
+    itemTotalCentsBeforeDiscount += lineGrossFull;
     count += qty;
+
     lines.push({
       sku,
       name: lang === 'en' ? product.name : product.name_de,
       qty,
-      unitCents,
-      lineCents
+      unitCents: unitGross,               // gross, post-discount — the price charged
+      lineCents: lineGross,                // gross, post-discount
+      unitCentsBeforeDiscount: unitGrossFull,
+      lineCentsBeforeDiscount: lineGrossFull,
+      discounted: Boolean(coupon)
     });
   }
 
-  const thresholdCents = toCents(PRICING.FREE_SHIPPING_THRESHOLD_NET);
-  const shippingCents = (merged.size === 0 || itemTotalCents >= thresholdCents)
-    ? 0
-    : toCents(PRICING.SHIPPING_NET);
+  const discountCents = itemTotalCentsBeforeDiscount - itemTotalCents;
 
-  const vatRate = PRICING.SMALL_BUSINESS_19_USTG ? 0 : PRICING.VAT_RATE;
-  const taxableCents = itemTotalCents + shippingCents;
-  const vatCents = Math.round(taxableCents * vatRate);
+  // The free-shipping threshold and the shipping fee are configured
+  // net (that's the business rule); converted to gross here so the
+  // comparison is apples-to-apples with the now-gross item total, and
+  // so a coupon that drops the order under the threshold correctly
+  // switches shipping back on.
+  const thresholdGrossCents = toGrossCents(toCents(PRICING.FREE_SHIPPING_THRESHOLD_NET), vatRate);
+  const shippingGrossFull = toGrossCents(toCents(PRICING.SHIPPING_NET), vatRate);
+  const shippingCents = (merged.size === 0 || itemTotalCents >= thresholdGrossCents)
+    ? 0
+    : shippingGrossFull;
+
+  const grandTotalCents = itemTotalCents + shippingCents;
+
+  // Back out the VAT contained in the (already gross) grand total, for
+  // the statutory "enthaltene MwSt." disclosure. Zero under §19 UStG.
+  const vatCents = vatRate === 0
+    ? 0
+    : grandTotalCents - Math.round(grandTotalCents / (1 + vatRate));
 
   return {
     currency: PRICING.CURRENCY,
     lines,
     count,
     itemTotalCents,
+    itemTotalCentsBeforeDiscount,
+    discountCents,
     shippingCents,
     freeShipping: merged.size > 0 && shippingCents === 0,
-    shippingGapCents: Math.max(0, thresholdCents - itemTotalCents),
+    shippingGapCents: Math.max(0, thresholdGrossCents - itemTotalCents),
     vatRate,
     vatCents,
-    grandTotalCents: taxableCents + vatCents,
-    smallBusiness: PRICING.SMALL_BUSINESS_19_USTG
+    grandTotalCents,
+    smallBusiness: PRICING.SMALL_BUSINESS_19_USTG,
+    coupon,
+    couponError
   };
 }

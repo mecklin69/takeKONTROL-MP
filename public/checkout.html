@@ -224,10 +224,28 @@
                 <aside class="summary-panel">
                     <h3 data-localize="ck_sum_title">Bestellübersicht</h3>
                     <div id="summaryLines"></div>
+
+                    <div class="coupon-box">
+                        <div class="coupon-row" id="couponInputRow">
+                            <input type="text" id="couponInput" class="coupon-input"
+                                   autocomplete="off" autocapitalize="characters"
+                                   data-i18n-placeholder="ck_coupon_placeholder" placeholder="Rabattcode">
+                            <button type="button" class="btn btn-outline btn-small" id="couponApplyBtn"
+                                    data-localize="ck_coupon_apply">Einlösen</button>
+                        </div>
+                        <div class="coupon-row coupon-applied" id="couponAppliedRow" hidden>
+                            <span id="couponAppliedLabel">—</span>
+                            <button type="button" class="coupon-remove" id="couponRemoveBtn"
+                                    data-localize="ck_coupon_remove">Entfernen</button>
+                        </div>
+                        <p class="coupon-message" id="couponMessage" hidden></p>
+                    </div>
+
                     <div class="sum-divider"></div>
-                    <div class="sum-row"><span data-localize="ck_sum_items">Zwischensumme (netto)</span><span id="sumItems">—</span></div>
-                    <div class="sum-row"><span data-localize="ck_sum_ship">Versand (netto)</span><span id="sumShipping">—</span></div>
-                    <div class="sum-row" id="sumVatRow"><span id="sumVatLabel">zzgl. 19 % MwSt.</span><span id="sumVat">—</span></div>
+                    <div class="sum-row"><span data-localize="ck_sum_items">Zwischensumme (inkl. MwSt.)</span><span id="sumItems">—</span></div>
+                    <div class="sum-row" id="sumDiscountRow" hidden><span id="sumDiscountLabel">Rabatt</span><span id="sumDiscount" class="sum-discount-value">—</span></div>
+                    <div class="sum-row"><span data-localize="ck_sum_ship">Versand (inkl. MwSt.)</span><span id="sumShipping">—</span></div>
+                    <div class="sum-row" id="sumVatRow"><span id="sumVatLabel">davon 19 % MwSt.</span><span id="sumVat">—</span></div>
                     <div class="sum-total"><span data-localize="ck_sum_total">Gesamt</span><span id="sumTotal">—</span></div>
                     <p class="provisional-note" id="provisionalNote" hidden></p>
                     <p class="sum-note" data-localize="ck_sum_note">Alle Preise inkl. gesetzlicher MwSt. (19 %, §12 UStG). Lieferung innerhalb von 3–5 Werktagen.</p>

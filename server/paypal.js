@@ -147,8 +147,16 @@ async function call(path, { method = 'GET', body, headers = {}, retries = PAYPAL
 
 /**
  * Create an order from a server-computed quote.
- * The amount breakdown must add up to the cent or PayPal rejects it:
- *   item_total + shipping + tax_total === value
+ *
+ * Our prices are shown to the shopper VAT-inclusive, so PayPal is told
+ * the same way: item unit_amount is the full (pre-coupon) gross price,
+ * amount.breakdown.discount carries any coupon reduction as its own
+ * line, and tax_total is 0 because the tax is already folded into the
+ * item/shipping amounts rather than added on top of them. The
+ * breakdown must still add up to the cent or PayPal rejects it:
+ *   item_total - discount + shipping + tax_total === value
+ * which holds here because item_total is built from the same
+ * pre-discount unit prices quote.discountCents was computed from.
  */
 export async function createOrder(quote, { referenceId, returnUrl, cancelUrl, shipping }) {
   const purchaseUnit = {
@@ -159,16 +167,17 @@ export async function createOrder(quote, { referenceId, returnUrl, cancelUrl, sh
       currency_code: quote.currency,
       value: quote.grandTotal,
       breakdown: {
-        item_total: { currency_code: quote.currency, value: quote.itemTotalNet },
-        shipping: { currency_code: quote.currency, value: quote.shippingNet },
-        tax_total: { currency_code: quote.currency, value: quote.vat }
+        item_total: { currency_code: quote.currency, value: quote.itemTotalGrossBeforeDiscount },
+        discount: { currency_code: quote.currency, value: quote.discount },
+        shipping: { currency_code: quote.currency, value: quote.shippingGross },
+        tax_total: { currency_code: quote.currency, value: '0.00' }
       }
     },
     items: quote.lines.map((l) => ({
       name: l.name.slice(0, 127),
       sku: l.sku,
       quantity: String(l.qty),
-      unit_amount: { currency_code: quote.currency, value: l.unitNet },
+      unit_amount: { currency_code: quote.currency, value: l.unitGrossBeforeDiscount },
       category: 'PHYSICAL_GOODS'
     }))
   };

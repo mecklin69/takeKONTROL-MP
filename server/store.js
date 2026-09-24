@@ -147,6 +147,8 @@ async function syncToDynamo(order, isCreate = false) {
       payerEmail:    order.payerEmail     || undefined,
       grandTotal:    order.quote?.grandTotal  || undefined,
       currency:      order.quote?.currency    || 'EUR',
+      couponCode:    order.couponCode         || undefined,
+      discount:      order.quote?.discount    || undefined,
       paidAmount:    order.paidAmount     || undefined,
       paidAt:        order.paidAt         || undefined,
       settledVia:    order.settledVia     || undefined,

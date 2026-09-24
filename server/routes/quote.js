@@ -23,9 +23,12 @@ quoteRouter.get('/config', (req, res) => {
 });
 
 /**
- * POST /api/quote — price a cart. A PricingError thrown here becomes a
- * 400 with its code in the error middleware.
+ * POST /api/quote — price a cart, applying a coupon code if one is
+ * given. A PricingError thrown here (unknown SKU, unknown coupon,
+ * empty cart, ...) becomes a 400 with its code in the error
+ * middleware, which is exactly how the checkout UI tells "bad coupon"
+ * apart from "server unreachable".
  */
 quoteRouter.post('/quote', (req, res) => {
-  res.json(quote(req.body.lines, req.body.lang));
+  res.json(quote(req.body.lines, req.body.lang, req.body.couponCode));
 });

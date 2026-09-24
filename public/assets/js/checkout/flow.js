@@ -15,7 +15,7 @@
 import { PRICING, STORAGE_KEYS } from '../shared/catalog.js';
 import { $$, byId, escapeHtml, setText } from '../core/dom.js';
 import { currentLang } from '../core/i18n.js';
-import { readLocalJson, removeLocal, writeLocalJson } from '../core/storage.js';
+import { readLocal, readLocalJson, removeLocal, writeLocal, writeLocalJson } from '../core/storage.js';
 import * as cart from '../cart/engine.js';
 
 const API_BASE = String(window.TK_API_BASE || '').replace(/\/$/, '');
@@ -45,7 +45,8 @@ const state = {
   order: null,
   quotedAt: 0,
   paying: false,
-  serverOk: false
+  serverOk: false,
+  couponCode: null
 };
 
 /* ── Runtime messages ─────────────────────────────────────────────
@@ -75,8 +76,15 @@ const MESSAGES = {
     cannotPay: 'Zahlung ist erst möglich, wenn die Preise bestätigt sind. Bitte versuchen Sie es erneut.',
     transferOk: 'Bestellung vorgemerkt. Überweisungsdetails erhalten Sie per E-Mail.',
     free: 'Kostenlos',
-    vatLabel: 'zzgl. {r} % MwSt.',
-    vatLabelPlain: 'MwSt.'
+    vatLabel: 'davon {r} % MwSt.',
+    vatLabelPlain: 'MwSt.',
+    discountLabel: 'Rabatt',
+    couponEmpty: 'Bitte geben Sie einen Rabattcode ein.',
+    couponInvalid: 'Dieser Rabattcode ist ungültig.',
+    couponApplied: '{pct} % Rabatt angewendet.',
+    couponRemoved: 'Rabattcode entfernt.',
+    couponBadge: '{code} — {pct} % Rabatt',
+    couponCheckFailed: 'Der Rabattcode konnte nicht geprüft werden. Bitte versuchen Sie es erneut.'
   },
   en: {
     empty: 'Your cart is empty.',
@@ -101,8 +109,15 @@ const MESSAGES = {
     cannotPay: 'Payment stays locked until prices are confirmed. Please try again.',
     transferOk: 'Order reserved. Transfer details are on their way by email.',
     free: 'Free',
-    vatLabel: 'VAT {r} %',
-    vatLabelPlain: 'VAT'
+    vatLabel: 'of which {r} % VAT',
+    vatLabelPlain: 'VAT',
+    discountLabel: 'Discount',
+    couponEmpty: 'Please enter a discount code.',
+    couponInvalid: 'That discount code is not valid.',
+    couponApplied: '{pct} % discount applied.',
+    couponRemoved: 'Discount code removed.',
+    couponBadge: '{code} — {pct} % off',
+    couponCheckFailed: 'Could not check that discount code. Please try again.'
   }
 };
 
@@ -252,7 +267,7 @@ async function refreshQuote({ quiet = false } = {}) {
   try {
     const quote = await api('/api/quote', {
       method: 'POST',
-      body: JSON.stringify({ lines, lang: currentLang() })
+      body: JSON.stringify({ lines, lang: currentLang(), couponCode: state.couponCode })
     });
     state.quote = quote;
     state.quotedAt = Date.now();
@@ -262,6 +277,15 @@ async function refreshQuote({ quiet = false } = {}) {
     if (!quiet) banner('');
     return quote;
   } catch (err) {
+    // A coupon that stopped working between steps (typo'd earlier,
+    // expired, whatever) is not a server outage. Drop it quietly and
+    // re-quote without it rather than blaming "server down".
+    if (err.payload?.error === 'INVALID_COUPON' && state.couponCode) {
+      state.couponCode = null;
+      removeLocal(STORAGE_KEYS.COUPON);
+      showCouponMessage(t('couponInvalid'), 'error');
+      return refreshQuote({ quiet });
+    }
     // The server is the price authority, but a shopper staring at a
     // panel of em-dashes has no idea whether their cart survived. Show
     // what we know locally, mark it provisional, and keep the pay step
@@ -286,6 +310,80 @@ function setPayLocked(locked) {
   }
   const note = byId('provisionalNote');
   if (note && !locked) note.hidden = true;
+}
+
+/* ── Coupon ───────────────────────────────────────────────────────── */
+function showCouponMessage(text, kind) {
+  const el = byId('couponMessage');
+  if (!el) return;
+  el.textContent = text || '';
+  el.className = `coupon-message ${kind || ''}`.trim();
+  el.hidden = !text;
+}
+
+/** Swap the input row for an "applied" badge, or back, based on the
+ *  coupon (if any) carried on the last quote — server or local. */
+function syncCouponUI(source) {
+  const coupon = source?.coupon || null;
+  const inputRow = byId('couponInputRow');
+  const appliedRow = byId('couponAppliedRow');
+
+  if (coupon) {
+    if (inputRow) inputRow.hidden = true;
+    if (appliedRow) appliedRow.hidden = false;
+    setText('couponAppliedLabel', t('couponBadge')
+      .replace('{code}', coupon.code)
+      .replace('{pct}', String(coupon.percentOff)));
+  } else {
+    if (inputRow) inputRow.hidden = false;
+    if (appliedRow) appliedRow.hidden = true;
+  }
+}
+
+async function applyCoupon() {
+  const input = byId('couponInput');
+  const code = String(input?.value || '').trim().toUpperCase();
+  if (!code) {
+    showCouponMessage(t('couponEmpty'), 'error');
+    return;
+  }
+  if (cart.toApiLines().length === 0) return;
+
+  const applyBtn = byId('couponApplyBtn');
+  if (applyBtn) applyBtn.disabled = true;
+  showCouponMessage('');
+
+  try {
+    const quote = await api('/api/quote', {
+      method: 'POST',
+      body: JSON.stringify({ lines: cart.toApiLines(), lang: currentLang(), couponCode: code })
+    });
+    state.couponCode = code;
+    state.quote = quote;
+    state.quotedAt = Date.now();
+    state.serverOk = true;
+    writeLocal(STORAGE_KEYS.COUPON, code);
+    renderSummary(quote);
+    setPayLocked(false);
+    showCouponMessage(t('couponApplied').replace('{pct}', String(quote.coupon.percentOff)), 'success');
+  } catch (err) {
+    if (err.payload?.error === 'INVALID_COUPON') {
+      showCouponMessage(t('couponInvalid'), 'error');
+    } else {
+      showCouponMessage(t('couponCheckFailed'), 'error');
+    }
+  } finally {
+    if (applyBtn) applyBtn.disabled = false;
+  }
+}
+
+async function removeCoupon() {
+  state.couponCode = null;
+  removeLocal(STORAGE_KEYS.COUPON);
+  const input = byId('couponInput');
+  if (input) input.value = '';
+  showCouponMessage(t('couponRemoved'), 'info');
+  await refreshQuote();
 }
 
 /* ── Rendering ────────────────────────────────────────────────────── */
@@ -321,10 +419,22 @@ function renderLineList(lines, formatLine) {
 }
 
 function renderSummary(quote) {
-  renderLineList(quote.lines, (line) => money(line.lineNet));
+  renderLineList(quote.lines, (line) => line.discounted
+    ? `<s class="sum-was">${money(line.lineGrossBeforeDiscount)}</s> ${money(line.lineGross)}`
+    : money(line.lineGross));
 
-  setText('sumItems', money(quote.itemTotalNet));
-  setText('sumShipping', Number(quote.shippingNet) === 0 ? t('free') : money(quote.shippingNet));
+  setText('sumItems', money(quote.itemTotalGrossBeforeDiscount));
+
+  const discountRow = byId('sumDiscountRow');
+  if (Number(quote.discountCents) > 0) {
+    if (discountRow) discountRow.hidden = false;
+    setText('sumDiscountLabel', quote.coupon ? `${t('discountLabel')} (${quote.coupon.code})` : t('discountLabel'));
+    setText('sumDiscount', `−${money(quote.discount)}`);
+  } else if (discountRow) {
+    discountRow.hidden = true;
+  }
+
+  setText('sumShipping', Number(quote.shippingGross) === 0 ? t('free') : money(quote.shippingGross));
   setText('sumVat', money(quote.vat));
   setText('sumVatLabel', quote.smallBusiness
     ? t('vatLabelPlain')
@@ -336,19 +446,36 @@ function renderSummary(quote) {
 
   const note = byId('provisionalNote');
   if (note) note.hidden = true;
+
+  syncCouponUI(quote);
 }
 
 /**
  * Client-side mirror of the cart, used ONLY when the server cannot be
  * reached. Nothing computed here is ever sent anywhere or charged; the
- * server re-prices the order before a cent moves.
+ * server re-prices the order before a cent moves. A coupon already
+ * applied is reflected here too, using the same shared pricing maths —
+ * it just is not the number that ends up charged until the server
+ * confirms it.
  */
 function renderLocalSummary() {
-  const sums = cart.totals();
-  renderLineList(sums.lines, (line) => cart.formatEUR(line.lineNet));
+  const sums = cart.totals(currentLang(), state.couponCode);
+  renderLineList(sums.lines, (line) => line.discounted
+    ? `<s class="sum-was">${cart.formatEUR(line.lineGrossBeforeDiscount)}</s> ${cart.formatEUR(line.lineGross)}`
+    : cart.formatEUR(line.lineGross));
 
-  setText('sumItems', cart.formatEUR(sums.subtotalNet));
-  setText('sumShipping', sums.shippingNet === 0 ? t('free') : cart.formatEUR(sums.shippingNet));
+  setText('sumItems', cart.formatEUR(sums.subtotalGrossBeforeDiscount));
+
+  const discountRow = byId('sumDiscountRow');
+  if (sums.discount > 0) {
+    if (discountRow) discountRow.hidden = false;
+    setText('sumDiscountLabel', sums.coupon ? `${t('discountLabel')} (${sums.coupon.code})` : t('discountLabel'));
+    setText('sumDiscount', `−${cart.formatEUR(sums.discount)}`);
+  } else if (discountRow) {
+    discountRow.hidden = true;
+  }
+
+  setText('sumShipping', sums.shippingGross === 0 ? t('free') : cart.formatEUR(sums.shippingGross));
   setText('sumVat', cart.formatEUR(sums.vat));
   setText('sumTotal', cart.formatEUR(sums.total));
 
@@ -357,6 +484,8 @@ function renderLocalSummary() {
     note.textContent = t('provisional');
     note.hidden = false;
   }
+
+  syncCouponUI(sums);
 }
 
 function renderReview() {
@@ -456,6 +585,7 @@ async function mountPayPal() {
         body: JSON.stringify({
           lines: cart.toApiLines(),
           lang: currentLang(),
+          couponCode: state.couponCode,
           shipping: readForm()
         })
       });
@@ -555,6 +685,8 @@ function finish(orderNumber, kind) {
   setPaying(false);
   removeLocal(STORAGE_KEYS.PENDING_ORDER);
   removeLocal(STORAGE_KEYS.CHECKOUT_DRAFT);
+  removeLocal(STORAGE_KEYS.COUPON);
+  state.couponCode = null;
   cart.clear();
 
   const message = kind === 'pending' ? t('pending')
@@ -593,6 +725,7 @@ async function submitManual() {
         body: JSON.stringify({
           lines: cart.toApiLines(),
           lang: currentLang(),
+          couponCode: state.couponCode,
           shipping: readForm()
         })
       });
@@ -635,6 +768,13 @@ export async function initCheckout() {
   }
 
   restoreDraft();
+
+  // A coupon applied earlier in this session (or on a previous visit
+  // that didn't finish) carries over — refreshQuote() below picks it
+  // up automatically since it always sends state.couponCode.
+  const savedCoupon = readLocal(STORAGE_KEYS.COUPON);
+  if (savedCoupon) state.couponCode = savedCoupon;
+
   for (const field of FIELDS) {
     byId(`ship-${field}`)?.addEventListener('input', () => {
       fieldError(field, '');
@@ -673,6 +813,14 @@ export async function initCheckout() {
   }
 
   byId('manualBtn')?.addEventListener('click', submitManual);
+
+  byId('couponApplyBtn')?.addEventListener('click', applyCoupon);
+  byId('couponRemoveBtn')?.addEventListener('click', removeCoupon);
+  byId('couponInput')?.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    applyCoupon();
+  });
 
   window.addEventListener('offline', () => banner(t('offline'), 'warn'));
   window.addEventListener('online', () => refreshQuote());

@@ -57,6 +57,7 @@ userRouter.get('/user/orders/:id', asyncHandler(async (req, res) => {
 }));
 
 function formatOrder(o, detail = false) {
+  const q = safeJson(o.rawQuote) || {};
   const base = {
     orderId:       o.orderID || o.orderId,
     orderNumber:   o.orderNumber,
@@ -67,11 +68,13 @@ function formatOrder(o, detail = false) {
     currency:      o.currency || 'EUR',
     captureId:     o.captureId   || null,
     paidAt:        o.paidAt      || null,
-    items:         safeJson(o.rawQuote)?.lines || [],
-    shippingNet:   safeJson(o.rawQuote)?.shippingNet || '0.00',
-    itemTotalNet:  safeJson(o.rawQuote)?.itemTotalNet || '0.00',
-    vat:           safeJson(o.rawQuote)?.vat || '0.00',
-    vatRate:       safeJson(o.rawQuote)?.vatRate || 0.19,
+    items:         q.lines || [],
+    shippingGross: q.shippingGross || '0.00',
+    itemTotalGross: q.itemTotalGrossBeforeDiscount || q.itemTotalGross || '0.00',
+    discount:      q.discount || '0.00',
+    couponCode:    o.couponCode || null,
+    vat:           q.vat || '0.00',
+    vatRate:       q.vatRate ?? 0.19,
   };
 
   if (detail) {
@@ -100,12 +103,16 @@ userRouter.get('/user/orders/:id/invoice', asyncHandler(async (req, res) => {
 
   const lines = (q.lines || []).map(l =>
     `<tr>
-      <td>${esc(l.name)}</td>
+      <td>${esc(l.name)}${l.discounted ? ` <span style="color:#b32020;font-size:10px;">(FIRST10)</span>` : ''}</td>
       <td style="text-align:center">${l.qty}</td>
-      <td style="text-align:right">€${l.unitNet}</td>
-      <td style="text-align:right">€${l.lineNet}</td>
+      <td style="text-align:right">€${l.unitGross}</td>
+      <td style="text-align:right">€${l.lineGross}</td>
     </tr>`
   ).join('');
+
+  const discountRow = Number(q.discount) > 0
+    ? `<tr><td>Rabatt${q.coupon ? ` (${esc(q.coupon.code)})` : ''}</td><td style="text-align:right">−€${q.discount}</td></tr>`
+    : '';
 
   const html = `<!DOCTYPE html>
 <html lang="de">
@@ -158,17 +165,18 @@ userRouter.get('/user/orders/:id/invoice', asyncHandler(async (req, res) => {
       <tr>
         <th>Artikel / Item</th>
         <th style="text-align:center">Menge</th>
-        <th style="text-align:right">Einzelpreis (netto)</th>
-        <th style="text-align:right">Gesamt (netto)</th>
+        <th style="text-align:right">Einzelpreis (inkl. MwSt.)</th>
+        <th style="text-align:right">Gesamt (inkl. MwSt.)</th>
       </tr>
     </thead>
     <tbody>${lines}</tbody>
   </table>
 
   <table class="totals">
-    <tr><td>Zwischensumme (netto)</td><td style="text-align:right">€${q.itemTotalNet || '0.00'}</td></tr>
-    <tr><td>Versand (netto)</td><td style="text-align:right">${Number(q.shippingNet) === 0 ? 'Kostenlos' : '€' + q.shippingNet}</td></tr>
-    <tr><td>MwSt. 19 % (§12 UStG)</td><td style="text-align:right">€${q.vat || '0.00'}</td></tr>
+    <tr><td>Zwischensumme (inkl. MwSt.)</td><td style="text-align:right">€${q.itemTotalGrossBeforeDiscount || q.itemTotalGross || '0.00'}</td></tr>
+    ${discountRow}
+    <tr><td>Versand (inkl. MwSt.)</td><td style="text-align:right">${Number(q.shippingGross) === 0 ? 'Kostenlos' : '€' + q.shippingGross}</td></tr>
+    <tr><td>davon MwSt. ${Math.round((q.vatRate ?? 0.19) * 100)} % (§12 UStG)</td><td style="text-align:right">€${q.vat || '0.00'}</td></tr>
     <tr class="grand"><td>Gesamtbetrag (inkl. MwSt.)</td><td style="text-align:right">€${order.grandTotal || '0.00'}</td></tr>
   </table>
 

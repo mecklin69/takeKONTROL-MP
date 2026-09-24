@@ -13,9 +13,11 @@ export const ordersRouter = Router();
 
 /* ── Create ─────────────────────────────────────────────────────── */
 ordersRouter.post('/orders', asyncHandler(async (req, res) => {
-  // Throws PricingError on a cart we cannot price; the error middleware
-  // turns that into a 400 naming the exact problem.
-  const priced = quote(req.body.lines, req.body.lang);
+  // Throws PricingError on a cart we cannot price, or on a coupon code
+  // that does not exist; the error middleware turns that into a 400
+  // naming the exact problem. The coupon is re-resolved here from the
+  // code alone — never trust a discounted total the browser sends.
+  const priced = quote(req.body.lines, req.body.lang, req.body.couponCode);
 
   const shipping = validateShipping(req.body.shipping);
   if (shipping.error) {
@@ -43,10 +45,14 @@ ordersRouter.post('/orders', asyncHandler(async (req, res) => {
 
   // Persisted BEFORE the customer can pay. If everything downstream
   // fails, there is still a record tying a PayPal order to a cart.
+  // couponCode is stored on the order (not just inside quote.coupon)
+  // so capture-time re-pricing below can reapply exactly the same
+  // discount without having to dig it out of the priced lines.
   const order = store.createOrder({
     referenceId,
     paypalOrderId: ppOrder.id,
     quote: priced,
+    couponCode: priced.coupon?.code || null,
     shipping: shipping.value,
     email: shipping.value.email,
     captureIdempotencyKey: crypto.randomUUID(),
@@ -71,10 +77,16 @@ ordersRouter.post('/orders/:id/capture', asyncHandler(async (req, res) => {
     return res.json({ status: 'PAID', orderNumber: order.orderNumber, captureId: order.captureId });
   }
 
-  // The catalogue may have changed between create and capture.
+  // The catalogue — or the coupon — may have changed between create
+  // and capture. Re-quote with the exact same lines and the exact
+  // same coupon code the order was created with.
   let current;
   try {
-    current = quote(order.quote.lines.map((l) => ({ sku: l.sku, qty: l.qty })));
+    current = quote(
+      order.quote.lines.map((l) => ({ sku: l.sku, qty: l.qty })),
+      order.quote.lang,
+      order.couponCode
+    );
   } catch {
     current = null;
   }

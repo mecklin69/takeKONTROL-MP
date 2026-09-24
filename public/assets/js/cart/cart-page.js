@@ -16,35 +16,37 @@ const TXT = {
     empty: 'Ihr Warenkorb ist derzeit leer.',
     emptyCta: 'Zum Shop',
     remove: 'Entfernen',
-    each: 'je Stück, zzgl. MwSt.',
-    subtotal: 'Zwischensumme (netto)',
-    shipping: 'Versand (netto)',
+    each: 'je Stück, inkl. MwSt.',
+    subtotal: 'Zwischensumme (inkl. MwSt.)',
+    shipping: 'Versand (inkl. MwSt.)',
     free: 'Kostenlos',
-    vat: 'zzgl. 19 % MwSt.',
+    vat: 'davon 19 % MwSt.',
     total: 'Gesamtsumme (inkl. MwSt.)',
     freeHint: 'Noch {amt} bis zum kostenlosen Versand.',
     freeGot: 'Versandkostenfrei.',
     note: 'Alle Preise inkl. gesetzlicher MwSt. (19 %, §12 UStG). Versand innerhalb Deutschlands.',
     smallBiz: 'Gemäß §19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).',
     emptyAlert: 'Ihr Warenkorb ist leer.',
-    qtyLabel: 'Menge'
+    qtyLabel: 'Menge',
+    couponHint: 'Einen Rabattcode haben Sie? Geben Sie ihn an der Kasse ein.'
   },
   en: {
     empty: 'Your cart is currently empty.',
     emptyCta: 'Browse the shop',
     remove: 'Remove',
-    each: 'each, excl. VAT',
-    subtotal: 'Subtotal (net)',
-    shipping: 'Shipping (net)',
+    each: 'each, incl. VAT',
+    subtotal: 'Subtotal (incl. VAT)',
+    shipping: 'Shipping (incl. VAT)',
     free: 'Free',
-    vat: 'VAT 19 %',
+    vat: 'of which 19 % VAT',
     total: 'Total (incl. VAT)',
     freeHint: 'Add {amt} more for free shipping.',
     freeGot: 'You qualify for free shipping.',
     note: 'Prices include statutory German VAT (19 %, §12 UStG). Shipping within Germany.',
     smallBiz: 'No VAT charged in accordance with §19 UStG (small business regulation).',
     emptyAlert: 'Your cart is empty.',
-    qtyLabel: 'Quantity'
+    qtyLabel: 'Quantity',
+    couponHint: 'Have a discount code? Enter it at checkout.'
   }
 };
 
@@ -65,7 +67,7 @@ function renderLines(container, lines) {
     <div class="cart-item" data-sku="${escapeHtml(line.sku)}">
       <div class="cart-item-info">
         <div class="cart-item-title">${escapeHtml(line.name)}</div>
-        <div class="cart-item-price">${cart.formatEUR(line.unitNet)} ${escapeHtml(t('each'))}</div>
+        <div class="cart-item-price">${cart.formatEUR(line.unitGross)} ${escapeHtml(t('each'))}</div>
         <div class="cart-item-sku">${escapeHtml(line.sku)}</div>
       </div>
       <div class="cart-item-actions">
@@ -75,7 +77,7 @@ function renderLines(container, lines) {
                  aria-label="${escapeHtml(t('qtyLabel'))}" data-act="set">
           <button class="qty-btn" type="button" data-act="inc" aria-label="+">+</button>
         </div>
-        <div class="item-total">${cart.formatEUR(line.lineNet)}</div>
+        <div class="item-total">${cart.formatEUR(line.lineGross)}</div>
         <button class="remove-btn" type="button" data-act="remove">${escapeHtml(t('remove'))}</button>
       </div>
     </div>`).join('');
@@ -89,12 +91,12 @@ export function renderCart() {
   renderLines(container, sums.lines);
 
   setText('cartSubtotalLabel', t('subtotal'));
-  setText('cartSubtotal', cart.formatEUR(sums.subtotalNet));
+  setText('cartSubtotal', cart.formatEUR(sums.subtotalGross));
 
   setText('cartShippingLabel', t('shipping'));
   setText('cartShipping', sums.lines.length === 0
     ? cart.formatEUR(0)
-    : (sums.shippingNet === 0 ? t('free') : cart.formatEUR(sums.shippingNet)));
+    : (sums.shippingGross === 0 ? t('free') : cart.formatEUR(sums.shippingGross)));
 
   const vatRow = byId('cartVatRow');
   if (vatRow) vatRow.hidden = sums.smallBusiness;
