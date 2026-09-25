@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Resilienze", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
+        nav_home: "Resilienze", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_faq: "Q&A",
         ps_hero_title: "Produktsicherheit und rechtliche Hinweise",
         ps_hero_sub: "Wichtige Informationen und regulatorische Hinweise zu unserer Ausrüstung.",
         scroll_down: "Nach unten scrollen",
@@ -33,10 +33,10 @@ export const dictionary = {
         ps_sec7_text: "Bei Fragen zur Produktsicherheit kontaktieren Sie uns bitte direkt.",
         footer_title: "Werden Sie Teil der take<span style='color: var(--primary-red);'>KONTROL</span> Community", 
         footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge. Bleiben Sie informiert, bleiben Sie bereit.", 
-        btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
+        btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_links_heading: "Schnellzugriff", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_faq: "Q&A",
         ps_hero_title: "Product Safety and Legal",
         ps_hero_sub: "Important information and regulatory notices regarding our equipment.",
         scroll_down: "Scroll to read",
@@ -62,6 +62,6 @@ export const dictionary = {
         ps_sec7_text: "For questions regarding product safety, please contact us directly.",
         footer_title: "Join the take<span style='color: var(--primary-red);'>KONTROL</span> Community", 
         footer_desc: "Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.", 
-        btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_stamp: "Status: May 2026"
+        btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_links_heading: "Quick Links", footer_stamp: "Status: May 2026"
     }
 };

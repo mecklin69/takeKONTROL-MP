@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_account: "Mein Konto", btn_organizations: "Für Organisationen",
+        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_faq: "Q&A", nav_account: "Mein Konto", btn_organizations: "Für Organisationen",
         hp_hero_title: "Wäre Ihre Familie—oder Ihr Unternehmen—morgen <span>bereit</span>?", hp_hero_sub: "Entdecken Sie Ihre Bereitschaft. Bauen Sie Resilienz auf. Schützen Sie, was zählt.", hp_hero_desc: "takeKONTROL hilft Einzelpersonen, Familien, Unternehmen und Gemeinden, sich durch Risikobewertung, angeleitetes Lernen und praktische Vorsorge auf Notfälle vorzubereiten.", hp_btn_journey: "Readiness Journey starten",
         hl_title: "Der Fahrplan zur <span>Resilienz</span>", hl_sub: "Ein systematisches Framework, das Sie Schritt für Schritt durch Risikoanalyse, Funktionstraining und langfristige Schutzstrategien führt.",
         hl_c1_title: "Risiken Verstehen", hl_c1_desc: "Wissen, welche Bedrohungen existieren.",
@@ -42,10 +42,10 @@ export const dictionary = {
         pyr_4_bold: "Vorbereitete Einzelpersonen", pyr_4_text: "schützen sich selbst",
         b2b_title: "Wer ist im Notfall <span>wirklich verfügbar?</span>", b2b_callout: "Sie wissen, dass jeder Mitarbeiter viel kostet, wenn er nicht verfügbar ist. Schützen Sie Unternehmenswerte.", b2b_i1: "Resilienz-Beurteilung", b2b_i2: "KONTROL Score Module", b2b_i3: "Protokolle zur Krisenvorsorge", b2b_i4: "Realistische Lab-Szenarien", b2b_i5: "Management Training", b2b_i7: "Umfassende Workshops", btn_briefing: "Briefing anfordern",
         team_desc: "Menschen aus unterschiedlichen Bereichen. Uns verbindet der Antrieb, Unternehmen auf das Unerwartete vorzubereiten.", role_ceo: "Co-Gründer & CEO", role_cto: "Co-Gründerin & CTO",
-        footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
+        footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_links_heading: "Schnellzugriff", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_account: "My Account", btn_organizations: "For Organizations",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_faq: "Q&A", nav_account: "My Account", btn_organizations: "For Organizations",
         hp_hero_title: "Would your family—or your business—be <span>ready</span> tomorrow?", hp_hero_sub: "Discover your readiness. Build resilience. Protect what matters.", hp_hero_desc: "TakeKONTROL helps individuals, families, businesses and communities prepare for emergencies through risk assessment, guided learning and practical preparedness.", hp_btn_journey: "Start Your Readiness Journey",
         hl_title: "The Roadmap to <span>Resilience</span>", hl_sub: "A systematic framework engineered to guide you step-by-step through risk assessment, functional training, and long-term protective strategies.",
         hl_c1_title: "Understand the Risks", hl_c1_desc: "Know what threats exist.",
@@ -80,6 +80,6 @@ export const dictionary = {
         pyr_4_bold: "Prepared individuals", pyr_4_text: "protect themselves",
         b2b_title: "Who is truly available in an <span>emergency?</span>", b2b_callout: "You know that each employee cost you a lot if he is not available. By securing readiness, you fortify core assets.", b2b_i1: "Resilience Assessment", b2b_i2: "KONTROL Score Modules", b2b_i3: "Crisis Preparedness Protocols", b2b_i4: "Realistic Lab Scenarios", b2b_i5: "Management Training", b2b_i7: "Comprehensive Workshops", btn_briefing: "Request a Briefing",
         team_desc: "People from diverse backgrounds. We are united by the drive to prepare organizations for the unexpected.", role_ceo: "Co-Founder & CEO", role_cto: "Co-Founder & CTO",
-        footer_title: "Join the takeKONTROL Community", footer_desc: "Subscribe to our newsletter for practical tips on keeping your household safe and prepared.", btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_stamp: "Status: May 2026"
+        footer_title: "Join the takeKONTROL Community", footer_desc: "Subscribe to our newsletter for practical tips on keeping your household safe and prepared.", btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_links_heading: "Quick Links", footer_stamp: "Status: May 2026"
     }
 };

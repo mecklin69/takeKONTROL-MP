@@ -7,7 +7,7 @@
 
 export const dictionary = {
     de: {
-        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt",
+        nav_home: "Resilienz", nav_shop: "Shop", nav_team: "Team", nav_contact: "Kontakt", nav_faq: "Q&A",
         enq_title: "Ihre Anfrage", 
         enq_sub: "Ob für Ihren privaten Haushalt oder die Stärkung Ihrer Organisation – wir helfen Ihnen, die Kontrolle zu übernehmen.",
         enq_left_tag: "Warum Kontakt aufnehmen?", 
@@ -32,10 +32,10 @@ export const dictionary = {
         succ_title: "ANFRAGE GESENDET", succ_msg: "Vielen Dank — wir haben Ihre Nachricht erhalten und melden uns innerhalb von 1 Werktag bei Ihnen.",
         cart_back: "← Zurück zum Shop",
         
-        footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge. Bleiben Sie informiert, bleiben Sie bereit.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_stamp: "Stand: Mai 2026"
+        footer_title: "Werden Sie Teil der takeKONTROL Community", footer_desc: "Abonnieren Sie unseren Newsletter für praktische Tipps zur Notfallvorsorge. Bleiben Sie informiert, bleiben Sie bereit.", btn_subscribe: "Abonnieren", footer_contact: "Kontakt", footer_links_heading: "Schnellzugriff", footer_stamp: "Stand: Mai 2026"
     },
     en: {
-        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact",
+        nav_home: "Resilience", nav_shop: "Shop", nav_team: "Team", nav_contact: "Contact", nav_faq: "Q&A",
         enq_title: "Make Your Enquiry", 
         enq_sub: "Whether you're equipping your household or strengthening your organisation — we're here to help you take control.",
         enq_left_tag: "Why reach out?", 
@@ -60,6 +60,6 @@ export const dictionary = {
         succ_title: "ENQUIRY SENT", succ_msg: "Thank you — we've received your message and will get back to you within 1 business day.",
         cart_back: "← Back to Shop",
 
-        footer_title: "Join the takeKONTROL Community", footer_desc: "Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.", btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_stamp: "Status: May 2026"
+        footer_title: "Join the takeKONTROL Community", footer_desc: "Subscribe to our newsletter for practical tips on keeping your household safe and prepared. Stay informed, stay ready.", btn_subscribe: "Subscribe", footer_contact: "Contact Us", footer_links_heading: "Quick Links", footer_stamp: "Status: May 2026"
     }
 };
